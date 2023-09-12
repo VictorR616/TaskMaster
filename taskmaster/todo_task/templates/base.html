@@ -1,20 +1,24 @@
 <!-- base.html -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>{% block title %} Tasks {% endblock %}</title>
-    </head>
-    <body>
-        <header>
-            <!-- Barra de navegación común -->
-        </header>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %} Tasks {% endblock %}</title>
+    <!-- Enlaza el archivo CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'todo_task/css/style.css' %}">
+    <!------------------------- IMPORTACION DE FONT AWESOME ------------------------->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <!------------------------- IMPORTACION DE GOOGLE FONT ------------------------->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!------------------------- IMPORTACION DE GOOGLE FONT ------------------------->
+</head>
+<body>
 
-        <main>{% block content %}{% endblock %}</main>
+    <main>{% block content %}{% endblock %}</main>
 
-        <footer>
-            <!-- Pie de página común -->
-        </footer>
-    </body>
+</body>
 </html>

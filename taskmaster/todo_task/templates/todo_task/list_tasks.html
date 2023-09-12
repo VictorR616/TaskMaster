@@ -1,56 +1,46 @@
 {% extends "base.html" %}
 
-{% block title %} Resultados de Búsqueda {% endblock %}
+{% block title %} Lista de tareas {% endblock %}
 
 {% block content %}
-<div class="search-container">
-    <h1>Resultados de la Búsqueda</h1>
+<section class="container">
+    <h1 class="fs-6">Lista de Tareas</h1>
 
-    <form method="get">
+    <form class="search-form" method="get">
         <input type="text" name="q" value="{{ query }}" placeholder="Buscar tareas">
         <input type="submit" value="Buscar">
     </form>
-</div>
+</section>
 
-<div class="task-list">
-    <ul>
-        {% for task in tasks %}
-        <li>
-            <a href="{% url 'task_detail' task.id %}">Ver detalle de tarea</a>
-        </li>
-        <li><strong>Tarea:</strong> {{ task.title }}</li>
-        <li><strong>Completada:</strong> {{ task.complete }}</li>
-        <li><strong>Fecha de registro:</strong> {{ task.created|date:"d/m/Y" }}</li>
-        {% endfor %}
-    </ul>
-</div>
+<section class="container">
+        <table class="task-table">
+            <caption class="fs-2">
+                Lista de Tareas
+            </caption> 
+            <thead>
+                <tr class="headers fs-1">
+                    <th>Acción</th>
+                    <th>Tarea</th>
+                    <th>Completada</th>
+                    <th>Fecha de registro</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr class="tasks fs-0 {% if task.complete %}completed{% else %}not-completed{% endif %}">
+                    <td><a href="{% url 'task_detail' task.id %}">Ver detalle de tarea</a></td>
+                    <td>{{ task.title }}</td>
+                    <td class="status-cell">{% if task.complete %}<span class="ticket"><i class="fa-solid fa-check"></i></span>{% else %}<span class="cross"><i class="fa-solid fa-xmark"></i></span>{% endif %}</td>
+                    <td>{{ task.created|date:"d/m/Y" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</section>
 
-<div class="completed-tasks">
-    <h2>Tareas completadas</h2>
-    <ul>
-        {% for task in tasks %}
-        {% if task.complete %}
-        <li>{{ task.title }}</li>
-        <li><strong>Completada:</strong> {{ task.complete }}</li>
-        {% endif %}
-        {% endfor %}
-    </ul>
-</div>
-
-<div class="incomplete-tasks">
-    <h2>Tareas por completar</h2>
-    <ul>
-        {% for task in tasks %}
-        {% if not task.complete %}
-        <li>{{ task.title }}</li>
-        <li><strong>Completada:</strong> {{ task.complete }}</li>
-        {% endif %}
-        {% endfor %}
-    </ul>
-</div>
 
 <!-- Agrega un enlace para ir a la página de creación de tareas -->
-<div class="create-task-link">
-    <a href="{% url 'create_task' %}">Crear Nueva Tarea</a>
+<div class="container create-task-link">
+    <a class="new-task" href="{% url 'create_task' %}">Crear Nueva Tarea</a>
 </div>
 {% endblock %}

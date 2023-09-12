@@ -4,13 +4,16 @@
 {% block title %} Lista de tareas {% endblock %}
 
 {% block content %}
-<!-- Contenido personalizado de list_tasks.html aquí -->
-<form method="POST">
-    {% csrf_token %} <!-- Agrega el token de seguridad CSRF -->
-    {{ form.as_p }} <!-- Renderiza los campos del formulario como párrafos -->
-    <input type="submit" value="Enviar">
-</form>
-
-<!-- Agrega un botón para ir atrás -->
-<a href="{% url 'list_tasks' %}" class="btn-back">Volver Atrás</a>
+<section class="container">
+    <h1 class="fs-6">Edicion de tarea</h1>
+    <!-- Contenido personalizado de list_tasks.html aquí -->
+    <form method="POST">
+        {% csrf_token %} <!-- Agrega el token de seguridad CSRF -->
+        {{ form.as_p }} <!-- Renderiza los campos del formulario como párrafos -->
+        <input type="submit" value="Enviar">
+    </form>
+    
+    <!-- Agrega un botón para ir atrás -->
+    <a class="list-tasks" href="{% url 'list_tasks' %}" class="btn-back">Volver Atrás</a>
+</section>
 {% endblock %}
