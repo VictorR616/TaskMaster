@@ -1,0 +1,26 @@
+<!-- task_detail.html -->
+{% extends "base.html" %} {% block title %} Detalle de Tarea {% endblock %} 
+{% block content %}
+<h1>Detalle de Tarea</h1>
+<table>
+    <tr>
+        <th>Título:</th>
+        <td>{{ task.title }}</td>
+    </tr>
+    <tr>
+        <th>Finalización:</th>
+        <td>{{ task.complete }}</td>
+    </tr>
+    <tr>
+        <th>Creada:</th>
+        <td>{{ task.created }}</td>
+    </tr>
+</table>
+<a href="{% url 'edit_task' task.id %}">Editar Tarea</a>
+<a href="{% url 'list_tasks' %}">Volver a la Lista de Tareas</a>
+<form method="POST" action="{% url 'delete_task' task.id %}">
+    {% csrf_token %}
+    <input type="submit" value="Borrar Tarea" />
+</form>
+
+{% endblock %}

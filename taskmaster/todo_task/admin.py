@@ -7,6 +7,7 @@ from .models import Task, Label, Comment, TaskMetadata
 
 class TaskAdmin(admin.ModelAdmin):
     list_display = (
+        "id",
         "title",
         "complete",
         "created",

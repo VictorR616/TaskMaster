@@ -1,34 +1,56 @@
-<!-- mi_plantilla.html -->
 {% extends "base.html" %}
 
-{% block title %} Lista de tareas {% endblock %}
+{% block title %} Resultados de Búsqueda {% endblock %}
 
 {% block content %}
-<!-- Contenido personalizado de list_tasks.html aquí -->
-<h1>Lista de Tareas</h1>
-<ul>
-    {% for task in tasks %}
-    <li>{{ task.title }}</li>
-    <li>Completada: {{ task.complete }}</li>
-    <li>Fecha de registro: {{ task.created|date:"d/m/Y" }}</li>
-    {% endfor %}
-</ul>
+<div class="search-container">
+    <h1>Resultados de la Búsqueda</h1>
 
-<h2>Tareas completadas</h2>
-<ul>
-    {% for task in tasks %} {% if task.complete %}
-    <li>{{ task.title }}</li>
-    <li>Completada: {{ task.complete }}</li>
-    {% endif %} {% endfor %}
-</ul>
+    <form method="get">
+        <input type="text" name="q" value="{{ query }}" placeholder="Buscar tareas">
+        <input type="submit" value="Buscar">
+    </form>
+</div>
 
-<h2>Tareas por completar</h2>
-<ul>
-    {% for task in tasks %} {% if not task.complete %}
-    <li>{{ task.title }}</li>
-    <li>Completada: {{ task.complete }}</li>
-    {% endif %} {% endfor %}
-</ul>
+<div class="task-list">
+    <ul>
+        {% for task in tasks %}
+        <li>
+            <a href="{% url 'task_detail' task.id %}">Ver detalle de tarea</a>
+        </li>
+        <li><strong>Tarea:</strong> {{ task.title }}</li>
+        <li><strong>Completada:</strong> {{ task.complete }}</li>
+        <li><strong>Fecha de registro:</strong> {{ task.created|date:"d/m/Y" }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="completed-tasks">
+    <h2>Tareas completadas</h2>
+    <ul>
+        {% for task in tasks %}
+        {% if task.complete %}
+        <li>{{ task.title }}</li>
+        <li><strong>Completada:</strong> {{ task.complete }}</li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="incomplete-tasks">
+    <h2>Tareas por completar</h2>
+    <ul>
+        {% for task in tasks %}
+        {% if not task.complete %}
+        <li>{{ task.title }}</li>
+        <li><strong>Completada:</strong> {{ task.complete }}</li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- Agrega un enlace para ir a la página de creación de tareas -->
+<div class="create-task-link">
+    <a href="{% url 'create_task' %}">Crear Nueva Tarea</a>
+</div>
 {% endblock %}
-
-

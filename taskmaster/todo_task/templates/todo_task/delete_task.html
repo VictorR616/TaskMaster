@@ -1,0 +1,15 @@
+<!-- mi_plantilla.html -->
+{% extends "base.html" %}
+
+{% block title %} Lista de tareas {% endblock %}
+
+{% block content %}
+<!-- Contenido personalizado de list_tasks.html aquí -->
+<form method="POST">
+    {% csrf_token %} <!-- Agrega el token de seguridad CSRF -->
+    {{ form.as_p }} <!-- Renderiza los campos del formulario como párrafos -->
+    <input type="submit" value="Enviar">
+</form>
+{% endblock %}
+
+
