@@ -8,39 +8,47 @@
 
     <form class="search-form" method="get">
         <input type="text" name="q" value="{{ query }}" placeholder="Buscar tareas">
-        <input type="submit" value="Buscar">
+        <input class="btn btn-search" type="submit" value="Buscar">
     </form>
 </section>
 
 <section class="container">
-        <table class="task-table">
-            <caption class="fs-2">
-                Lista de Tareas
-            </caption> 
-            <thead>
-                <tr class="headers fs-1">
-                    <th>Acción</th>
-                    <th>Tarea</th>
-                    <th>Completada</th>
-                    <th>Fecha de registro</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for task in tasks %}
-                <tr class="tasks fs-0 {% if task.complete %}completed{% else %}not-completed{% endif %}">
-                    <td><a href="{% url 'task_detail' task.id %}">Ver detalle de tarea</a></td>
-                    <td>{{ task.title }}</td>
-                    <td class="status-cell">{% if task.complete %}<span class="ticket"><i class="fa-solid fa-check"></i></span>{% else %}<span class="cross"><i class="fa-solid fa-xmark"></i></span>{% endif %}</td>
-                    <td>{{ task.created|date:"d/m/Y" }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <table class="task-table">
+        <caption class="fs-2">
+            Lista de Tareas
+        </caption> 
+        <thead>
+            <tr class="task-table__headers fs-1">
+                <th>Acción</th>
+                <th>Tarea</th>
+                <th>Completada</th>
+                <th>Fecha de registro</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr class="task-table__tasks fs-0 {% if task.complete %}completed{% else %}not-completed{% endif %}">
+                <td><a href="{% url 'task_detail' task.id %}">Ver detalle de tarea</a></td>
+                <td>{{ task.title }}</td>
+                <td class="tasks__status-cell">{% if task.complete %}<i class="fa-solid fa-check status-cell__ticket"></i>{% else %}<i class="fa-solid fa-xmark status-cell__cross"></i>{% endif %}</td>
+                <td>{{ task.created|date:"d/m/Y" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr class="task-table__headers fs-1">
+                <th>Acción</th>
+                <th>Tarea</th>
+                <th>Completada</th>
+                <th>Fecha de registro</th>
+            </tr>
+        </tfoot>
+    </table>
 </section>
 
 
 <!-- Agrega un enlace para ir a la página de creación de tareas -->
 <div class="container create-task-link">
-    <a class="new-task" href="{% url 'create_task' %}">Crear Nueva Tarea</a>
+    <a class="btn btn-create" href="{% url 'create_task' %}">Crear Nueva Tarea</a>
 </div>
 {% endblock %}

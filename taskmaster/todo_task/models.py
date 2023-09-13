@@ -35,11 +35,20 @@ class Comment(models.Model):
         return self.text
 
 
-# Tabla de metadata para almacenar la descripción y prioridad de una tarea
+class Priority(models.Model):
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = "Priority"  # Nombre en singular
+        verbose_name_plural = "Priorities"  # Nombre en plural
+
 class TaskMetadata(models.Model):
     task = models.OneToOneField(Task, on_delete=models.CASCADE)
     description = models.TextField()
-    priority = models.CharField(max_length=20)
+    priority = models.ForeignKey(Priority, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return f"Metadata for Task: {self.task.title}"

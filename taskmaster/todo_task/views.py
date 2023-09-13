@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Task
-from .forms import TaskForm
+
+from .models import Task, TaskMetadata
+from .forms import TaskEditForm, TaskForm, TaskMetaDataForm
 
 
 def list_tasks(request):
@@ -12,7 +13,8 @@ def list_tasks(request):
     if not query:
         tasks = Task.objects.all()  # Obtén todas las tareas
     else:
-        tasks = Task.objects.filter(title__icontains=query)  # Filtra las tareas cuyos títulos contengan la consulta
+        # tasks = Task.objects.filter(title__icontains=query)  # Filtra las tareas cuyos títulos contengan la consulta
+        tasks = Task.objects.filter(title__startswith=query)  # Filtra las tareas cuyos títulos empiezan por la letra puesta
 
     return render(request, "todo_task/list_tasks.html", {"tasks": tasks, "query": query})
 
@@ -24,26 +26,44 @@ def task_detail(request, task_id):
 
 def create_task(request):
     if request.method == "POST":
-        form = TaskForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("list_tasks") # Se indica el nombre de la visa definida en urls.py
+        task_form = TaskForm(request.POST)
+        task_metadata_form = TaskMetaDataForm(request.POST)
+
+        if task_form.is_valid() and task_metadata_form.is_valid():
+            # Guardar la tarea (Task)
+            task = task_form.save()
+
+            # Guardar la metadata (TaskMetadata)
+            task_metadata = task_metadata_form.save(commit=False)
+            task_metadata.task = task  # Establecer la relación con la tarea
+            task_metadata.save()
+
+            return redirect("list_tasks")  # Redirigir a la lista de tareas
     else:
-        # Mostrar el formulario vacío si es una solicitud GET
-        form = TaskForm()
-    return render(request, "todo_task/create_task.html", {"form": form})
+        # Mostrar los formularios vacíos si es una solicitud GET
+        task_form = TaskForm()
+        task_metadata_form = TaskMetaDataForm()
+
+    return render(request, "todo_task/create_task.html", {"task_form": task_form, "task_metadata_form": task_metadata_form})
 
 
 def edit_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
+
     if request.method == "POST":
-        form = TaskForm(request.POST, instance=task)
-        if form.is_valid():
-            form.save()
+        task_form = TaskEditForm(request.POST, instance=task)
+        task_metadata_form = TaskMetaDataForm(request.POST, instance=task.taskmetadata)
+
+
+        if task_form.is_valid() and task_metadata_form.is_valid():
+            task_form.save()
+            task_metadata_form.save()
             return redirect("list_tasks")
     else:
-        form = TaskForm(instance=task)
-    return render(request, "todo_task/edit_task.html", {"form": form, "task": task})
+        task_form = TaskEditForm(instance=task)
+        task_metadata_form = TaskMetaDataForm(instance=task.taskmetadata)
+
+    return render(request, "todo_task/edit_task.html", {"task_form": task_form, "task_metadata_form": task_metadata_form, "task": task})
 
 
 def delete_task(request, task_id):

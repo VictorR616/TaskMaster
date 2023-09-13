@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Task, Label, Comment, TaskMetadata
+from .models import Task, Label, Comment,Priority, TaskMetadata
 
 
 # Register your models here.
@@ -44,7 +44,13 @@ class TaskMetadataAdmin(admin.ModelAdmin):
     list_filter = ("task",)
 
 
+class PriorityAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+
+    list_filter = ("name",)
+
 admin.site.register(Task, TaskAdmin)
 admin.site.register(Label, LabelAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(TaskMetadata, TaskMetadataAdmin)
+admin.site.register(Priority, PriorityAdmin)

@@ -25,15 +25,29 @@
             <td>{{ task.taskmetadata.priority }}</td>
         </tr>
     </table>
-    <div class="edit-task-container">
-        <a class="edit-task" href="{% url 'edit_task' task.id %}">Editar Tarea</a>
-        
-        <form class="delete-form" method="POST" action="{% url 'delete_task' task.id %}">
-            {% csrf_token %}
-            <input  type="submit" value="Borrar Tarea" />
-        </form>
+
+    <div class="edit-task__container">
+        <a class="btn btn-edit" href="{% url 'edit_task' task.id %}">Editar Tarea</a>
+
+        <button class="btn btn-delete">Borrar Tarea</button>
     </div>
 
-    <a class="list-tasks"  href="{% url 'list_tasks' %}">Volver a la Lista de Tareas</a>
+    <div id="delete-task-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p class="fs-1">¿Estás seguro de que deseas borrar esta tarea?</p>
+            <div class="modal-content__btn-container">
+                <form class="delete-form" method="POST" action="{% url 'delete_task' task.id %}">
+                    {% csrf_token %}
+                    <input id="confirm-delete" class="btn btn-delete"  type="submit" value="Confirmar" />
+                </form>
+                <button id="cancel-delete" class="btn btn-cancel">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-return">
+        <a class="btn btn-return" href="{% url 'list_tasks' %}" class="btn-back">Volver a la lista de tareas</a>
+    </div>
 </section>
 {% endblock %}

@@ -1,16 +1,11 @@
 from django import forms
-from .models import Task  # Importa el modelo si es necesario
-
-
-from django import forms
-from .models import Task
+from .models import Task, TaskMetadata 
 
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = [
             "title",
-            "complete",
             "labels",
         ]
 
@@ -31,3 +26,29 @@ class TaskForm(forms.ModelForm):
         if len(title) <= 8:
             raise forms.ValidationError("El título debe tener más de 8 caracteres.")
         return title
+    
+
+class TaskEditForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = [
+            "title",
+            "complete",
+            "labels",
+        ]
+
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if len(title) <= 8:
+            raise forms.ValidationError("El título debe tener más de 8 caracteres.")
+        return title
+
+
+class TaskMetaDataForm(forms.ModelForm):
+    class Meta:
+        model = TaskMetadata
+        fields = [
+            "description",
+            "priority"]
+        
+
