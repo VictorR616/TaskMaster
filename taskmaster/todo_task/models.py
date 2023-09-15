@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import CustomUser  # Importa el modelo de usuario personalizado
+
 
 
 class Task(models.Model):
@@ -24,7 +25,7 @@ class Label(models.Model):
 
 class Comment(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)  # Usa el modelo de usuario personalizado
     text = models.TextField()
     creation_date = models.DateTimeField(auto_now_add=True)
 

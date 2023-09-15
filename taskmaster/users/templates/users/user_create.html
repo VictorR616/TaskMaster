@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <section class="container">
+    <h1>Crear Usuario</h1>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <button type="submit">Guardar Usuario</button>
+    </form>
+
+    <a href="{% url 'user_list' %}">Volver a la lista de usuarios</a>
+  </section>
+{% endblock %}

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "todo_task",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,9 @@ ROOT_URLCONF = "taskmaster.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "todo_task", "templates")],
+        "DIRS": [
+            os.path.join(BASE_DIR,"taskmaster", "templates"),  # Directorio de plantillas del proyecto
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -68,6 +71,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = "taskmaster.wsgi.application"
 
@@ -119,9 +123,15 @@ USE_TZ = True
 
 # Ruta de archivos estaticos
 STATIC_URL = "static/"
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'todo_task', 'static')]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'users', 'static'),
+    os.path.join(BASE_DIR, 'todo_task', 'static'),
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = 'users.CustomUser'  # Utilizando usuario personalizado

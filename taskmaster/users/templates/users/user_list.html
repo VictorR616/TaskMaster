@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+  <section class="container">
+    <h1>Lista de Usuarios</h1>
+    
+    <table class="task-table">
+        <caption class="fs-2">
+            Lista de Usuarios
+        </caption>
+        <thead>
+            <tr class="task-table__headers fs-1">
+                <th>Acción</th>
+                <th>Email</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Fecha creación</th>
+                <th>Activo</th>
+                <th>Staff</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr class="task-table__tasks fs-0 {% if user.is_active %}completed{% else %}not-completed{% endif %}">
+                <td><a href="{% url 'user_detail' user.id %}">Ver detalle de usuario</a></td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.date_joined }}</td>
+                <td>{{ user.is_active }}</td>
+                <td>{{ user.is_staff }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+              <td colspan="7">No hay usuarios registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</section>
+
+<div class="container create-task-link">
+    <a class="btn btn-create" href="{% url 'user_create' %}" class="btn btn-primary">Crear Usuario</a>
+</div>
+{% endblock %}

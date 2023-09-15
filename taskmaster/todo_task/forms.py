@@ -1,34 +1,8 @@
 from django import forms
 from .models import Task, TaskMetadata 
 
-class TaskForm(forms.ModelForm):
-    class Meta:
-        model = Task
-        fields = [
-            "title",
-            "labels",
-        ]
 
-    # Personaliza las etiquetas de los campos
-    labels = {
-        'title': 'Título de la Tarea',
-        # Otras etiquetas personalizadas si las tienes
-    }
-
-    # Personaliza los widgets de los campos
-    widgets = {
-        'title': forms.Textarea(attrs={'class': 'custom-input'}),
-        'complete': forms.CheckboxInput(attrs={'class': 'custom-checkbox'}),
-    }
-
-    def clean_title(self):
-        title = self.cleaned_data['title']
-        if len(title) <= 8:
-            raise forms.ValidationError("El título debe tener más de 8 caracteres.")
-        return title
-    
-
-class TaskEditForm(forms.ModelForm):
+class BaseTaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = [
@@ -37,11 +11,36 @@ class TaskEditForm(forms.ModelForm):
             "labels",
         ]
 
+        labels = {
+            'title': 'Título de la Tarea',
+            'complete': 'Completada',
+            'labels': 'Categorias',
+            # Otras etiquetas personalizadas si las tienes
+        }
+
     def clean_title(self):
         title = self.cleaned_data['title']
         if len(title) <= 8:
             raise forms.ValidationError("El título debe tener más de 8 caracteres.")
         return title
+
+class TaskForm(BaseTaskForm):
+    class Meta(BaseTaskForm.Meta):
+        # Excluir el campo 'complete' en TaskForm
+        exclude = ['complete']
+
+        # Puedes agregar campos adicionales o personalizaciones aquí si es necesario
+
+
+class TaskEditForm(BaseTaskForm):
+    class Meta(BaseTaskForm.Meta):
+        fields = [
+            "title",
+            "complete",
+            "labels",
+        ]
+
+    # Puedes agregar validaciones específicas para TaskEditForm aquí si es necesario
 
 
 class TaskMetaDataForm(forms.ModelForm):
@@ -50,5 +49,12 @@ class TaskMetaDataForm(forms.ModelForm):
         fields = [
             "description",
             "priority"]
+        
+        labels = {
+            'description': 'Descripcion',
+            'priority' : 'Prioridad',
+            # Otras etiquetas personalizadas si las tienes
+        }
+
         
 
