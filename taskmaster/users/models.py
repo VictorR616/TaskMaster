@@ -34,6 +34,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(default=timezone.now)  # Campo de fecha de registro
     is_active = models.BooleanField(default=True)  # Indica si el usuario está activo
     is_staff = models.BooleanField(default=False)  # Indica si el usuario es miembro del staff
+    is_worker = models.BooleanField(default=False)  # Indica si el usuario es trabajador
 
     # Ejemplo de campo personalizado: foto de perfil
     profile_picture = models.ImageField(upload_to='users/images/profile_pictures/', blank=True, null=True)

@@ -1,6 +1,12 @@
 {% extends "base.html" %}
+{% load static %}
+
 
 {% block title %} Lista de tareas {% endblock %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'todo_task/css/style.css' %}">
+{% endblock %}
+
 
 {% block content %}
 <section class="container">
@@ -13,12 +19,12 @@
 </section>
 
 <section class="container">
-    <table class="task-table">
+    <table class="table">
         <caption class="fs-2">
             Lista de Tareas
         </caption> 
         <thead>
-            <tr class="task-table__headers fs-1">
+            <tr class="table__headers fs-1">
                 <th>Acción</th>
                 <th>Tarea</th>
                 <th>Completada</th>
@@ -27,16 +33,16 @@
         </thead>
         <tbody>
             {% for task in tasks %}
-            <tr class="task-table__tasks fs-0 {% if task.complete %}completed{% else %}not-completed{% endif %}">
-                <td><a href="{% url 'task_detail' task.id %}">Ver detalle de tarea</a></td>
+            <tr class="fs-0">
+                <td><a class="table__action" href="{% url 'task_detail' task.id %}">Ver detalle de tarea</a></td>
                 <td>{{ task.title }}</td>
-                <td class="tasks__status-cell">{% if task.complete %}<i class="fa-solid fa-check status-cell__ticket"></i>{% else %}<i class="fa-solid fa-xmark status-cell__cross"></i>{% endif %}</td>
+                <td class="table__status-cell">{% if task.complete %}<i class="fa-solid fa-check status-cell__ticket"></i>{% else %}<i class="fa-solid fa-xmark status-cell__cross"></i>{% endif %}</td>
                 <td>{{ task.created|date:"d/m/Y" }}</td>
             </tr>
             {% endfor %}
         </tbody>
         <tfoot>
-            <tr class="task-table__headers fs-1">
+            <tr class="table__headers fs-1">
                 <th>Acción</th>
                 <th>Tarea</th>
                 <th>Completada</th>
@@ -48,7 +54,7 @@
 
 
 <!-- Agrega un enlace para ir a la página de creación de tareas -->
-<div class="container create-task-link">
+<div class="container">
     <a class="btn btn-create" href="{% url 'create_task' %}">Crear Nueva Tarea</a>
 </div>
 {% endblock %}

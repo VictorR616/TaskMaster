@@ -124,6 +124,7 @@ USE_TZ = True
 # Ruta de archivos estaticos
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'taskmaster', 'static'),
     os.path.join(BASE_DIR, 'users', 'static'),
     os.path.join(BASE_DIR, 'todo_task', 'static'),
 ]

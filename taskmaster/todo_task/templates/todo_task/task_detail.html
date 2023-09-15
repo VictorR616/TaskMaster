@@ -1,5 +1,12 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block title %} Detalle de Tarea {% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'todo_task/css/style.css' %}">
+{% endblock %}
+
 {% block content %}
 <section class="container">
     <h1 class="fs-6">Detalle de Tarea</h1>
@@ -50,4 +57,9 @@
         <a class="btn btn-return" href="{% url 'list_tasks' %}" class="btn-back">Volver a la lista de tareas</a>
     </div>
 </section>
+
+    {% block script %}
+    <script src="{% static 'todo_task/js/main.js' %}"></script>
+{% endblock %}
+
 {% endblock %}
