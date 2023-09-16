@@ -1,21 +1,48 @@
-{% extends 'base.html' %}
-
-{% block title %}Iniciar Sesión{% endblock %}
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %} Iniciar Sesión {%endblock %} 
+{% block css %} <link rel="stylesheet" type="text/css" href="{% static 'users/css/style.css' %}"/> {% endblock %} 
 
 {% block content %}
-<div class="container">
-    <h2>Iniciar Sesión</h2>
-    <form method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="username">Nombre de usuario:</label>
-            <input type="text" class="form-control" id="username" name="username" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Contraseña:</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-    </form>
+<div class="login-container">
+    <div class="wrapper">
+        <h1 class="fs-6">Login</h1>
+
+        <form method="POST" class="form-login">
+            {% csrf_token %}
+            <div class="input-box fs-0">
+                <i class="fa fa-envelope fs-0"></i>
+                <input
+                    type="email"
+                    name="username"
+                    id="username"
+                    class="fs-0"
+                    placeholder="Email" />
+            </div>
+            <div class="input-box fs-0">
+                <i class="fa fa-lock fs-0"></i>
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    class="fs-0"
+                    placeholder="Contraseña" />
+            </div>
+            <div class="remember-forgot fs-0">
+                <label for="remember">
+                    <input type="checkbox" name="remember" id="remember" />
+                    Recordarme
+                </label>
+                <a href="#">¿Olvido la contraseña?</a>
+            </div>
+
+            <input type="submit" value="Iniciar sesion" class="btn btn-login fs-1" />
+            <div class="register">
+                <p class="fs-0">¿No tienes una cuenta?</p>
+                <a href="#" class="fs-0">Registrarte</a>
+            </div>
+        </form>
+    </div>
 </div>
+
 {% endblock %}

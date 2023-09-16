@@ -1,8 +1,0 @@
-/* ---------------------------------- Estilos pestaña de detalle de tarea ----------------------------------*/
-.edit-task__container {
-	display: flex;
-	margin-top: 2rem;
-	gap: 2rem;
-}
-
-/* ---------------------------------- Estilos pestaña de edicion de tareas ----------------------------------*/

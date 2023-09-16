@@ -10,7 +10,7 @@
 {% block content %}
 <section class="container">
     <h1 class="fs-6">Detalle de Tarea</h1>
-    <table class="task-table">
+    <table class="table">
         <tr>
             <th>Título:</th>
             <td>{{ task.title }}</td>
@@ -33,10 +33,9 @@
         </tr>
     </table>
 
-    <div class="edit-task__container">
+    <div>
         <a class="btn btn-edit" href="{% url 'edit_task' task.id %}">Editar Tarea</a>
-
-        <button class="btn btn-delete">Borrar Tarea</button>
+        <a class="btn btn-delete">Borrar Tarea</a>
     </div>
 
     <div id="delete-task-modal" class="modal">
@@ -54,11 +53,11 @@
     </div>
 
     <div class="container-return">
-        <a class="btn btn-return" href="{% url 'list_tasks' %}" class="btn-back">Volver a la lista de tareas</a>
+        <a href="{% url 'list_tasks' %}" class="btn btn-return">Volver a la lista de tareas</a>
     </div>
 </section>
 
-    {% block script %}
+{% block script %}
     <script src="{% static 'todo_task/js/main.js' %}"></script>
 {% endblock %}
 

@@ -1,31 +1,79 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %} Detalle de Usuario {% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'users/css/style.css' %}">
+{% endblock %}
+
 {% block content %}
   <section class="container">
     <h1>Detalle del Usuario</h1>
+    
+        <div class="user-detail">
+            <div class="user-detail__column user-detail__info-column">
+                <table class="user-detail__info">
+                    <tr>
+                        <td><strong>Email:</strong></td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Nombre:</strong></td>
+                        <td>{{ user.first_name }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Apellido:</strong></td>
+                        <td>{{ user.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Activo:</strong></td>
+                        <td>{% if user.is_active %}Sí{% else %}No{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Staff:</strong></td>
+                        <td>{% if user.is_staff %}Sí{% else %}No{% endif %}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="user-detail__column user-detail__profile-picture-column">
+                <div class="user-detail__profile-picture">
+                    {% if user.profile_picture %}
+                        <img src="{{ user.profile_picture.url }}" alt="{{ user.first_name }} {{ user.last_name }}">
+                    {% else %}
+                        <p>No hay foto de perfil disponible.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
 
-    <div class="user-detail">
-      <div class="user-detail__info">
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <p><strong>Nombre:</strong> {{ user.first_name }}</p>
-        <p><strong>Apellido:</strong> {{ user.last_name }}</p>
-        <p><strong>Activo:</strong> {% if user.is_active %}Sí{% else %}No{% endif %}</p>
-        <p><strong>Staff:</strong> {% if user.is_staff %}Sí{% else %}No{% endif %}</p>
-      </div>
-      <div class="user-detail__profile-picture">
-        {% if user.profile_picture %}
-          <img src="{{ user.profile_picture.url }}" alt="{{ user.first_name }} {{ user.last_name }}">
-        {% else %}
-          <p>No hay foto de perfil disponible.</p>
-        {% endif %}
-      </div>
+
+    <div>
+        <a class="btn btn-edit" href="{% url 'user_update' user.id %}">Editar Usuario</a>
+        <a class="btn btn-delete">Borrar Usuario</a>
     </div>
 
-    <div class="user-actions">
-      <a href="{% url 'user_list' %}" class="btn btn-secondary">Volver a la lista de usuarios</a>
-      <a href="{% url 'user_update' user.id %}" class="btn btn-primary">Editar Usuario</a>
-      <a href="{% url 'user_delete' user.id %}" class="btn btn-danger">Eliminar Usuario</a>
+    <div id="delete-task-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p class="fs-1">¿Estás seguro de que deseas borrar este usuario?</p>
+            <div class="modal-content__btn-container">
+                <form class="delete-form" method="POST" action="{% url 'user_delete' user.id %}">
+                    {% csrf_token %}
+                    <input id="confirm-delete" class="btn btn-delete"  type="submit" value="Confirmar" />
+                </form>
+                <button id="cancel-delete" class="btn btn-cancel">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-return">
+        <a href="{% url 'user_list' %}" class="btn btn-return">Volver a la lista de usuarios</a>
     </div>
   </section>
+
+{% block script %}
+    <script src="{% static 'users/js/main.js' %}"></script>
+{% endblock %}
 {% endblock %}

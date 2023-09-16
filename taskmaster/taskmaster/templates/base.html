@@ -23,34 +23,32 @@
         <!------------------------- IMPORTACION DE GOOGLE FONT ------------------------->
     </head>
     <body>
-        <header>
-            <nav class="primary-nav">
-                <ul class="nav-links">
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'list_tasks' %}">Tareas</a></li>
-                    {% if user.is_staff %}
-                    <li><a href="{% url 'user_list' %}">Usuarios</a></li>
-                    {% endif %}
-                    <li id="perfil-trigger">
-                        <div class="dropdown">
-                            <button id="dropdown-button" class="dropbtn">
-                                {{ user.email }}
-                            </button>
-                            <div id="myDropdown" class="dropdown-content">
-                                <a href="{% url 'user_detail' request.user.id %}"
-                                    >Mi Perfil</a
-                                >
-                                <a href="{% url 'logout' %}">Cerrar Sesión</a>
-                            </div>
+    {% if user.is_authenticated %}
+    <header>
+        <nav class="primary-nav">
+            <ul class="nav-links">
+                <li><a href="{% url 'list_tasks' %}">Tareas</a></li>
+                {% if user.is_staff %}
+                <li><a href="{% url 'user_list' %}">Usuarios</a></li>
+                {% endif %}
+                <li id="perfil-trigger">
+                    <div class="dropdown">
+                        <button id="dropdown-button" class="dropbtn">
+                            {{ user.email }}
+                        </button>
+                        <div id="myDropdown" class="dropdown-content">
+                            <a href="{% url 'user_detail' request.user.id %}"
+                                >Mi Perfil</a
+                            >
+                            <a href="{% url 'logout' %}">Cerrar Sesión</a>
                         </div>
-                    </li>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    {% endif %}
 
-                    {% else %}
-                    <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </header>
 
         <main>{% block content %}{% endblock %}</main>
         <script src="{% static 'js/main.js' %}"></script>

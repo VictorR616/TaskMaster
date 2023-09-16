@@ -1,0 +1,151 @@
+/* Estilos para el login */
+.login-container {
+    margin-inline: auto;
+    display: grid;
+    place-content: center;
+    min-height: 100svh;
+    background-color: purple;
+}
+
+.wrapper {
+    background-color: purple;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.wrapper h1 {
+    color: #fff;
+    text-align:center;
+}
+
+.form-login {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.input-box {
+    position: relative;
+}
+
+.input-box input {
+    width: 100%; /* Resta 40px para dejar espacio al ícono */
+    padding: 0.75rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    outline: none;
+    border-radius: 40px;
+    color: #fff;
+    background-color: transparent;
+    padding-left: 2.75rem;
+}
+
+
+.input-box input::placeholder {
+    color: #fff;
+}
+
+.input-box i {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+}
+
+.wrapper .remember-forgot {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 2.5rem;
+    padding-inline: 1rem;
+}
+
+.remember-forgot label {
+    color: #fff;
+}
+
+.remember-forgot a {
+    color: #fff;
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+.btn-login {
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    color: purple;
+    font-weight: bold;
+    padding: 1rem;
+}
+
+.btn-login:hover {
+    background-color: white;
+    color: #000000;
+}
+
+
+.register {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+}
+
+.register p {
+    color: #fff;
+}
+
+.register a {
+    color: #fff;
+    font-weight: bold;
+}
+
+.register a:hover {
+    text-decoration: underline;
+}
+
+.user-detail {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente el contenido */
+    align-items: center; /* Centra verticalmente el contenido */
+    margin: 2rem auto;
+}
+
+.user-detail__column {
+    flex: 1;
+    text-align: center;
+}
+
+.user-detail__info-column {
+    padding-right: 20px; /* Espaciado entre columnas */
+}
+
+.user-detail__profile-picture-column {
+    padding-left: 20px; /* Espaciado entre columnas */
+}
+
+.user-detail__profile-picture img {
+    height: 200px; /* Establece una altura fija para la imagen */
+    width: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
+.user-detail__info table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    height: 200px; /* Establece una altura fija para la tabla */
+}
+
+.user-detail__info td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.user-detail__info strong {
+    font-weight: bold;
+}

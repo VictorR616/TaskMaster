@@ -29,7 +29,7 @@ def user_create(request):
             return redirect('user_list')
     else:
         form = UserForm()
-    return render(request, 'users/user_create.html', {'form': form})
+    return render(request, 'users/user_create.html', {'user_form': form})
 
 @login_required(login_url='/users/login/')
 def user_update(request, user_id):
@@ -42,7 +42,7 @@ def user_update(request, user_id):
             return redirect('user_list')
     else:
         form = UserForm(instance=user)
-    return render(request, 'users/user_create.html', {'form': form, 'user': user})
+    return render(request, 'users/user_update.html', {'user_form': form, 'user': user})
 
 @login_required(login_url='/users/login/')
 def user_delete(request, user_id):
