@@ -29,6 +29,7 @@ class CustomUserManager(BaseUserManager):
 # Definimos nuestro modelo de usuario personalizado
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)  # Campo de correo electrónico único
+    password = models.CharField(max_length=128)  # Campo de contraseña
     first_name = models.CharField(max_length=30, blank=True)  # Campo de nombre
     last_name = models.CharField(max_length=30, blank=True)  # Campo de apellido
     date_joined = models.DateTimeField(default=timezone.now)  # Campo de fecha de registro

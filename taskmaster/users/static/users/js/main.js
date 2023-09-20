@@ -25,5 +25,6 @@ function setupDeleteModal() {
     });
 }
 
+
 // Llama a la función para configurar el modal de eliminación cuando la página se carga
 document.addEventListener("DOMContentLoaded", setupDeleteModal);

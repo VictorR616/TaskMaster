@@ -6,7 +6,7 @@
 {% block content %}
 <section class="container">
     <h1>Crear Usuario</h1>
-        <form class="form" method="post" enctype="multipart/form-data">
+        <form class="form" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         
         {% for field in user_form %}
@@ -17,12 +17,12 @@
             {% endif %}
         {% endfor %}
 
-        <input type="submit" class="btn-save btn-create" value="Enviar">
+        <input type="submit" class="btn-save btn-create" value="Registrarse">
     </form>
-
-    <div class="container-return">
-        <a class="btn btn-return" href="{% url 'user_list' %}">Volver a la lista de usuarios</a>
+    <div>
+        <a href="{% url 'login' %}">Login</a>
     </div>
+
 </section>
 
 {% endblock %}

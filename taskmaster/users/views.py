@@ -19,12 +19,13 @@ def user_detail(request, user_id):
     user = get_object_or_404(CustomUser, pk=user_id)
     return render(request, 'users/user_detail.html', {'user': user})
 
-@login_required(login_url='/users/login/')
 def user_create(request):
     if request.method == 'POST':
         form = UserForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)  # Evitar guardar inmediatamente en la base de datos
+            user.set_password(form.cleaned_data['password'])  # Establecer la contraseña
+            user.save()  # Guardar el usuario con la contraseña encriptada
             messages.success(request, 'Usuario creado correctamente.')
             return redirect('user_list')
     else:
@@ -55,19 +56,36 @@ def user_delete(request, user_id):
 
 
 # Manejo de sesion
+
 def iniciar_sesion(request):
     if request.method == 'POST':
-        username = request.POST['username']
+        email = request.POST['email']
         password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
+        remember = request.POST.get('remember')  # Obtiene el valor del checkbox "Recordarme"
+
+        print(f"Email ingresado: {email}")
+        print(f"Contraseña ingresada: {password}")
+
+        user = authenticate(request, email=email, password=password)
+
         if user is not None:
+            print(f"Usuario autenticado: {user}")
+
             login(request, user)
+
+            # Configura la duración de la sesión en función del checkbox "Recordarme"
+            if remember:
+                request.session.set_expiry(1209600)  # Duración de la sesión en segundos (2 semanas)
+            else:
+                request.session.set_expiry(0)  # La sesión expirará al cerrar el navegador
+
             messages.success(request, 'Inicio de sesión exitoso.')
             return redirect('user_list')
         else:
-            messages.error(request, 'Credenciales incorrectas. Intente nuevamente.')
-
+            print("Autenticación fallida.")
+            messages.error(request, 'Credenciales incorrectas. Intente nuevamente.', extra_tags='alert-danger')
     return render(request, 'users/login.html')
+
 
 def cerrar_sesion(request):
     logout(request)
