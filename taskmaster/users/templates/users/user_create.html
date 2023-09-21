@@ -2,27 +2,30 @@
 {% load static %}
 
 {% block title %} Creacion de Usuario {% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/style.css' %}" /> {% endblock %}
 
 {% block content %}
 <section class="container">
-    <h1>Crear Usuario</h1>
+    <h1 class="fs-6">Crear Usuario</h1>
         <form class="form" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
+            {% csrf_token %}
+            
+            {% for field in user_form %}
+            <label class="register-input-label" for="{{ field.id_for_label }}">{{ field.label }} </label>
+            <div class="register-input-box">
+                {{ field }}
+                    {% if field.errors %}
+                        {{ field.errors }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="container-login">
+                <a class="btn" href="{% url 'login' %}">Login</a>
+                <input type="submit" class="btn" value="Registrarse">
+            </div>
+        </form>
         
-        {% for field in user_form %}
-            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {{ field }}
-            {% if field.errors %}
-                {{ field.errors }}
-            {% endif %}
-        {% endfor %}
-
-        <input type="submit" class="btn-save btn-create" value="Registrarse">
-    </form>
-    <div>
-        <a href="{% url 'login' %}">Login</a>
-    </div>
-
 </section>
 
 {% endblock %}

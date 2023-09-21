@@ -9,50 +9,55 @@
 
 {% block content %}
   <section class="container">
-    <h1>Detalle del Usuario</h1>
-    
-        <div class="user-detail">
-            <div class="user-detail__column user-detail__info-column">
-                <table class="user-detail__info">
-                    <tr>
-                        <td><strong>Email:</strong></td>
-                        <td>{{ user.email }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Nombre:</strong></td>
-                        <td>{{ user.first_name }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Apellido:</strong></td>
-                        <td>{{ user.last_name }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Activo:</strong></td>
-                        <td>{% if user.is_active %}Sí{% else %}No{% endif %}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Staff:</strong></td>
-                        <td>{% if user.is_staff %}Sí{% else %}No{% endif %}</td>
-                    </tr>
-                </table>
+    <h1 class="fs-6">Detalle del Usuario</h1>
+<div class="user-card">
+    <div class="user-detail">
+        <div class="user-detail__profile-picture">
+            {% if user.profile_picture %}
+            <img src="{{ user.profile_picture.url }}" alt="{{ user.first_name }} {{ user.last_name }}">
+            {% else %}
+            <p class="profile-picture-placeholder">No hay foto de perfil disponible.</p>
+            {% endif %}
+        </div>
+        <div class="user-detail__info">
+            <div class="user-detail__info__layer">
+                <p class="info-name fs-2">{{ user.first_name}} {{ user.last_name}}</p>
             </div>
-            <div class="user-detail__column user-detail__profile-picture-column">
-                <div class="user-detail__profile-picture">
-                    {% if user.profile_picture %}
-                        <img src="{{ user.profile_picture.url }}" alt="{{ user.first_name }} {{ user.last_name }}">
-                    {% else %}
-                        <p>No hay foto de perfil disponible.</p>
-                    {% endif %}
+            <div class="user-detail__info__layer">
+                <p class="info-email fs-1">{{user.email}}</p>
+            </div>
+            <div class="user-detail__info__layer">
+                <div class="info-pair">
+                    <strong class="fs-1">Activo:</strong>
+                    <p>{{ user.is_active }}</p>
+                </div>
+                <div class="info-pair">
+                    <strong class="fs-1">Staff:</strong>
+                    <p>{{ user.is_staff }}</p>
+                </div>
+                <div class="info-pair">
+                    <strong class="fs-1">Trabajador:</strong>
+                    <p>{{ user.is_worker }}</p>
                 </div>
             </div>
+
+            </p>
         </div>
-
-
-    <div>
+    </div>
+    
+    <!-- <div>
         <a class="btn btn-edit" href="{% url 'user_update' user.id %}">Editar Usuario</a>
         <a class="btn btn-delete">Borrar Usuario</a>
-    </div>
+    </div> -->
+</div>
 
+
+
+
+    <div class="container-login">
+        <a href="{% url 'user_list' %}" class="btn btn-return">Volver a la lista de usuarios</a>
+    </div>
+    
     <div id="delete-task-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -67,10 +72,6 @@
         </div>
     </div>
 
-
-    <div class="container-return">
-        <a href="{% url 'user_list' %}" class="btn btn-return">Volver a la lista de usuarios</a>
-    </div>
   </section>
 
 {% block script %}

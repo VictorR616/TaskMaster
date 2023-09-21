@@ -2,15 +2,14 @@
 {% load static %}
 
 {% block title %} Listado de usuarios {% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/style.css' %}" /> {% endblock %}
 
 {% block content %}
-  <section class="container">
+<section class="container">
     <h1 class="fs-6">Lista de Usuarios</h1>
     
     <table class="table">
-        <caption class="fs-2">
-            Lista de Usuarios
-        </caption>
         <thead>
             <tr class="table__headers fs-1">
                 <th>Acción</th>
@@ -41,9 +40,10 @@
         </tbody>
     </table>
     
+    <div class="links-container">
+        <a class="btn" href="{% url 'user_create' %}">Crear Usuario</a>
+    </div>
 </section>
 
-<div class="container">
-    <a class="btn btn-create" href="{% url 'user_create' %}">Crear Usuario</a>
-</div>
+
 {% endblock %}

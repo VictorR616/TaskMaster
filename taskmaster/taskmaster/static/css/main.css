@@ -5,13 +5,13 @@
     /* Colores */
     --clr-white: rgb(255, 255, 255);
     --clr-neutral-400: rgb(3, 3, 3);
-    --clr-accent-700: rgb(90, 0, 235);
+    --clr-accent-700: rgb(128, 0, 128);
     --clr-gradient-accent: rgb(182, 0, 136);
 
     --clr-complete: rgb(0, 117, 16);
     --clr-incomplete: rgb(223, 14, 14);
 
-    --clr-btn-create: rgb(26, 214, 41);
+    --clr-btn-create: rgb(22, 180, 36);
     --clr-btn-edit: rgb(0, 123, 255);
     --clr-btn-delete: rgb(223, 14, 14);
     --clr-btn-return: rgb(90, 90, 90);
@@ -73,7 +73,7 @@ html {
 body {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
-    background-color: var(--bg-clr);
+    background-color: var(--clr-accent-700);
     font-family: var(--ff-primary);
 }
 
@@ -162,14 +162,13 @@ caption {
 .container {
     width: min(100% - 3rem, 120ch);
     margin-inline: auto;
-    margin-top: 2rem;
     display: grid;
     place-content: center;
+    min-height: 90svh;
 }
 
 .container-return {
     display: flex;
-    justify-content: start;
     margin-block: 2rem;
 }
 
@@ -241,21 +240,12 @@ caption {
     display: block;
 }
 
-
-
 /* ********** Components ********** */
 
 /* ---------------------------------- Estilos genericos ----------------------------------*/
 h1 {
     font-weight: var(--fw-bold);
-    background-image: linear-gradient(
-        45deg,
-        var(--clr-accent-700),
-        var(--clr-gradient-accent)
-    );
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
+    color: var(--clr-white);
 }
 
 /* Estilos para el formulario */
@@ -275,10 +265,11 @@ h1 {
 .form textarea {
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
     outline: none;
     transition: border-color 0.3s ease;
-    margin-bottom: 10px; /* Agregamos margen inferior para separar los campos */
+    margin-bottom: 10px;
+    background-color: transparent;
 }
 
 /* Estilos para campos de entrada de texto y select enfocados */
@@ -287,9 +278,14 @@ h1 {
 .form input[type="email"]:focus,
 .form select:focus,
 .form textarea:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    border-color: #ececec;
+    box-shadow: 0 0 15px rgba(218, 218, 218, 0.5);
 }
+
+.form input::placeholder {
+    color: white;
+}
+
 
 .form textarea {
     resize: none;
@@ -342,27 +338,19 @@ h1 {
 }
 
 .btn {
-    display: inline;
-    padding: 10px 20px;
-    color: white;
-    text-decoration: none;
-    border: none;
-    border-radius: 5px;
+    color: purple;
+    font-weight: bold;
+    padding: 1rem;
+    background-color: var(--clr-white);
+    border-radius: 10px;
+    text-align: center;
     cursor: pointer;
-    font-weight: var(--fw-bold);
-    transition: background-color 0.3s ease;
 }
 
-.btn-save {
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    align-self: center;
-    margin-top: 10px;
-    width: 60%;
+.btn:hover {
+    color: black;
 }
+
 
 .btn-search {
     background-color: var(--clr-btn-search);
@@ -428,13 +416,15 @@ h1 {
 .table {
     width: 100%;
     border-collapse: collapse;
-    border: 2px solid rgb(231, 231, 231);
+    background-color: white;
 }
 
 .table th,
 .table td {
     padding: 1rem;
     text-align: center;
+    color: var(--clr-accent-700);
+
 }
 
 .table th {

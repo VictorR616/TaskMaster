@@ -5,54 +5,51 @@
 
 {% block content %}
 <div class="login-container">
-    <div class="wrapper">
-        <h1 class="fs-6">Login</h1>
-        
-            {% if messages %}
-                {% for message in messages %}
-                {% if 'alert-danger' in message.tags %}
-                <div class="error-message">
-                    <p class="fs-0">{{ message }}</p>
-                </div>
-                {% endif %}
-                {% endfor %}
-            {% endif %}
-            
-            <form method="POST" class="form-login">
-                {% csrf_token %}
-                <div class="input-box fs-0">
-                    <i class="fa fa-envelope fs-0"></i>
-                    <input
-                        type="email"
-                        name="email"
-                        id="email"
-                        class="fs-0"
-                        placeholder="Email" />
-                </div>
-                <div class="input-box fs-0">
-                    <i class="fa fa-lock fs-0"></i>
-                    <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        class="fs-0"
-                        placeholder="Contraseña" />
-                </div>
-                <div class="remember-forgot fs-0">
-                    <label for="remember">
-                        <input type="checkbox" name="remember" id="remember" />
-                        Recordarme
-                    </label>
-                    <a href="#">¿Olvido la contraseña?</a>
-                </div>
+    <h1 class="fs-6">Login</h1>
     
-                <input type="submit" value="Iniciar sesión" class="btn btn-login fs-1" />
-                <div class="register">
-                    <p class="fs-0">¿No tienes una cuenta?</p>
-                    <a href="{% url 'user_create' %}" class="fs-0">Registrarte</a>
-                </div>
-            </form>
+        {% if messages %}
+            {% for message in messages %}
+            {% if 'alert-danger' in message.tags %}
+            <div class="error-message">
+                <p class="fs-0">{{ message }}</p>
+            </div>
+            {% endif %}
+            {% endfor %}
+        {% endif %}
+        
+        <form method="POST" class="form-login">
+            {% csrf_token %}
+            <div class="input-box fs-0">
+                <i class="fa fa-envelope fs-0"></i>
+                <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    class="fs-0"
+                    placeholder="Email" />
+            </div>
+            <div class="input-box fs-0">
+                <i class="fa fa-lock fs-0"></i>
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    class="fs-0"
+                    placeholder="Contraseña" />
+            </div>
+            <div class="remember-forgot fs-0">
+                <label for="remember" class="checkbox-label">
+                    <input type="checkbox" name="remember" id="remember" class="custom-checkbox" />
+                    Recordarme
+                </label>
+                <a href="#">¿Olvidó la contraseña?</a>
+            </div>
 
-    </div>
+            <input type="submit" value="Iniciar sesión" class="btn btn-login fs-1" />
+            <div class="container-register">
+                <p class="fs-0">¿No tienes una cuenta?</p>
+                <a href="{% url 'user_create' %}" class="fs-0">Registrarte</a>
+            </div>
+        </form>
 </div>
 {% endblock %}
