@@ -2,27 +2,42 @@
 {% load static %}
 
 {% block title %} Actualizacion de Usuario {% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/style.css' %}" /> {% endblock %}
 
 {% block content %}
 <section class="container">
-    <h1>Crear Usuario</h1>
+    <h1 class="fs-6">Editar Usuario</h1>
 
-   
-        <form class="form" method="post" enctype="multipart/form-data">
+
+    <form class="form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        
+
         {% for field in user_form %}
-            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+
+        {% if field.name == 'profile_picture' %}
+            {% if user.profile_picture %}
+                <div class="imagen">
+                    {{ field }}
+                </div>
+            {% else %}
+                <p>No hay imagen de perfil actual.</p>
+        {% endif %}
+        
+        {% else %}
             {{ field }}
-            {% if field.errors %}
-                {{ field.errors }}
-            {% endif %}
+        {% endif %}
+
+        {% if field.errors %}
+            {{ field.errors }}
+        {% endif %}
         {% endfor %}
 
-        <input type="submit" class="btn-save btn-create" value="Enviar">
+        <input type="submit" class="btn" value="Guardar cambios">
     </form>
 
-    <div class="container-return">
+    <div class="container-list">
         <a class="btn btn-return" href="{% url 'user_list' %}">Volver a la lista de usuarios</a>
     </div>
 </section>

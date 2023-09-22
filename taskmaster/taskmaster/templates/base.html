@@ -23,31 +23,30 @@
         <!------------------------- IMPORTACION DE GOOGLE FONT ------------------------->
     </head>
     <body>
-    {% if user.is_authenticated %}
-    <header>
-        <nav class="primary-nav">
-            <ul class="nav-links">
-                <li><a href="{% url 'list_tasks' %}">Tareas</a></li>
-                {% if user.is_staff %}
-                <li><a href="{% url 'user_list' %}">Usuarios</a></li>
-                {% endif %}
-                <li id="perfil-trigger">
-                    <div class="dropdown">
-                        <button id="dropdown-button" class="dropbtn">
-                            {{ user.email }}
-                        </button>
-                        <div id="myDropdown" class="dropdown-content">
-                            <a href="{% url 'user_detail' request.user.id %}"
-                                >Mi Perfil</a
-                            >
-                            <a href="{% url 'logout' %}">Cerrar Sesión</a>
-                        </div>
+{% if request.user.is_authenticated %}
+<header>
+    <nav class="primary-nav">
+        <ul class="nav-links">
+            <li><a href="{% url 'list_tasks' %}">Tareas</a></li>
+            {% if request.user.is_staff %}
+            <li><a href="{% url 'user_list' %}">Usuarios</a></li>
+            {% endif %}
+            <li id="perfil-trigger">
+                <div class="dropdown">
+                    <button id="dropdown-button" class="dropbtn">
+                        {{ request.user.email }}
+                    </button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a href="{% url 'user_detail' request.user.id %}">Mi Perfil</a>
+                        <a href="{% url 'logout' %}">Cerrar Sesión</a>
                     </div>
-                </li>
-            </ul>
-        </nav>
-    </header>
-    {% endif %}
+                </div>
+            </li>
+        </ul>
+    </nav>
+</header>
+{% endif %}
+
 
 
         <main>{% block content %}{% endblock %}</main>

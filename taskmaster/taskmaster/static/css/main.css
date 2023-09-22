@@ -167,11 +167,6 @@ caption {
     min-height: 90svh;
 }
 
-.container-return {
-    display: flex;
-    margin-block: 2rem;
-}
-
 .primary-nav {
     background-color: var(--clr-accent-700);
 }

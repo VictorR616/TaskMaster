@@ -1,14 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from users.models import CustomUser
-from users.forms import UserForm
+from users.forms import UserEditForm, UserForm
 
 from django.contrib.auth import login, authenticate, logout, views as auth_views
 from .decorators import admin_or_worker_required
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse
-from django.core.mail import send_mail
-from django.contrib.auth.tokens import default_token_generator
 
 
 
@@ -46,13 +43,13 @@ def user_create(request):
 def user_update(request, user_id):
     user = get_object_or_404(CustomUser, pk=user_id)
     if request.method == "POST":
-        form = UserForm(request.POST, request.FILES, instance=user)
+        form = UserEditForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
             messages.success(request, "Usuario actualizado correctamente.")
             return redirect("user_list")
     else:
-        form = UserForm(instance=user)
+        form = UserEditForm(instance=user)
     return render(request, "users/user_update.html", {"user_form": form, "user": user})
 
 

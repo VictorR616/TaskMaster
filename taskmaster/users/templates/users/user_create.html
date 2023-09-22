@@ -12,7 +12,7 @@
             {% csrf_token %}
             
             {% for field in user_form %}
-            <label class="register-input-label" for="{{ field.id_for_label }}">{{ field.label }} </label>
+            <label for="{{ field.id_for_label }}">{{ field.label }} </label>
             <div class="register-input-box">
                 {{ field }}
                     {% if field.errors %}
