@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Task, Label, Comment,Priority, TaskMetadata
+from .models import Task, Label,Priority, TaskMetadata
 
 
 # Register your models here.
@@ -25,14 +25,6 @@ class LabelAdmin(admin.ModelAdmin):
     list_filter = ("name",)
 
 
-class CommentAdmin(admin.ModelAdmin):
-    list_display = (
-        "text",
-        "creation_date",
-    )
-
-    list_filter = ("creation_date",)
-
 
 class TaskMetadataAdmin(admin.ModelAdmin):
     list_display = (
@@ -51,6 +43,5 @@ class PriorityAdmin(admin.ModelAdmin):
 
 admin.site.register(Task, TaskAdmin)
 admin.site.register(Label, LabelAdmin)
-admin.site.register(Comment, CommentAdmin)
 admin.site.register(TaskMetadata, TaskMetadataAdmin)
 admin.site.register(Priority, PriorityAdmin)

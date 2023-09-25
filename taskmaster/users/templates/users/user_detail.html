@@ -66,17 +66,14 @@
             {% endif %}
             <a class="btn btn-return" href="{% url 'user_list' %}">Lista de usuarios</a>
         </div>
-
-
-            
-        </div>
+    </div>
 
     <div id="delete-task-modal" class="modal">
         <div class="modal-content">
             <span class="close"></span>
             <p class="fs-1">¿Estás seguro de que deseas borrar este usuario?</p>
             <div class="modal-content__btn-container">
-                <form class="delete-form" method="POST" action="{% url 'user_delete' user.id %}">
+                <form  method="POST" action="{% url 'user_delete' user.id %}">
                     {% csrf_token %}
                     <input id="confirm-delete" class="btn" type="submit" value="Confirmar" />
                 </form>

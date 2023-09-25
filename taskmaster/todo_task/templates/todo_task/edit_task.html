@@ -11,7 +11,7 @@
 <section class="container">
     <h1 class="fs-6">Edicion de tarea</h1>
     <!-- Contenido personalizado de list_tasks.html aquí -->
-        <form class="form" method="post">
+        <form class="form" method="POST">
         {% csrf_token %}
         
         {% for field in task_form %}
@@ -23,7 +23,7 @@
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
             {{ field }}
         {% endfor %}
-        <input type="submit" class="btn-save btn-create" value="Guardar Cambios">
+        <input type="submit" class="btn" value="Guardar Cambios">
     </form>
 
     <!-- Agrega un botón para ir atrás -->

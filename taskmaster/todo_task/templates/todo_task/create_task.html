@@ -44,11 +44,11 @@
                 <p class="error">{{ field.errors }}</p>
             {% endif %}
         {% endfor %}
-        <input type="submit" class="btn-save btn-create" value="Enviar">
+        <input type="submit" class="btn" value="Enviar">
     </form>
 
     <div class="container-return">
-        <a class="btn btn-return" href="{% url 'list_tasks' %}">Volver a la lista de tareas</a>
+        <a class="btn" href="{% url 'list_tasks' %}">Volver a la lista de tareas</a>
     </div>
 </section>
 

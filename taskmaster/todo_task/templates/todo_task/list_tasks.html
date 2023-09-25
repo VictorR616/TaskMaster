@@ -10,51 +10,44 @@
 
 {% block content %}
 <section class="container">
-    <h1 class="fs-6">Lista de Tareas</h1>
 
-    <form class="search-form" method="get">
-        <input type="text" name="q" value="{{ query }}" placeholder="Buscar tareas">
-        <input class="btn btn-search" type="submit" value="Buscar">
-    </form>
+    <section>
+        <h1 class="fs-6">Lista de Tareas</h1>
+    
+        <form class="search-form" method="get">
+            <input type="text" name="q" value="{{ query }}" placeholder="Buscar tareas">
+            <input class="btn" type="submit" value="Buscar">
+        </form>
+    </section>
+    
+    <section>
+        <table class="table">
+            <thead>
+                <tr class="table__headers fs-1">
+                    <th>Acción</th>
+                    <th>Tarea</th>
+                    <th>Completada</th>
+                    <th>Fecha de registro</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr class="fs-0">
+                    <td><a class="table__action" href="{% url 'task_detail' task.id %}">Ver detalle de tarea</a></td>
+                    <td>{{ task.title }}</td>
+                    <td class="table__status-cell">{% if task.complete %}<i class="fa-solid fa-check status-cell__ticket"></i>{% else %}<i class="fa-solid fa-xmark status-cell__cross"></i>{% endif %}</td>
+                    <td>{{ task.created|date:"d/m/Y" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </section>
+    
+    
+    <!-- Agrega un enlace para ir a la página de creación de tareas -->
+    <div class="links-container">
+        <a class="btn" href="{% url 'create_task' %}">Crear Nueva Tarea</a>
+    </div>
 </section>
-
-<section class="container">
-    <table class="table">
-        <caption class="fs-2">
-            Lista de Tareas
-        </caption> 
-        <thead>
-            <tr class="table__headers fs-1">
-                <th>Acción</th>
-                <th>Tarea</th>
-                <th>Completada</th>
-                <th>Fecha de registro</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for task in tasks %}
-            <tr class="fs-0">
-                <td><a class="table__action" href="{% url 'task_detail' task.id %}">Ver detalle de tarea</a></td>
-                <td>{{ task.title }}</td>
-                <td class="table__status-cell">{% if task.complete %}<i class="fa-solid fa-check status-cell__ticket"></i>{% else %}<i class="fa-solid fa-xmark status-cell__cross"></i>{% endif %}</td>
-                <td>{{ task.created|date:"d/m/Y" }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr class="table__headers fs-1">
-                <th>Acción</th>
-                <th>Tarea</th>
-                <th>Completada</th>
-                <th>Fecha de registro</th>
-            </tr>
-        </tfoot>
-    </table>
-</section>
-
-
-<!-- Agrega un enlace para ir a la página de creación de tareas -->
-<div class="container">
-    <a class="btn btn-create" href="{% url 'create_task' %}">Crear Nueva Tarea</a>
-</div>
 {% endblock %}

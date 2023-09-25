@@ -1,0 +1,56 @@
+/* Creacion de tarea */
+
+.container-return {
+    margin-block: 1rem;
+    margin-left: 20px;
+}
+
+/* Detalle tarea */
+
+.container-task-detail {
+    display: flex;
+    background-color: var(--clr-white);
+    border-radius: 14px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 80%;
+    margin-inline: auto;
+    margin-block: 1rem;
+}
+
+.task-card {
+    padding-inline: 2rem;
+    padding-block: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.task-card__title {
+    color: purple;
+}
+.task-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.task-card strong{
+    font-weight: bold;
+    color: purple;
+}
+
+.modal-content__btn-container .btn {
+    background-color: transparent;
+    color: var(--clr-accent-700);
+    border: 2px solid var(--clr-accent-700);
+}
+
+
+.modal-content__btn-container .btn:hover {
+    background-color: var(--clr-accent-700);
+    color: var(--clr-white);
+}
