@@ -27,29 +27,47 @@
                         <p class="info-email fs-1">{{user.email}}</p>
                     </div>
                     <div class="user-detail__info__layer">
-                        <div class="info-pair">
-                            <strong class="fs-1">Activo:</strong>
-                            <p>{{ user.is_active }}</p>
-                        </div>
-                        <div class="info-pair">
-                            <strong class="fs-1">Staff:</strong>
-                            <p>{{ user.is_staff }}</p>
-                        </div>
-                        <div class="info-pair">
-                            <strong class="fs-1">Trabajador:</strong>
-                            <p>{{ user.is_worker }}</p>
-                        </div>
+                    <div class="info-pair">
+                        <strong class="fs-1">Activo</strong>
+                        {% if user.is_active %}
+                        <p><i class="fa-solid fa-check status-cell__ticket"></i></p>
+                        {% else %}
+                        <p><i class="fa-solid fa-xmark status-cell__cross"></i></p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="info-pair">
+                        <strong class="fs-1">Staff</strong>
+                        {% if user.is_staff %}
+                        <p><i class="fa-solid fa-check status-cell__ticket"></i></p>
+                        {% else %}
+                        <p><i class="fa-solid fa-xmark status-cell__cross"></i></p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="info-pair">
+                        <strong class="fs-1">Trabajador</strong>
+                        {% if user.is_worker %}
+                        <p><i class="fa-solid fa-check status-cell__ticket"></i></p>
+                        {% else %}
+                        <p><i class="fa-solid fa-xmark status-cell__cross"></i></p>
+                        {% endif %}
+                    </div>
+
                     </div>
 
                     </p>
                 </div>
             </div>
-            
-            <div class="container-actions">
-                <a class="btn btn-edit" href="{% url 'user_update' user.id %}">Editar Usuario</a>
-                <a class="btn btn-delete">Borrar Usuario</a>
-                <a class="btn btn-return" href="{% url 'user_list' %}" >Lista de usuarios</a>
-            </div>
+        <div class="container-actions">
+            <a class="btn btn-edit" href="{% url 'user_update' user.id %}">Editar Usuario</a>
+            {% if is_not_current_user %}
+            <a class="btn btn-delete" href="#" id="delete-user">Borrar Usuario</a>
+            {% endif %}
+            <a class="btn btn-return" href="{% url 'user_list' %}">Lista de usuarios</a>
+        </div>
+
+
             
         </div>
 

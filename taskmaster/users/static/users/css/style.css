@@ -60,17 +60,11 @@
 
 .remember-forgot {
     display: flex;
-    justify-content: space-evenly;
-    gap: 2.5rem;
+    justify-content: flex-start;
     padding-inline: 1rem;
-    justify-content: baseline;
 }
 
-.remember-forgot label {
-    color: #fff;
-}
-
-.remember-forgot a {
+.checkbox-label {
     color: #fff;
 }
 
@@ -79,10 +73,6 @@
     height: 16px;
     width: 16px;
     margin-right: 5px;
-}
-
-.remember-forgot a:hover {
-    text-decoration: underline;
 }
 
 .btn-login {
@@ -309,7 +299,8 @@ label {
 
 .container-list {
     display: flex;
-    margin-inline: auto;
+    justify-content: flex-start;
+    padding-inline: 1.25rem;
 }
 
 .container-list .btn-return {
@@ -320,3 +311,4 @@ label {
 .container-list .btn-return:hover {
     color: black;
 }
+

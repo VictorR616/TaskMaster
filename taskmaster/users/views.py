@@ -20,7 +20,14 @@ def user_list(request):
 @login_required(login_url="/users/login/")
 def user_detail(request, user_id):
     user = get_object_or_404(CustomUser, pk=user_id)
-    return render(request, "users/user_detail.html", {"user": user})
+    is_not_current_user = request.user != user
+
+    context = {
+        'user': user,
+        'is_not_current_user': is_not_current_user,
+    }
+
+    return render(request, "users/user_detail.html", context)
 
 
 def user_create(request):
@@ -56,10 +63,14 @@ def user_update(request, user_id):
 @login_required(login_url="/users/login/")
 def user_delete(request, user_id):
     user = get_object_or_404(CustomUser, pk=user_id)
+    
     if request.method == "POST":
-        user.delete()
-        messages.success(request, "Usuario eliminado correctamente.")
+        # Cambiar el estado de is_active a False en lugar de eliminar al usuario
+        user.is_active = False
+        user.save()
+        messages.success(request, "Usuario desactivado correctamente.")
         return redirect("user_list")
+    
     return render(request, "users/user_delete.html", {"user": user})
 
 
@@ -67,6 +78,10 @@ def user_delete(request, user_id):
 
 
 def iniciar_sesion(request):
+    if request.user.is_authenticated:
+        # Si el usuario ya ha iniciado sesión, redirige a la página deseada.
+        return redirect("list_tasks")  # Cambia 'user_list' a la URL que desees.
+    
     if request.method == "POST":
         email = request.POST["email"]
         password = request.POST["password"]
