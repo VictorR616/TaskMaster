@@ -40,6 +40,27 @@
         </tbody>
     </table>
 
+<div class="card-container">
+    {% for user in users %}
+    <div class="card">
+        <div class="card-header">
+            <strong>{{ user.first_name }} {{ user.last_name }}</strong>
+        </div>
+        <div class="card-body">
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Fecha de creación:</strong> {{ user.date_joined }}</p>
+            <p><strong>Activo:</strong> {% if user.is_active %}<i class="fa-solid fa-check"></i>{% else %}<i
+                    class="fa-solid fa-xmark"></i>{% endif %}</p>
+            <p><strong>Staff:</strong> {% if user.is_staff %}<i class="fa-solid fa-check"></i>{% else %}<i
+                    class="fa-solid fa-xmark"></i>{% endif %}</p>
+            <p><strong>Acción:</strong> <a href="{% url 'user_detail' user.id %}">Ver detalles</a></p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
     <!-- Enlaces de paginación -->
     <div class="pagination">
         <span class="step-links">
