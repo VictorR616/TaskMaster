@@ -2,21 +2,42 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Task, TaskMetadata
 from .forms import TaskEditForm, TaskForm, TaskMetaDataForm
+from django.core.paginator import Paginator, EmptyPage
 
+
+
+from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator, EmptyPage
 
 def list_tasks(request):
     tasks = Task.objects.all()
 
-    query = request.GET.get('q', '')  # Obtiene el valor de búsqueda del parámetro 'q' en la URL
+    query = request.GET.get('q', '')
 
-    # Verifica si la consulta es vacía
     if not query:
-        tasks = Task.objects.all()  # Obtén todas las tareas
+        tasks = Task.objects.all()
     else:
-        # tasks = Task.objects.filter(title__icontains=query)  # Filtra las tareas cuyos títulos contengan la consulta
-        tasks = Task.objects.filter(title__startswith=query)  # Filtra las tareas cuyos títulos empiezan por la letra puesta
+        tasks = Task.objects.filter(title__startswith=query)
+
+    # Agregar paginación
+    page_number = request.GET.get('page') # Devuelve un str
+
+    
+    try:
+        page_number = int(page_number)  # Convierte a entero
+    except (TypeError, ValueError):
+        page_number = 1  # Si no es un número válido, muestra la primera página
+    
+    paginator = Paginator(tasks, 2)  # Cambia 10 al número de elementos por página que desees
+
+    try:
+        tasks = paginator.page(page_number)
+    except EmptyPage:
+        tasks = paginator.page(1)  # Si la página está vacía, muestra la primera página
 
     return render(request, "todo_task/list_tasks.html", {"tasks": tasks, "query": query})
+
+
 
 
 def task_detail(request, task_id):

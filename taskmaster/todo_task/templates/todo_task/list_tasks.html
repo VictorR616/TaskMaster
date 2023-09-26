@@ -1,25 +1,21 @@
 {% extends "base.html" %}
 {% load static %}
 
-
 {% block title %} Lista de tareas {% endblock %}
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'todo_task/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'todo_task/css/style.css' %}">
 {% endblock %}
-
 
 {% block content %}
 <section class="container">
-
     <section>
         <h1 class="fs-6">Lista de Tareas</h1>
-    
         <form class="search-form" method="get">
             <input type="text" name="q" value="{{ query }}" placeholder="Buscar tareas">
             <input class="btn" type="submit" value="Buscar">
         </form>
     </section>
-    
+
     <section>
         <table class="table">
             <thead>
@@ -35,16 +31,39 @@
                 <tr class="fs-0">
                     <td><a class="table__action" href="{% url 'task_detail' task.id %}">Ver detalle de tarea</a></td>
                     <td>{{ task.title }}</td>
-                    <td class="table__status-cell">{% if task.complete %}<i class="fa-solid fa-check status-cell__ticket"></i>{% else %}<i class="fa-solid fa-xmark status-cell__cross"></i>{% endif %}</td>
+                    <td class="table__status-cell">{% if task.complete %}<i
+                            class="fa-solid fa-check status-cell__ticket"></i>{% else %}<i
+                            class="fa-solid fa-xmark status-cell__cross"></i>{% endif %}</td>
                     <td>{{ task.created|date:"d/m/Y" }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
-
         </table>
+
+        <!-- Enlaces de paginación -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if tasks.has_previous %}
+                <a href="?page={{ tasks.previous_page_number }}">previous</a>
+                {% else %}
+                <span class="disabled">previous</span>
+                {% endif %}
+
+                <span class="current-page">
+                    Página {{ tasks.number }} de {{ tasks.paginator.num_pages }}.
+                </span>
+
+                {% if tasks.has_next %}
+                <a href="?page={{ tasks.next_page_number }}">next</a>
+                {% else %}
+                <span class="disabled">next</span>
+                {% endif %}
+            </span>
+        </div>
+
+
     </section>
-    
-    
+
     <!-- Agrega un enlace para ir a la página de creación de tareas -->
     <div class="links-container">
         <a class="btn" href="{% url 'create_task' %}">Crear Nueva Tarea</a>

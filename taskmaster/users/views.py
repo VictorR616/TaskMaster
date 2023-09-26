@@ -6,6 +6,7 @@ from users.forms import UserEditForm, UserForm
 from django.contrib.auth import login, authenticate, logout, views as auth_views
 from .decorators import admin_or_worker_required
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage
 
 
 
@@ -14,6 +15,23 @@ from django.contrib.auth.decorators import login_required
 @admin_or_worker_required
 def user_list(request):
     users = CustomUser.objects.all()
+
+    # Agregar paginación
+    page_number = request.GET.get('page') # Devuelve un str
+
+    
+    try:
+        page_number = int(page_number)  # Convierte a entero
+    except (TypeError, ValueError):
+        page_number = 1  # Si no es un número válido, muestra la primera página
+    
+    paginator = Paginator(users, 2)  # Cambia 10 al número de elementos por página que desees
+
+    try:
+        users = paginator.page(page_number)
+    except EmptyPage:
+        users = paginator.page(1)  # Si la página está vacía, muestra la primera página
+
     return render(request, "users/user_list.html", {"users": users})
 
 

@@ -498,3 +498,49 @@ h1 {
     justify-content: center;
     align-items: center; 
 }
+
+/* Estilo básico para la paginación */
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Estilo para los enlaces de paginación */
+.pagination a {
+    display: inline-block;
+    padding: 6px 12px;
+    text-decoration: none;
+    background-color: var(--clr-white);
+    color: var(--clr-accent-700);
+    border: 1px solid var(--clr-white);
+    border-radius: 3px;
+    margin: 0 3px;
+    font-weight: var(--fw-bold);
+}
+
+.pagination a:hover {
+    background-color: var(--clr-accent-700);
+    color: var(--clr-white);
+}
+
+/* Estilo para los enlaces de paginación desactivados */
+.pagination .disabled {
+    display: inline-block;
+    padding: 6px 12px;
+    color: #ccc;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin: 0 3px;
+    pointer-events: none; /* Desactiva la interacción con el enlace */
+}
+
+/* Estilo para el enlace de la página actual */
+.pagination .current-page {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: var(--clr-white);
+    color: var(--clr-accent-700);
+    border: 1px solid var(--clr-white);
+    border-radius: 3px;
+    margin: 0 3px;
+}
