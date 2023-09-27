@@ -14,44 +14,34 @@
         <input class="btn" type="submit" value="Buscar">
     </form>
 
-    <table class="table">
-        <caption class="fs-2">
-            Lista de Tareas
-        </caption>
-        <thead>
-            <tr class="table__headers fs-1">
-                <th>Acción</th>
-                <th>Tarea</th>
-                <th>Completada</th>
-                <th>Fecha de registro</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for task in tasks %}
-            <tr">
-                <td data-cell="actions"><a class="table__action" href="{% url 'task_detail' task.id %}">Ver detalle de tarea</a></td>
-                <td data-cell="title">{{ task.title }}</td>
-                <td data-cell="status" class="table__status-cell">{% if task.complete %}<i
-                        class="fa-solid fa-check status-cell__ticket"></i>{% else %}<i
-                        class="fa-solid fa-xmark status-cell__cross"></i>{% endif %}</td>
-                <td data-cell="Registro">{{ task.created|date:"d/m/Y" }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <div class="card-container">
-        {% for task in tasks %}
-        <div class="card">
-            <h2>{{ task.title }}</h2>
-            <p><strong>Acción: </strong><a href="{% url 'task_detail' task.id %}">Ver detalle de tarea</a></p>
-            <p><strong>Completada: </strong>{% if task.complete %}<i class="fa-solid fa-check status-cell__ticket"></i>{% else %}<i
-                    class="fa-solid fa-xmark status-cell__cross"></i>{% endif %}</p>
-            <p><strong>Fecha de registro: </strong>{{ task.created|date:"d/m/Y" }}</p>
-        </div>
-        {% endfor %}
-    </div>
-
+        <table role="table">
+            <caption role="caption" class="fs-3">
+                Lista de Tareas
+            </caption>
+            <thead>
+                <tr class="fs-1">
+                    <th>Acción</th>
+                    <th>Tarea</th>
+                    <th>Completada</th>
+                    <th>Fecha de registro</th>
+                </tr>
+            </thead>
+            <tbody role="rowgroup">
+                {% for task in tasks %}
+                <tr role="row">
+                    <td headers="actions" role="cell">
+                        <a class="table__action fs-btn-1" href="{% url 'task_detail' task.id %}">Detalle de tarea</a>
+                    </td>
+                    <td headers="title" role="cell">{{ task.title }}</td>
+                    <td headers="status" role="cell" class="table__status-cell">{% if task.complete %}<i
+                            class="fa-solid fa-check status-cell__ticket"></i>{% else %}<i
+                            class="fa-solid fa-xmark status-cell__cross"></i>{% endif %}</td>
+                    <td headers="Registro" role="cell">{{ task.created|date:"d/m/Y" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+    
+        </table>
 
     <!-- Enlaces de paginación -->
     <div class="pagination">

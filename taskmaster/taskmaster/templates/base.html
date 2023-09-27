@@ -2,56 +2,55 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>{% block title %} Tasks {% endblock %}</title>
-        <!-- Enlaza el archivo CSS -->
-        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
 
-        {% block css %}{% endblock %}
-        <!------------------------- IMPORTACION DE FONT AWESOME ------------------------->
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-        <!------------------------- IMPORTACION DE GOOGLE FONT ------------------------->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
-            rel="stylesheet" />
-        <!------------------------- IMPORTACION DE GOOGLE FONT ------------------------->
-    </head>
-    <body>
-{% if request.user.is_authenticated %}
-<header>
-    <nav class="primary-nav">
-        <ul class="nav-links">
-            <li><a href="{% url 'list_tasks' %}">Tareas</a></li>
-            {% if request.user.is_staff %}
-            <li><a href="{% url 'user_list' %}">Usuarios</a></li>
-            {% endif %}
-            <li id="perfil-trigger">
-                <div class="dropdown">
-                    <button id="dropdown-button" class="dropbtn">
-                        {{ request.user.email }}
-                    </button>
-                    <div id="myDropdown" class="dropdown-content">
-                        <a href="{% url 'user_detail' request.user.id %}">Mi Perfil</a>
-                        <a href="{% url 'logout' %}">Cerrar Sesión</a>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %} Tasks {% endblock %}</title>
+    <!-- Enlaza el archivo CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+
+    <!------------------------- IMPORTACION DE FONT AWESOME ------------------------->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <!------------------------- IMPORTACION DE GOOGLE FONT ------------------------->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <!------------------------- IMPORTACION DE GOOGLE FONT ------------------------->
+    {% block css %}{% endblock %}
+</head>
+
+<body>
+    {% if request.user.is_authenticated %}
+
+    <header>
+        <nav class="primary-nav">
+            <ul class="nav-links">
+                <li><a href="{% url 'list_tasks' %}">Tareas</a></li>
+                {% if request.user.is_staff %}
+                <li><a href="{% url 'user_list' %}">Usuarios</a></li>
+                {% endif %}
+                <li id="perfil-trigger">
+                    <div class="dropdown">
+                        <button id="dropdown-button" class="dropbtn">
+                            {{ request.user.email }}
+                        </button>
+                        <div id="myDropdown" class="dropdown-content">
+                            <a href="{% url 'user_detail' request.user.id %}">Mi Perfil</a>
+                            <a href="{% url 'logout' %}">Cerrar Sesión</a>
+                        </div>
                     </div>
-                </div>
-            </li>
-        </ul>
-    </nav>
-</header>
-{% endif %}
+                </li>
+            </ul>
+        </nav>
+    </header>
+    {% endif %}
 
+    <main>{% block content %}{% endblock %}</main>
+    <script type="module" src="{% static 'js/main.js' %}"></script>
 
+    {% block script %}{% endblock %}
+</body>
 
-        <main>{% block content %}{% endblock %}</main>
-        <script src="{% static 'js/main.js' %}"></script>
-
-        {% block script %}{% endblock %}
-    </body>
 </html>
+

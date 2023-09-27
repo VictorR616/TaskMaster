@@ -36,6 +36,8 @@
     --fs-6: clamp(1.51rem, calc(1.11rem + 2.31vw), 3.42rem);
     --fs-7: clamp(1.81rem, calc(1.29rem + 2.98vw), 4.27rem);
     --fs-8: clamp(2.18rem, calc(1.51rem + 3.83vw), 5.34rem);
+
+    --fs-btn-1: clamp(1rem, calc(1rem + 0.05vw), 1.19rem);
 }
 
 /* ********** RESET ********** */
@@ -143,7 +145,7 @@ caption {
     font-size: var(--fs-8);
 }
 
-.bs-1 {
+.fs-btn-1 {
     font-size: var(--bs-1);
 }
 
@@ -160,6 +162,7 @@ caption {
     text-align: center;
     margin-block: 1rem;
 }
+
 
 .primary-nav {
     background-color: var(--clr-accent-700);
@@ -416,7 +419,7 @@ h1 {
     display: flex;
     gap: 1rem;
     margin-block: 1rem;
-    width: 30rem;
+    flex-wrap: wrap;
 }
 
 .search-form input[type="text"] {
@@ -435,51 +438,41 @@ h1 {
 /* ---------------------------------- Estilos genericos ----------------------------------*/
 
 /* ---------------------------------- Estilos para tabla ----------------------------------*/
-
-.wrapper {
-    width: min(900px, 100% - 3rem);
-    margin-inline: auto;
-}
-
-.table {
-    width: 100%;
+table {
+    max-width: 100%;
     border-collapse: collapse;
-    background-color: var(--clr-white);
+    background-color: #ffffff;
 }
 
-.table caption,
-.table th,
-.table td {
+caption,
+th,
+td {
     padding: 1rem;
 }
 
-.table caption,
-.table th {
+caption,
+th {
     text-align: left;
+    font-weight: var(--fw-bold);
 }
 
-.table caption {
+caption {
     color: var(--clr-white);
-    font-weight: var(--fw-bold);
+    background-color: hsl(0, 0%, 0%);
     text-transform: uppercase;
 }
 
-.table__headers {
-    font-weight: var(--fw-bold);
+th {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
-.table th {
-    font-weight: var(--fw-bold);
-    background-color: rgb(51, 51, 51);
-    color: var(--clr-white);
-}
-
-.table tr:nth-of-type(2) {
+tr:nth-of-type(2n) {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
 .table__action {
-    display: inline-block;
+    display: flex;
+    justify-content: center;
     padding: 10px 20px;
     background-color: var(--clr-btn-edit);
     color: var(--clr-white);
@@ -487,16 +480,12 @@ h1 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+    font-weight: var(--fw-bold);
+    transition: background-color 0.1s ease;
 }
 
 .table__action:hover {
     background-color: var(--clr-btn-edit-hover);
-}
-
-.table__status-cell {
-    font-size: 1.5rem;
 }
 
 .status-cell__ticket {
@@ -561,32 +550,36 @@ h1 {
     margin: 0 3px;
 }
 
-.card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.card {
-    background-color: var(--clr-white);
-    width: calc(50% - 1rem); /* Inicialmente, 2 tarjetas por fila */
-    margin-block: 1rem;
-    border-radius: 5px;
-    padding: 1rem;
-}
-
-.card h2,
-strong {
-    font-weight: var(--fw-bold);
-    text-transform: capitalize;
-}
-
-
 @media (max-width: 650px) {
-    .card {
-        width: 100%; /* Cambia a una tarjeta por fila en pantallas pequeñas */
+    /* Navegacion */
+    .nav-links {
+        display: flex;
+        flex-direction: column;
     }
 
+    /* Tabla */
+    th {
+        display: none;
+    }
 
+    td {
+        display: grid;
+        gap: 0.5rem;
+        grid-template-columns: 15ch auto;
+        padding: 0.5rem 1rem;
+    }
+
+    td:first-child {
+        padding-top: 2rem;
+    }
+
+    td:last-child {
+        padding-bottom: 2rem;
+    }
+
+    td::before {
+        content: attr(headers) ": ";
+        font-weight: var(--fw-bold);
+        text-transform: capitalize;
+    }
 }
