@@ -6,11 +6,11 @@
 <link rel="stylesheet" type="text/css" href="{% static 'users/css/style.css' %}" /> {% endblock %}
 
 {% block content %}
-<section class="container">
+<section class="card-container grid-center">
     <h1 class="fs-6">Editar Usuario</h1>
 
 
-    <form class="form" method="post" enctype="multipart/form-data">
+    <form class="form" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
         {% for field in user_form %}

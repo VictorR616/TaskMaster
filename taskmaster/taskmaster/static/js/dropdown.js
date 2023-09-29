@@ -3,6 +3,8 @@ export default function dropdownMenu(dropdownButtonId, dropdownContentId) {
     const dropdownButton = document.getElementById(dropdownButtonId);
     const dropdownContent = document.getElementById(dropdownContentId);
 
+    console.log("Hello")
+
     // Evento de clic en el botón desplegable
     dropdownButton.addEventListener("click", function () {
         dropdownContent.classList.toggle("show");

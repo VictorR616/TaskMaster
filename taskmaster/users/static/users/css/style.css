@@ -6,6 +6,11 @@
 
 }
 
+.grid-center {
+    display: grid;
+    place-content: center;
+}
+
 /* Estilos para el login */
 .error-message {
     margin-block: 1rem;
@@ -19,6 +24,7 @@
 
 
 .login-container {
+    width: min(100% - 3rem, 120ch);
     margin-inline: auto;
     display: grid;
     place-content: center;
@@ -102,6 +108,7 @@
     display: flex;
     color: var(--clr-white);
     gap: 0.5rem;
+    justify-content: space-between;
 }
 
 .container-register a {
@@ -166,6 +173,10 @@
 
 
 /* Detalle de usuarios */
+.card-container {
+    width: min(100% - 3rem, 60ch);
+    margin-inline: auto;
+}
 /* Tarjeta de usuario */
 .user-card {
     display: flex;
@@ -179,6 +190,7 @@
     width: 80%;
     margin-inline: auto;
     margin-block: 1rem;
+    padding-block: 2rem;
 }
 
 .user-detail {

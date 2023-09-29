@@ -13,7 +13,7 @@
         <input type="text" name="q" value="{{ query }}" placeholder="Buscar tareas">
         <input class="btn" type="submit" value="Buscar">
     </form>
-
+    <div class="table-wrapper">
         <table role="table">
             <caption role="caption" class="fs-3">
                 Lista de Tareas
@@ -42,6 +42,7 @@
             </tbody>
     
         </table>
+    </div>
 
     <!-- Enlaces de paginación -->
     <div class="pagination">
@@ -72,8 +73,5 @@
     </div>
 </section>
 
-{% block script %}
-<script src="{% static 'todo_task/js/main.js' %}"></script>
-{% endblock %}
 
 {% endblock %}

@@ -6,7 +6,7 @@ function setupDeleteModal() {
     // Agrega un evento de clic al botón .btn-delete
     const deleteButton = document.querySelector(".btn-delete");
     deleteButton.addEventListener("click", () => {
-        background_modal.style.display = "block";
+        background_modal.style.display = "grid";
     });
 
     cancelButton.addEventListener("click", () => {

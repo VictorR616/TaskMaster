@@ -63,7 +63,6 @@ html {
 /* Estilos para el cuerpo del documento */
 body {
     line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
     background-color: var(--clr-accent-700);
     font-family: var(--ff-primary);
 }
@@ -88,17 +87,6 @@ svg {
     display: block;
     max-width: 100%;
     object-fit: cover;
-}
-
-/* Estilos para enlaces */
-a {
-    text-decoration: none;
-}
-
-/* Estilos para listas */
-li {
-    list-style-type: none;
-    text-align: center;
 }
 
 caption {
@@ -153,8 +141,6 @@ caption {
 .container {
     width: min(100% - 3rem, 120ch);
     margin-inline: auto;
-    display: grid;
-    place-content: center;
     min-height: 90svh;
 }
 
@@ -164,27 +150,95 @@ caption {
 }
 
 
-.primary-nav {
-    background-color: var(--clr-accent-700);
-}
-
-.nav-links {
+/* NAVEGACION */
+.flex {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    padding-block: 1rem;
+    gap: var(--gap, 1rem);
 }
 
-.nav-links a {
+/* Primary header */
+.primary-header {
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-nav-toggle {
+    display: none;
+}
+
+.primary-navigation {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+.primary-navigation a {
+    text-decoration: none;
     color: var(--clr-white);
 }
 
-.nav-links a:hover {
-    color: var(--clr-white-hover);
+.primary-navigation a:hover {
+    text-decoration: underline;
 }
 
-/* Dropdown Button */
+.primary-navigation a > [aria-hidden="true"] {
+    font-weight: 700;
+    margin-inline-end: 0.75em;
+}
+
+@media (max-width: 35em) {
+    .primary-navigation {
+        --gap: 2em;
+        position: fixed;
+        z-index: 2;
+        inset: 0 0 0 30%;
+        flex-direction: column;
+        padding: min(30vh, 10rem) 2em;
+        transform: translateX(100%);
+        transition: transform 350ms ease-out;
+        background-color: black;
+    }
+
+    .primary-navigation[data-visible="true"] {
+        transform: translateX(0%);
+    }
+
+    .mobile-nav-toggle {
+        display: block;
+        position: absolute;
+        z-index: 3;
+        background-image: url('../assets/hamburger.svg');
+        background-repeat: no-repeat;
+        background-color: transparent;
+        width: 2rem;
+        border: 0;
+        aspect-ratio: 1;
+        top: 2rem;
+        right: 2rem;
+    }
+
+    .mobile-nav-toggle[aria-expanded="true"] {
+        background-image: url('../assets/cross.svg');
+    }
+}
+
+@media (min-width: 35em) and (max-width: 55em) {
+    .primary-navigation a > span[aria-hidden]{
+        display: none;
+    }
+}
+
+@media (min-width: 35em) {
+    .primary-navigation {
+        --gap: clamp(1.5rem, 5vw, 3rem);
+        padding-block: 2rem;
+        padding-inline: clamp(3rem, 8vw, 10rem);
+    }
+}
+
+
+
 .dropbtn {
     background-color: transparent;
     color: var(--clr-white);
@@ -192,19 +246,16 @@ caption {
     cursor: pointer;
 }
 
-/* Dropdown button on hover & focus */
 .dropbtn:hover,
 .dropbtn:focus {
     color: var(--clr-white-hover);
 }
 
-/* The container <div> - needed to position the dropdown content */
 .dropdown {
     position: relative;
     display: inline-block;
 }
 
-/* Dropdown Content (Hidden by Default) */
 .dropdown-content {
     display: none;
     position: absolute;
@@ -214,7 +265,6 @@ caption {
     z-index: 1;
 }
 
-/* Links inside the dropdown */
 .dropdown-content a {
     color: var(--clr-white);
     text-decoration: none;
@@ -222,16 +272,12 @@ caption {
     padding-block: 1rem;
 }
 
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {
-    color: var(--clr-white-hover);
-}
 
-/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {
     display: block;
 }
 
+/* NAVEGACION */
 /* ********** Components ********** */
 
 /* ---------------------------------- Estilos genericos ----------------------------------*/
@@ -244,10 +290,10 @@ h1 {
 .form {
     display: flex;
     flex-direction: column;
+    flex-basis: 300px;
     gap: 1rem; /* Aumentamos el espacio entre elementos del formulario */
     padding: 20px;
     border-radius: 10px;
-    width: 30rem;
 }
 
 .form input[type="checkbox"] {
@@ -356,14 +402,16 @@ h1 {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    place-content: center;
 }
 
 .modal-content {
+    width: min(100% - 3rem, 40ch);
+    margin-inline: auto;
+    
     background-color: #fff;
-    margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 25%;
     text-align: center;
     position: relative;
     display: flex;
@@ -424,7 +472,7 @@ h1 {
 
 .search-form input[type="text"] {
     padding: 10px;
-    font-size: 16px;
+    font-size: 1rem;
     border: 2px solid #ccc;
     border-radius: 5px;
     outline: none;
@@ -438,8 +486,12 @@ h1 {
 /* ---------------------------------- Estilos genericos ----------------------------------*/
 
 /* ---------------------------------- Estilos para tabla ----------------------------------*/
+.table-wrapper {
+    overflow-x: auto;
+}
+
 table {
-    max-width: 100%;
+    width: 100%;
     border-collapse: collapse;
     background-color: #ffffff;
 }
@@ -477,7 +529,7 @@ tr:nth-of-type(2n) {
     background-color: var(--clr-btn-edit);
     color: var(--clr-white);
     text-decoration: none;
-    border: none;
+    border: 0;
     border-radius: 5px;
     cursor: pointer;
     font-weight: var(--fw-bold);
@@ -506,12 +558,18 @@ tr:nth-of-type(2n) {
 
 /* Estilo básico para la paginación */
 .pagination {
-    text-align: center;
     margin-top: 20px;
 }
 
+.step-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    text-align: center;
+}
+
 /* Estilo para los enlaces de paginación */
-.pagination a {
+.step-links a {
     display: inline-block;
     padding: 6px 12px;
     text-decoration: none;
@@ -523,13 +581,14 @@ tr:nth-of-type(2n) {
     font-weight: var(--fw-bold);
 }
 
-.pagination a:hover {
+.step-links a:hover {
     background-color: var(--clr-accent-700);
     color: var(--clr-white);
 }
 
+
 /* Estilo para los enlaces de paginación desactivados */
-.pagination .disabled {
+.step-links .disabled {
     display: inline-block;
     padding: 6px 12px;
     color: #ccc;
@@ -540,7 +599,7 @@ tr:nth-of-type(2n) {
 }
 
 /* Estilo para el enlace de la página actual */
-.pagination .current-page {
+.step-links .current-page {
     display: inline-block;
     padding: 6px 12px;
     background-color: var(--clr-white);
@@ -550,12 +609,14 @@ tr:nth-of-type(2n) {
     margin: 0 3px;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 35em) {
     /* Navegacion */
     .nav-links {
         display: flex;
         flex-direction: column;
     }
+
+
 
     /* Tabla */
     th {
@@ -565,7 +626,7 @@ tr:nth-of-type(2n) {
     td {
         display: grid;
         gap: 0.5rem;
-        grid-template-columns: 15ch auto;
+        grid-template-columns: 11ch 1fr;
         padding: 0.5rem 1rem;
     }
 
@@ -581,5 +642,13 @@ tr:nth-of-type(2n) {
         content: attr(headers) ": ";
         font-weight: var(--fw-bold);
         text-transform: capitalize;
+    }
+
+ 
+}
+
+@media screen and (max-width: 30em) {
+    .step-links {
+        flex-direction: column;
     }
 }

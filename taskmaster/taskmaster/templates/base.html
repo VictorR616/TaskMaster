@@ -22,13 +22,15 @@
 
 <body>
     {% if request.user.is_authenticated %}
-
-    <header>
-        <nav class="primary-nav">
-            <ul class="nav-links">
-                <li><a href="{% url 'list_tasks' %}">Tareas</a></li>
+    <header class="primary-header flex">
+        <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+            <span class="sr-only">Menu</span>
+        </button>
+        <nav>
+            <ul id="primary-navigation" data-visible="false" class="primary-navigation flex">
+                <li class="active"><a href="{% url 'list_tasks' %}">Tareas</a></li>
                 {% if request.user.is_staff %}
-                <li><a href="{% url 'user_list' %}">Usuarios</a></li>
+                <li class="active"><a href="{% url 'user_list' %}">Usuarios</a></li>
                 {% endif %}
                 <li id="perfil-trigger">
                     <div class="dropdown">
@@ -46,11 +48,11 @@
     </header>
     {% endif %}
 
+
     <main>{% block content %}{% endblock %}</main>
-    <script type="module" src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/main.js' %}" type="module"></script>
 
     {% block script %}{% endblock %}
 </body>
 
 </html>
-
