@@ -26,7 +26,7 @@
         <!-- <input class="new-task" type="submit" value="Enviar"> -->
     <!-- </form> --> 
 
-    <form class="form" method="post">
+    <form class="form" method="POST">
         {% csrf_token %}
         
         {% for field in task_form %}
@@ -47,7 +47,7 @@
         <input type="submit" class="btn" value="Enviar">
     </form>
 
-    <div class="container-return">
+    <div class="container-return-list">
         <a class="btn" href="{% url 'list_tasks' %}">Volver a la lista de tareas</a>
     </div>
 </section>

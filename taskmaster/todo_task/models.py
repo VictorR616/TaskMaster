@@ -1,10 +1,10 @@
 from django.db import models
 from users.models import CustomUser  # Importa el modelo de usuario personalizado
-
+from django.core.exceptions import ValidationError
 
 
 class Task(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=50)
     complete = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     labels = models.ManyToManyField("Label")
@@ -17,20 +17,23 @@ class Task(models.Model):
 
 
 class Label(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name
+
+
 
 class Priority(models.Model):
     name = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name = "Priority"  # Nombre en singular
         verbose_name_plural = "Priorities"  # Nombre en plural
+
 
 class TaskMetadata(models.Model):
     task = models.OneToOneField(Task, on_delete=models.CASCADE)

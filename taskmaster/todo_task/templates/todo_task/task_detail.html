@@ -10,44 +10,42 @@
 {% block content %}
 <section class="card-container">
     <h1 class="fs-6">Detalle de Tarea</h1>
-        <div class="card__body">
-            <div class="card__item">
-                <strong class="card__item__title fs-4">{{ task.title }}</strong>
+    <div class="card__body">
+        <h2 class="fs-4">{{ task.title }}</h2>
+
+        <div class="task-info">
+            <div class="task-info-item">
+                <p>Fecha Creacion</p>
+                <p class="categoria_count">{{ task.created|date:"d/m/Y" }}</p>
             </div>
-            <div class="card__item">
-                <strong>Finalización:</strong>
-                <span
-                    class="{% if task.complete %}fa-solid fa-check status-cell__ticket{% else %}fa-solid fa-xmark status-cell__cross{% endif %}">
-                </span>
-            </div>
-            <div class="card__item">
-                <strong>Creada:</strong>
-                <span>{{ task.created }}</span>
-            </div>
-            <div class="card__item">
-                <strong>Descripción:</strong>
-                <span>{{ task.taskmetadata.description }}</span>
-            </div>
-            <div class="card__item">
-                <strong>Categoría:</strong>
-                <span>
+            <div class="task-info-item">
+                <p>Categorias</p>
+                <p class="categoria_count">
                     {% for label in task.labels.all %}
                     {{ label.name }}{% if not forloop.last %} - {% endif %}
                     {% endfor %}
-                </span>
+                </p>
             </div>
-            <div class="card__item">
-                <strong>Prioridad:</strong>
-                <span>{{ task.taskmetadata.priority }}</span>
+            <div class="task-info-item">
+                <p>Prioridad</p>
+                <p class="categoria_count">{{ task.taskmetadata.priority }}</p>
             </div>
+            <div class="task-info-item">
+                <p>Descripcion</p>
+                <p>{{ task.taskmetadata.description }}</p>
+            </div>
+        </div>
+
+
+        <div >
+            <h3 class="fs-3 actions">Acciones</h3>
             <div class="cluster">
                 <a class="item btn btn-edit" href="{% url 'edit_task' task.id %}">Editar Tarea</a>
                 <a class="item btn btn-delete open-modal-btn" href="#" id="delete-task">Borrar Tarea</a>
                 <a class="item btn btn-return" href="{% url 'list_tasks' %}">Lista de tareas</a>
             </div>
         </div>
-
-
+    </div>
 
     <div id="delete-task-modal" class="modal">
         <div class="modal-content">
@@ -62,15 +60,7 @@
             </div>
         </div>
     </div>
-
-
 </section>
-
-
-
-
-
-
 
 {% block script %}
 <script src="{% static 'todo_task/js/main.js' %}"></script>

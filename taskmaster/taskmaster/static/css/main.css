@@ -143,12 +143,12 @@ caption {
 .container {
     width: min(100% - 3rem, 120ch);
     margin-inline: auto;
-    min-height: 90svh;
+    margin-block: 1rem;
 }
 
 .container h1 {
-    text-align: center;
-    margin-block: 1rem;
+    width: min(100% - 3rem, 40ch);
+    text-align: left;
 }
 
 .sr-only {
@@ -173,8 +173,6 @@ caption {
 
 .primary-navigation {
     list-style: none;
-    padding: 0;
-    margin: 0;
 }
 
 .primary-navigation a {
@@ -236,9 +234,10 @@ caption {
 
 .cluster {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     gap: 1rem;
-    justify-content: space-around;
+    justify-content: space-between;
     margin-block: 1rem;
 }
 
@@ -252,10 +251,6 @@ caption {
 }
 
 @media (max-width: 35em) {
-    .container h1 {
-        text-align: left;
-    }
-
     .primary-navigation {
         --gap: 2em;
         position: fixed;
@@ -281,9 +276,9 @@ caption {
         background-repeat: no-repeat;
         background-color: transparent;
         width: 2rem;
+        height: 2rem;
         border: 0;
-        aspect-ratio: 1;
-        top: 2rem;
+        top: 1.75rem;
         right: 2rem;
     }
 
@@ -301,10 +296,7 @@ caption {
         padding-top: 1rem;
     }
 
-    .cluster .item {
-        flex-basis: 100%;
-        margin-inline: 1rem;
-    }
+
 }
 
 @media (min-width: 35em) and (max-width: 55em) {
@@ -319,6 +311,10 @@ caption {
         padding-block: 2rem;
         padding-inline: clamp(3rem, 8vw, 10rem);
     }
+
+    .container h1 {
+        text-align: center;
+    }
 }
 
 /* NAVEGACION */
@@ -332,6 +328,9 @@ h1 {
 
 /* Estilos para el formulario */
 .form {
+    width: min(100%, 60ch);
+    margin-inline: auto;
+    background-color: var(--clr-white);
     display: flex;
     flex-direction: column;
     flex-basis: 300px;
@@ -354,21 +353,22 @@ h1 {
 .form select,
 .form textarea {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid purple;
     border-radius: 10px;
     outline: none;
     transition: border-color 0.3s ease;
     margin-bottom: 10px;
     background-color: transparent;
-    color: white;
+    color: purple;
 }
 
 .form select {
-    background-color: var(--clr-accent-700);
+    background-color: var(--clr-white);
+    color: purple;
 }
 
 .form label {
-    color: white;
+    color: purple;
 }
 
 /* Estilos para campos de entrada de texto y select enfocados */
@@ -377,8 +377,7 @@ h1 {
 .form input[type="email"]:focus,
 .form select:focus,
 .form textarea:focus {
-    border-color: #ececec;
-    box-shadow: 0 0 15px rgba(218, 218, 218, 0.5);
+    border-color: purple;
 }
 
 .form input::placeholder {
@@ -390,16 +389,15 @@ h1 {
 }
 
 .form input[type="submit"] {
-    background-color: var(--clr-white);
-    color: var(--clr-accent-700);
-    border: 2px solid var(--clr-white);
+    background-color: var(--clr-accent-700);
+    color: var(--clr-white);
+    border: 2px solid var(--clr-accent-700);
 }
 
 .form input[type="submit"]:hover {
-    border: 2px solid var(--clr-white);
+    border: 2px solid var(--clr-accent-700);
     background-color: transparent;
-    color: var(--clr-white);
-    border: 2px solid var(--clr-white);
+    color: var(--clr-accent-700);
     transition: background 100ms ease-in-out;
 }
 
@@ -408,6 +406,16 @@ h1 {
     color: red;
     font-size: var(--fs-1); /* Reducimos el tamaño de fuente para los errores */
     display: flex;
+}
+
+.container-return-list {
+    margin-block: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.container-return-list a{
+    text-decoration: none;
 }
 
 /* Estilos para el modal */
@@ -583,7 +591,7 @@ tr:nth-of-type(2n) {
 
 /* Estilo básico para la paginación */
 .pagination {
-    margin-top: 20px;
+    margin-block: 2rem;
 }
 
 .step-links {
@@ -604,6 +612,7 @@ tr:nth-of-type(2n) {
     border-radius: 3px;
     margin: 0 3px;
     font-weight: var(--fw-bold);
+    border-radius: 5px;
 }
 
 .step-links a:hover {
@@ -617,7 +626,7 @@ tr:nth-of-type(2n) {
     padding: 6px 12px;
     color: #ccc;
     border: 1px solid #ccc;
-    border-radius: 3px;
+    border-radius: 5px;
     margin: 0 3px;
     pointer-events: none; /* Desactiva la interacción con el enlace */
 }
@@ -629,7 +638,7 @@ tr:nth-of-type(2n) {
     background-color: var(--clr-white);
     color: var(--clr-accent-700);
     border: 1px solid var(--clr-white);
-    border-radius: 3px;
+    border-radius: 5px;
     margin: 0 3px;
 }
 

@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .models import Task, TaskMetadata
+from .models import Task, TaskMetadata, Label
 from .forms import TaskEditForm, TaskForm, TaskMetaDataForm
 from django.core.paginator import Paginator, EmptyPage
 from datetime import datetime
-
+from django.db.models import Count
 
 
 
@@ -15,34 +15,36 @@ def list_tasks(request):
     fecha_actual = datetime.now()
     
     tasks = Task.objects.all()
-
     query = request.GET.get('q', '')
 
     if not query:
         tasks = Task.objects.all()
     else:
         tasks = Task.objects.filter(title__startswith=query)
-
+    
     # Agregar paginación
-    page_number = request.GET.get('page') # Devuelve un str
+    page_number = request.GET.get('page')
 
-    
     try:
-        page_number = int(page_number)  # Convierte a entero
+        page_number = int(page_number)
     except (TypeError, ValueError):
-        page_number = 1  # Si no es un número válido, muestra la primera página
+        page_number = 1
     
-    paginator = Paginator(tasks, 6)  # Cambia 10 al número de elementos por página que desees
+    paginator = Paginator(tasks, 4)
 
     try:
         tasks = paginator.page(page_number)
     except EmptyPage:
-        tasks = paginator.page(1)  # Si la página está vacía, muestra la primera página
+        tasks = paginator.page(1)
 
+    # Obtener el conteo de tareas por categoría
+    categorias = Label.objects.annotate(task_count=Count('task'))
+    
     context = {
         "tasks": tasks,
         'fecha_actual': fecha_actual,
-        "query": query
+        "query": query,
+        "categorias": categorias
     }
     
     return render(request, "todo_task/list_tasks.html", context)
