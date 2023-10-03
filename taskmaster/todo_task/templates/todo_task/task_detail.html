@@ -4,60 +4,57 @@
 {% block title %} Detalle de Tarea {% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'todo_task/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'todo_task/css/style.css' %}">
 {% endblock %}
 
 {% block content %}
-<section class="container">
+<section class="card-container">
     <h1 class="fs-6">Detalle de Tarea</h1>
-    <div class="container-task-detail">
-        <div class="task-card">
-            <div class="task-card__header">
-                <strong class="task-card__title fs-4">{{ task.title }}</strong>
+        <div class="card__body">
+            <div class="card__item">
+                <strong class="card__item__title fs-4">{{ task.title }}</strong>
             </div>
-            <div class="task-card__body">
-                <div class="task-card__item">
-                    <strong>Finalización:</strong>
-                    <span class="{% if task.complete %}fa-solid fa-check status-cell__ticket{% else %}fa-solid fa-xmark status-cell__cross{% endif %}">
-                    </span>
-                </div>
-                <div class="task-card__item">
-                    <strong>Creada:</strong>
-                    <span>{{ task.created }}</span>
-                </div>
-                <div class="task-card__item">
-                    <strong>Descripción:</strong>
-                    <span>{{ task.taskmetadata.description }}</span>
-                </div>
-                <div class="task-card__item">
-                    <strong>Categoría:</strong>
-                    <span>
-                        {% for label in task.labels.all %}
-                        {{ label.name }}{% if not forloop.last %} - {% endif %}
-                        {% endfor %}
-                    </span>
-                </div>
-                <div class="task-card__item">
-                    <strong>Prioridad:</strong>
-                    <span>{{ task.taskmetadata.priority }}</span>
-                </div>
+            <div class="card__item">
+                <strong>Finalización:</strong>
+                <span
+                    class="{% if task.complete %}fa-solid fa-check status-cell__ticket{% else %}fa-solid fa-xmark status-cell__cross{% endif %}">
+                </span>
             </div>
-        </div>
-    
-        <div class="container-actions">
-            <a class="btn btn-edit" href="{% url 'edit_task' task.id %}">Editar Tarea</a>
-            <a class="btn btn-delete" href="#" id="delete-task">Borrar Tarea</a>
-            <a href="{% url 'list_tasks' %}" class="btn btn-return">Volver a la lista de tareas</a>
+            <div class="card__item">
+                <strong>Creada:</strong>
+                <span>{{ task.created }}</span>
+            </div>
+            <div class="card__item">
+                <strong>Descripción:</strong>
+                <span>{{ task.taskmetadata.description }}</span>
+            </div>
+            <div class="card__item">
+                <strong>Categoría:</strong>
+                <span>
+                    {% for label in task.labels.all %}
+                    {{ label.name }}{% if not forloop.last %} - {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+            <div class="card__item">
+                <strong>Prioridad:</strong>
+                <span>{{ task.taskmetadata.priority }}</span>
+            </div>
+            <div class="cluster">
+                <a class="item btn btn-edit" href="{% url 'edit_task' task.id %}">Editar Tarea</a>
+                <a class="item btn btn-delete open-modal-btn" href="#" id="delete-task">Borrar Tarea</a>
+                <a class="item btn btn-return" href="{% url 'list_tasks' %}">Lista de tareas</a>
+            </div>
         </div>
 
-    </div>
+
 
     <div id="delete-task-modal" class="modal">
         <div class="modal-content">
-            <span class="close"></span>
+            <span class="close-modal-btn">&times;</span>
             <p class="fs-1">¿Estás seguro de que deseas borrar esta tarea?</p>
             <div class="modal-content__btn-container">
-                <form  method="POST" action="{% url 'delete_task' task.id %}">
+                <form method="POST" action="{% url 'delete_task' task.id %}">
                     {% csrf_token %}
                     <input id="confirm-delete" class="btn" type="submit" value="Confirmar" />
                 </form>
@@ -66,11 +63,17 @@
         </div>
     </div>
 
-    
+
 </section>
 
+
+
+
+
+
+
 {% block script %}
-    <script src="{% static 'todo_task/js/main.js' %}"></script>
+<script src="{% static 'todo_task/js/main.js' %}"></script>
 {% endblock %}
 
 {% endblock %}

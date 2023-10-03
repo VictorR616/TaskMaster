@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Task, TaskMetadata
 from .forms import TaskEditForm, TaskForm, TaskMetaDataForm
 from django.core.paginator import Paginator, EmptyPage
+from datetime import datetime
+
 
 
 
@@ -10,6 +12,8 @@ from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage
 
 def list_tasks(request):
+    fecha_actual = datetime.now()
+    
     tasks = Task.objects.all()
 
     query = request.GET.get('q', '')
@@ -28,14 +32,20 @@ def list_tasks(request):
     except (TypeError, ValueError):
         page_number = 1  # Si no es un número válido, muestra la primera página
     
-    paginator = Paginator(tasks, 2)  # Cambia 10 al número de elementos por página que desees
+    paginator = Paginator(tasks, 6)  # Cambia 10 al número de elementos por página que desees
 
     try:
         tasks = paginator.page(page_number)
     except EmptyPage:
         tasks = paginator.page(1)  # Si la página está vacía, muestra la primera página
 
-    return render(request, "todo_task/list_tasks.html", {"tasks": tasks, "query": query})
+    context = {
+        "tasks": tasks,
+        'fecha_actual': fecha_actual,
+        "query": query
+    }
+    
+    return render(request, "todo_task/list_tasks.html", context)
 
 
 
@@ -65,7 +75,13 @@ def create_task(request):
         task_form = TaskForm()
         task_metadata_form = TaskMetaDataForm()
 
-    return render(request, "todo_task/create_task.html", {"task_form": task_form, "task_metadata_form": task_metadata_form})
+    context = {
+        "task_form": task_form, 
+        "task_metadata_form": task_metadata_form
+        }
+    
+
+    return render(request, "todo_task/create_task.html", context )
 
 
 def edit_task(request, task_id):

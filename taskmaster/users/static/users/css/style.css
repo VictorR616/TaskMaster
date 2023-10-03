@@ -3,7 +3,6 @@
     --clr-white: rgb(255, 255, 255);
     --clr-accent-700: rgb(128, 0, 128);
     --fw-bold: 700;
-
 }
 
 .grid-center {
@@ -22,7 +21,6 @@
     text-align: center;
 }
 
-
 .login-container {
     width: min(100% - 3rem, 120ch);
     margin-inline: auto;
@@ -34,7 +32,7 @@
 
 .login-container > h1 {
     color: var(--clr-white);
-    text-align:center;
+    text-align: center;
     margin-block: 1rem;
 }
 
@@ -58,7 +56,6 @@
     background-color: transparent;
     padding-left: 2.75rem;
 }
-
 
 .input-box input::placeholder {
     color: var(--clr-white);
@@ -92,7 +89,7 @@
 .btn-login {
     outline: none;
     border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     color: var(--clr-accent-700);
     font-weight: var(--fw-bold);
@@ -120,10 +117,9 @@
     text-decoration: underline;
 }
 
-
 /* Registro de usuarios */
 .container > h1 {
-    color: whvar(--clr-white)ite;
+    color: whvar(--clr-white) ite;
     text-align: center;
 }
 
@@ -135,13 +131,11 @@
     color: rgb(146, 146, 146);
 }
 
-
 .register-input-box {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
-
 
 .container-login {
     display: flex;
@@ -171,45 +165,36 @@
 
 /* Lista de usuarios */
 
-
 /* Detalle de usuarios */
 .card-container {
     width: min(100% - 3rem, 60ch);
     margin-inline: auto;
+    margin-top: 3rem;
 }
+
 /* Tarjeta de usuario */
 .user-card {
     display: flex;
+    flex-direction: column;
     background-color: var(--clr-white);
     border-radius: 14px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 80%;
-    margin-inline: auto;
-    margin-block: 1rem;
-    padding-block: 2rem;
+    width: 100%;
 }
 
-.user-detail {
-    display: flex;
-    flex-direction: column;
+.user-card {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
     gap: 1rem;
-    padding-inline: 1rem;
-    padding-top: 1rem;
-    align-items: center;
 }
 
 .user-detail__profile-picture img {
-    width: 250px; 
-    height: 250px; 
+    width: 100%;
+    height: auto;
     object-fit: cover;
-    border-radius: 50%;
     object-position: center;
 }
-
 
 .profile-picture-placeholder {
     color: rgb(136, 136, 136);
@@ -221,45 +206,49 @@
     display: flex;
     gap: 1rem;
     flex-direction: column;
+    margin-top: 1rem;
 }
 
 /* Contenedor de pares de información */
 .user-detail__info__layer {
     display: flex;
-    justify-content: center; 
-    flex-wrap: wrap; 
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.user-detail__info__actives {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 /* Par de información */
 .info-pair {
     display: flex;
-    flex-direction: column; 
-    align-items: center; 
-    margin: 0 1rem; 
+    gap: 0.25rem;
 }
 
 .info-pair strong {
-    text-align: center;
     margin-bottom: 0.5rem;
-}
-
-.info-pair strong {
     font-weight: var(--fw-bold);
-    color: var(--clr-accent-700); 
+    color: var(--clr-accent-700);
 }
 
 .info-name {
     font-weight: var(--fw-bold);
     color: var(--clr-accent-700);
+    font-size: 1.5rem;
 }
 
-
-
+.info-email {
+    font-size: 1.125rem;
+}
 
 .delete-form input[type="submit"] {
     background-color: var(--clr-accent-700);
     color: var(--clr-white);
-
 }
 
 .modal-content__btn-container .btn {
@@ -279,7 +268,6 @@
     color: var(--clr-white);
 }
 
-
 .imagen > * {
     color: var(--clr-white);
 }
@@ -288,4 +276,19 @@
 
 .container-list {
     padding: 1.25rem;
+}
+
+
+@media (min-width: 35em) {
+    .card-container {
+        margin-top: 0;
+    }
+
+    .user-detail__info__layer {
+        align-items: flex-start;
+    }
+
+    .user-detail__info__actives {
+        flex-direction: column;
+    }
 }

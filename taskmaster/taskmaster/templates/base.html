@@ -32,23 +32,17 @@
                 {% if request.user.is_staff %}
                 <li class="active"><a href="{% url 'user_list' %}">Usuarios</a></li>
                 {% endif %}
-                <li id="perfil-trigger">
-                    <div class="dropdown">
-                        <button id="dropdown-button" class="dropbtn">
-                            {{ request.user.email }}
-                        </button>
-                        <div id="myDropdown" class="dropdown-content">
-                            <a href="{% url 'user_detail' request.user.id %}">Mi Perfil</a>
-                            <a href="{% url 'logout' %}">Cerrar Sesión</a>
-                        </div>
-                    </div>
+                <li class="active has-dropdown">{{ request.user.email }} <i class="fa-solid fa-chevron-down"></i>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item"><a href="{% url 'user_detail' request.user.id %}">Mi Perfil</a>
+                        </li>
+                        <li class="dropdown-item"><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
+                    </ul>
                 </li>
             </ul>
         </nav>
     </header>
     {% endif %}
-
-
     <main>{% block content %}{% endblock %}</main>
     <script src="{% static 'js/main.js' %}" type="module"></script>
 

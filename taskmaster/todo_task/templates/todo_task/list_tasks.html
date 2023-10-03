@@ -13,36 +13,62 @@
         <input type="text" name="q" value="{{ query }}" placeholder="Buscar tareas">
         <input class="btn" type="submit" value="Buscar">
     </form>
-    <div class="table-wrapper">
-        <table role="table">
-            <caption role="caption" class="fs-3">
-                Lista de Tareas
-            </caption>
-            <thead>
-                <tr class="fs-1">
-                    <th>Acción</th>
-                    <th>Tarea</th>
-                    <th>Completada</th>
-                    <th>Fecha de registro</th>
-                </tr>
-            </thead>
-            <tbody role="rowgroup">
-                {% for task in tasks %}
-                <tr role="row">
-                    <td headers="actions" role="cell">
-                        <a class="table__action fs-btn-1" href="{% url 'task_detail' task.id %}">Detalle de tarea</a>
-                    </td>
-                    <td headers="title" role="cell">{{ task.title }}</td>
-                    <td headers="status" role="cell" class="table__status-cell">{% if task.complete %}<i
-                            class="fa-solid fa-check status-cell__ticket"></i>{% else %}<i
-                            class="fa-solid fa-xmark status-cell__cross"></i>{% endif %}</td>
-                    <td headers="Registro" role="cell">{{ task.created|date:"d/m/Y" }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-    
-        </table>
-    </div>
+
+    <!-- NUEVO DISEÑO-->
+    <section class="card">
+
+        <div class="user">
+            <div class="user-info">
+                <img src="{{ request.user.profile_picture.url }}" alt="Foto de perfil">
+
+                <h1>{{ request.user.email }}</h1>
+            </div>
+            <div class="options">
+                <a href="#"><i class="bi bi-grid"></i> Categorias</a>
+                <a href="#"><i class="bi bi-bar-chart"></i> Analiticas</a>
+                <a href="#"><i class="bi bi-gear"></i> Opciones</a>
+
+            </div>
+        </div>
+        <div class="task">
+            <h2>Hola, {{ request.user.email }}!</h2>
+            <p class="task_date">{{ fecha_actual|date:"l, j \d\e F \d\e Y" }}</p>
+
+            <div class="categorias">
+                <h3>Categorias</h3>
+                <div class="categoria_lista">
+                    <div class="categoria bg-pink">
+                        <p>Personal</p>
+                        <p class="categoria_count">15 tasks</p>
+                    </div>
+                    <div class="categoria bg-green">
+                        <p>Shooping</p>
+                        <p class="categoria_count">8 tasks</p>
+                    </div>
+                    <div class="categoria bg-red">
+                        <p>Negocios</p>
+                        <p class="categoria_count">6 tasks</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Tareas de Hoy</h3>
+            <div class="tasks">
+                <ul class="task-list">
+                    {% for task in tasks %}
+                    <li class="task-element">
+                        <a href="{% url 'task_detail' task.id %}" class="task-link">
+                            {{ task.title }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="task-creation">
+                    <a href="{% url 'create_task' %}">Crear nueva tarea</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Enlaces de paginación -->
     <div class="pagination">
@@ -67,11 +93,15 @@
 
 
 
-    <!-- Agrega un enlace para ir a la página de creación de tareas -->
-    <div class="links-container">
-        <a class="btn" href="{% url 'create_task' %}">Crear Nueva Tarea</a>
-    </div>
+
+
+
+
+
 </section>
 
+{% block script %}
+<script src="{% static 'todo_task/js/main.js' %}"></script>
+{% endblock %}
 
 {% endblock %}
