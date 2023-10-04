@@ -1,7 +1,7 @@
 function setupModal() {
     const openModalBtn = document.querySelector(".open-modal-btn");
     const modal = document.querySelector(".modal");
-    const closeModalBtn = document.querySelector(".close-modal-btn");
+    const cancelModalBtn = document.querySelector("#cancel-delete");
 
     function openModal() {
         modal.style.display = "grid";
@@ -12,8 +12,7 @@ function setupModal() {
     }
 
     openModalBtn.addEventListener("click", openModal);
-
-    closeModalBtn.addEventListener("click", closeModal);
+    cancelModalBtn.addEventListener("click", closeModal);
 
     window.addEventListener("click", function (event) {
         if (event.target === modal) {

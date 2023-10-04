@@ -37,26 +37,23 @@
         </div>
 
 
-        <div >
             <h3 class="fs-3 actions">Acciones</h3>
             <div class="cluster">
                 <a class="item btn btn-edit" href="{% url 'edit_task' task.id %}">Editar Tarea</a>
                 <a class="item btn btn-delete open-modal-btn" href="#" id="delete-task">Borrar Tarea</a>
                 <a class="item btn btn-return" href="{% url 'list_tasks' %}">Lista de tareas</a>
             </div>
-        </div>
     </div>
 
     <div id="delete-task-modal" class="modal">
         <div class="modal-content">
-            <span class="close-modal-btn">&times;</span>
             <p class="fs-1">¿Estás seguro de que deseas borrar esta tarea?</p>
             <div class="modal-content__btn-container">
                 <form method="POST" action="{% url 'delete_task' task.id %}">
                     {% csrf_token %}
-                    <input id="confirm-delete" class="btn" type="submit" value="Confirmar" />
+                    <input id="confirm-delete" class="btn fs-2" type="submit" value="Confirmar" />
                 </form>
-                <button id="cancel-delete" class="btn">Cancelar</button>
+                <button id="cancel-delete" class="btn fs-2">Cancelar</button>
             </div>
         </div>
     </div>

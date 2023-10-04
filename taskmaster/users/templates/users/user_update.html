@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'users/css/style.css' %}" /> {% endblock %}
 
 {% block content %}
-<section class="card-container grid-center">
+<section class="card-container">
     <h1 class="fs-6">Editar Usuario</h1>
 
 
@@ -17,28 +17,28 @@
         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
 
         {% if field.name == 'profile_picture' %}
-            {% if user.profile_picture %}
-                <div class="imagen">
-                    {{ field }}
-                </div>
-            {% else %}
-                <p>No hay imagen de perfil actual.</p>
-        {% endif %}
-        
-        {% else %}
+        {% if user.profile_picture %}
+        <div class="imagen">
             {{ field }}
+        </div>
+        {% else %}
+        <p>No hay imagen de perfil actual.</p>
+        {% endif %}
+
+        {% else %}
+        {{ field }}
         {% endif %}
 
         {% if field.errors %}
-            {{ field.errors }}
+        {{ field.errors }}
         {% endif %}
         {% endfor %}
 
         <input type="submit" class="btn" value="Guardar cambios">
     </form>
 
-    <div class="container-list">
-        <a class="btn btn-return" href="{% url 'user_list' %}">Volver a la lista de usuarios</a>
+    <div class="container-return-list">
+        <a class="btn" href="{% url 'user_list' %}">Volver a la lista de usuarios</a>
     </div>
 </section>
 

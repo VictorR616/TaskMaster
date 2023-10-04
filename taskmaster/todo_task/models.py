@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 
 
 class Task(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=35)
     complete = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     labels = models.ManyToManyField("Label")

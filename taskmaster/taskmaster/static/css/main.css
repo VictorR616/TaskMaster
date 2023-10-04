@@ -295,8 +295,6 @@ caption {
     .dropdown-item a {
         padding-top: 1rem;
     }
-
-
 }
 
 @media (min-width: 35em) and (max-width: 55em) {
@@ -414,7 +412,7 @@ h1 {
     justify-content: center;
 }
 
-.container-return-list a{
+.container-return-list a {
     text-decoration: none;
 }
 
@@ -521,6 +519,7 @@ h1 {
 /* ---------------------------------- Estilos para tabla ----------------------------------*/
 .table-wrapper {
     overflow-x: auto;
+    margin-top: 1rem;
 }
 
 table {
@@ -587,6 +586,10 @@ tr:nth-of-type(2n) {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.links-container a {
+    text-decoration: none;
 }
 
 /* Estilo básico para la paginación */

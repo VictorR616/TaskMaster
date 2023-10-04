@@ -118,10 +118,7 @@
 }
 
 /* Registro de usuarios */
-.container > h1 {
-    color: whvar(--clr-white) ite;
-    text-align: center;
-}
+
 
 .custom-input {
     color: var(--clr-white);
@@ -169,24 +166,20 @@
 .card-container {
     width: min(100% - 3rem, 60ch);
     margin-inline: auto;
-    margin-top: 3rem;
+    margin-top: 1rem;
 }
 
 /* Tarjeta de usuario */
 .user-card {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+    gap: 1rem;
     background-color: var(--clr-white);
     border-radius: 14px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     width: 100%;
-}
-
-.user-card {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
-    gap: 1rem;
+    padding: 1rem;
 }
 
 .user-detail__profile-picture img {
@@ -213,14 +206,18 @@
 .user-detail__info__layer {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    flex-wrap: wrap;
     gap: 1rem;
+    container-type: inline-size;
+}
+
+.user-detail__info__layer > p {
+    font-size: clamp(0.5rem, 5cqw, 1.5rem);
 }
 
 .user-detail__info__actives {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-content: center;
     gap: 0.5rem;
 }
 
@@ -268,8 +265,9 @@
     color: var(--clr-white);
 }
 
-.imagen > * {
-    color: var(--clr-white);
+.imagen {
+    overflow: hidden; /* Evita que el contenido se desborde */
+    white-space: nowrap; /* Evita el salto de línea del texto */
 }
 
 /* Actualizar usuario */

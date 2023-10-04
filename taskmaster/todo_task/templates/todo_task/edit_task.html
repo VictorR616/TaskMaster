@@ -4,31 +4,32 @@
 
 {% block title %} Lista de tareas {% endblock %}
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'todo_task/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'todo_task/css/style.css' %}">
 {% endblock %}
 
 {% block content %}
 <section class="container">
     <h1 class="fs-6">Edicion de tarea</h1>
     <!-- Contenido personalizado de list_tasks.html aquí -->
-        <form class="form" method="POST">
+    <form class="form" method="POST">
         {% csrf_token %}
-        
+
         {% for field in task_form %}
-            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {{ field }}
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
         {% endfor %}
 
         {% for field in task_metadata_form %}
-            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {{ field }}
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
         {% endfor %}
         <input type="submit" class="btn" value="Guardar Cambios">
-    </form>
 
-    <!-- Agrega un botón para ir atrás -->
-    <div class="container-return">
-        <a class="btn btn-return" href="{% url 'list_tasks' %}" class="btn-back">Volver a la lista de tareas</a>
+    </form>
+    <div class="container-return-list">
+        <a class="btn" href="{% url 'list_tasks' %}">Volver a la lista de tareas</a>
     </div>
+
+
 </section>
 {% endblock %}
