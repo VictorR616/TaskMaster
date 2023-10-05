@@ -27,12 +27,14 @@
             <tbody>
                 {% for user in users %}
                 <tr>
-                    <td headers="actions"><a class="table__action" href="{% url 'user_detail' user.id %}">Ver detalles</a>
+                    <td headers="actions"><a class="table__action" href="{% url 'user_detail' user.id %}">Ver
+                            detalles</a>
                     </td>
                     <td headers="email">{{ user.email }}</td>
                     <td headers="first_name">{{ user.first_name }}</td>
                     <td headers="last_name">{{ user.last_name }}</td>
-                    <td headers="date_joined">{{ user.date_joined }}</td>
+                    <td headers="date_joined">{{ user.date_joined|date:"d/m/Y" }}</td>
+
                     <td headers="is_active" class="table__status-cell">{% if user.is_active %}<i
                             class="fa-solid fa-check status-cell__ticket"></i>{% else %}<i
                             class="fa-solid fa-xmark status-cell__cross"></i>{% endif %}</td>
@@ -46,9 +48,9 @@
                 </tr>
                 {% endfor %}
             </tbody>
-    
+
         </table>
-</div>
+    </div>
 
 
 

@@ -28,7 +28,7 @@ class CustomUserManager(BaseUserManager):
 
 # Definimos nuestro modelo de usuario personalizado
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True)  # Campo de correo electrónico único
+    email = models.EmailField(unique=True, max_length=25)  # Campo de correo electrónico único
     password = models.CharField(max_length=128)  # Campo de contraseña
     first_name = models.CharField(max_length=30, blank=True)  # Campo de nombre
     last_name = models.CharField(max_length=30, blank=True)  # Campo de apellido
@@ -45,6 +45,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = "email"  # Campo que se usará como nombre de usuario (correo electrónico)
     REQUIRED_FIELDS = []  # Campos adicionales requeridos al crear un superusuario
+
+    class Meta:
+        ordering = ["-date_joined"]
 
     def __str__(self):
         return self.email  # Representación en cadena del usuario (en este caso, el correo electrónico)

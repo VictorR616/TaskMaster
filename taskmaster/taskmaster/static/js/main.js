@@ -1,5 +1,14 @@
 import hamburgerMenu from "./hamburguer.js";
+import setupModal from "./modal.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    hamburgerMenu(".hamburguer", ".panel", ".menu a");
+    hamburgerMenu();
+    
+    const deleteButton = document.getElementById("delete-modal");
+    
+    if (deleteButton) {
+        setupModal(deleteButton);
+    }
 });
+
+

@@ -11,74 +11,66 @@
 <section class="card-container">
     <h1 class="fs-6">Detalle del Usuario</h1>
     <div class="user-card">
-        <div class="user-detail__profile-picture">
+        <div class="user__profile-picture">
             {% if user.profile_picture %}
             <img src="{{ user.profile_picture.url }}" alt="{{ user.first_name }} {{ user.last_name }}">
             {% else %}
-            <p class="profile-picture-placeholder">No hay foto de perfil disponible.</p>
+            <p class="placeholder">No hay foto de perfil disponible.</p>
             {% endif %}
         </div>
-        <div class="user-detail__info">
-            <div class="user-detail__info__layer">
-                <p class="info-name">{{ user.first_name}} {{ user.last_name}}</p>
-                <p class="info-email">{{user.email}}</p>
+
+        <div class="user__info">
+            <div class="user__info-box">
+                <p class="fs-5">{{ user.first_name }} {{ user.last_name }}</p>
+                <p class="fs-2">{{ user.email }}</p>
             </div>
-            <div class="user-detail__info__actives">
-                <div class="info-pair">
-                    <strong>Activo</strong>
+            <div class="user__info-actives">
+                <div class="pair-box">
+                    <strong class="fs-2">Activo</strong>
                     {% if user.is_active %}
-                    <p><i class="fa-solid fa-check status-cell__ticket"></i></p>
+                    <p><i class="fa-solid fa-check icon"></i></p>
                     {% else %}
-                    <p><i class="fa-solid fa-xmark status-cell__cross"></i></p>
+                    <p><i class="fa-solid fa-xmark icon"></i></p>
                     {% endif %}
                 </div>
 
-                <div class="info-pair">
-                    <strong>Staff</strong>
+                <div class="pair-box">
+                    <strong class="fs-2">Staff</strong>
                     {% if user.is_staff %}
-                    <p><i class="fa-solid fa-check status-cell__ticket"></i></p>
+                    <p><i class="fa-solid fa-check icon"></i></p>
                     {% else %}
-                    <p><i class="fa-solid fa-xmark status-cell__cross"></i></p>
+                    <p><i class="fa-solid fa-xmark icon"></i></p>
                     {% endif %}
                 </div>
 
-                <div class="info-pair">
-                    <strong>Trabajador</strong>
+                <div class="pair-box">
+                    <strong class="fs-2">Trabajador</strong>
                     {% if user.is_worker %}
-                    <p><i class="fa-solid fa-check status-cell__ticket"></i></p>
+                    <p><i class="fa-solid fa-check icon"></i></p>
                     {% else %}
-                    <p><i class="fa-solid fa-xmark status-cell__cross"></i></p>
+                    <p><i class="fa-solid fa-xmark icon"></i></p>
                     {% endif %}
                 </div>
             </div>
         </div>
-        
-        <div class="cluster">
-            <a class="item btn btn-edit" href="{% url 'user_update' user.id %}">Editar Usuario</a>
-            {% if is_not_current_user %}
-            <a class="item btn btn-delete" href="#" id="delete-user">Borrar Usuario</a>
-            {% endif %}
-            <a class="item btn btn-return" href="{% url 'user_list' %}">Lista de usuarios</a>
-        </div>
-    </div>
 
-    <div id="delete-task-modal" class="modal">
-        <div class="modal-content">
-            <span class="close"></span>
-            <p class="fs-1">¿Estás seguro de que deseas borrar este usuario?</p>
-            <div class="modal-content__btn-container">
-                <form method="POST" action="{% url 'user_delete' user.id %}">
-                    {% csrf_token %}
-                    <input id="confirm-delete" class="btn" type="submit" value="Confirmar" />
-                </form>
-                <button id="cancel-delete" class="btn">Cancelar</button>
+        <hr>
+
+        <div>
+            <h3 class="fs-3 actions">Acciones</h3>
+            <div class="cluster">
+                <a class="item btn btn-edit fs-1" href="{% url 'user_update' user.id %}">Editar Usuario</a>
+                {% if is_not_current_user %}
+                <a id="delete-modal" class="item btn btn-delete fs-1" href="#">Borrar Usuario</a>
+                {% endif %}
+                <a class="item btn btn-return fs-1" href="{% url 'user_list' %}">Lista de usuarios</a>
             </div>
         </div>
     </div>
+
+    {% include 'modal.html' with title="este usuario" delete_url=delete_url user_id=user_id_for_modal %}
+
 
 </section>
 
-{% block script %}
-<script src="{% static 'users/js/main.js' %}"></script>
-{% endblock %}
 {% endblock %}

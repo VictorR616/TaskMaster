@@ -37,30 +37,19 @@
         </div>
 
 
-            <h3 class="fs-3 actions">Acciones</h3>
-            <div class="cluster">
-                <a class="item btn btn-edit" href="{% url 'edit_task' task.id %}">Editar Tarea</a>
-                <a class="item btn btn-delete open-modal-btn" href="#" id="delete-task">Borrar Tarea</a>
-                <a class="item btn btn-return" href="{% url 'list_tasks' %}">Lista de tareas</a>
-            </div>
-    </div>
-
-    <div id="delete-task-modal" class="modal">
-        <div class="modal-content">
-            <p class="fs-1">¿Estás seguro de que deseas borrar esta tarea?</p>
-            <div class="modal-content__btn-container">
-                <form method="POST" action="{% url 'delete_task' task.id %}">
-                    {% csrf_token %}
-                    <input id="confirm-delete" class="btn fs-2" type="submit" value="Confirmar" />
-                </form>
-                <button id="cancel-delete" class="btn fs-2">Cancelar</button>
-            </div>
+        <h3 class="fs-3 actions">Acciones</h3>
+        <div class="cluster">
+            <a class="item btn btn-edit" href="{% url 'edit_task' task.id %}">Editar Tarea</a>
+            <a class="item btn btn-delete" href="#" id="delete-modal">Borrar Tarea</a>
+            <a class="item btn btn-return" href="{% url 'list_tasks' %}">Lista de tareas</a>
         </div>
     </div>
+
+    {% include 'modal.html' with title="esta tarea" delete_url=delete_url task_id=task_id_for_modal %}
+
+
 </section>
 
-{% block script %}
-<script src="{% static 'todo_task/js/main.js' %}"></script>
-{% endblock %}
+
 
 {% endblock %}

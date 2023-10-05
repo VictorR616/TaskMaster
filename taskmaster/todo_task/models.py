@@ -8,6 +8,7 @@ class Task(models.Model):
     complete = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     labels = models.ManyToManyField("Label")
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="tasks")
 
     class Meta:
         ordering = ["-created"]
@@ -21,7 +22,6 @@ class Label(models.Model):
 
     def __str__(self):
         return self.name
-
 
 
 class Priority(models.Model):

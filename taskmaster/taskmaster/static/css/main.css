@@ -40,6 +40,7 @@
     --fs-8: clamp(2.18rem, calc(1.51rem + 3.83vw), 5.34rem);
 
     --fs-btn-1: clamp(1rem, calc(1rem + 0.05vw), 1.19rem);
+
 }
 
 /* ********** RESET ********** */
@@ -335,6 +336,7 @@ h1 {
     gap: 1rem; /* Aumentamos el espacio entre elementos del formulario */
     padding: 20px;
     border-radius: 10px;
+    margin-block: 1rem;
 }
 
 .form input[type="checkbox"] {
@@ -683,4 +685,5 @@ tr:nth-of-type(2n) {
     .step-links {
         flex-direction: column;
     }
+
 }

@@ -1,0 +1,12 @@
+<div id="delete-task-modal" class="modal">
+    <div class="modal-content">
+        <p class="fs-1">¿Estás seguro de que deseas borrar {{ title }}?</p>
+        <div class="modal-content__btn-container">
+            <form method="POST" action="{{ delete_url }}">
+                {% csrf_token %}
+                <input id="confirm-delete" class="btn fs-2" type="submit" value="Confirmar" />
+            </form>
+            <button id="cancel-delete" class="btn fs-2">Cancelar</button>
+        </div>
+    </div>
+</div>

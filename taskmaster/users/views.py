@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.urls import reverse
 from users.models import CustomUser
 from users.forms import UserEditForm, UserForm
 
@@ -9,23 +10,22 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage
 
 
-
-
 @login_required(login_url="/users/login/")
 @admin_or_worker_required
 def user_list(request):
     users = CustomUser.objects.all()
 
     # Agregar paginación
-    page_number = request.GET.get('page') # Devuelve un str
+    page_number = request.GET.get("page")  # Devuelve un str
 
-    
     try:
         page_number = int(page_number)  # Convierte a entero
     except (TypeError, ValueError):
         page_number = 1  # Si no es un número válido, muestra la primera página
-    
-    paginator = Paginator(users, 2)  # Cambia 10 al número de elementos por página que desees
+
+    paginator = Paginator(
+        users, 4
+    )  # Cambia 10 al número de elementos por página que desees
 
     try:
         users = paginator.page(page_number)
@@ -39,10 +39,13 @@ def user_list(request):
 def user_detail(request, user_id):
     user = get_object_or_404(CustomUser, pk=user_id)
     is_not_current_user = request.user != user
+    delete_url = reverse("user_delete", args=[user_id])
 
     context = {
-        'user': user,
-        'is_not_current_user': is_not_current_user,
+        "user": user,
+        "is_not_current_user": is_not_current_user,
+        "delete_url": delete_url,
+        "user_id_for_modal": user_id,
     }
 
     return render(request, "users/user_detail.html", context)
@@ -81,14 +84,14 @@ def user_update(request, user_id):
 @login_required(login_url="/users/login/")
 def user_delete(request, user_id):
     user = get_object_or_404(CustomUser, pk=user_id)
-    
+
     if request.method == "POST":
         # Cambiar el estado de is_active a False en lugar de eliminar al usuario
         user.is_active = False
         user.save()
         messages.success(request, "Usuario desactivado correctamente.")
         return redirect("user_list")
-    
+
     return render(request, "users/user_delete.html", {"user": user})
 
 
@@ -99,7 +102,7 @@ def iniciar_sesion(request):
     if request.user.is_authenticated:
         # Si el usuario ya ha iniciado sesión, redirige a la página deseada.
         return redirect("list_tasks")  # Cambia 'user_list' a la URL que desees.
-    
+
     if request.method == "POST":
         email = request.POST["email"]
         password = request.POST["password"]
@@ -143,4 +146,3 @@ def cerrar_sesion(request):
     logout(request)
     messages.success(request, "Sesión cerrada correctamente.")
     return redirect("login")
-
