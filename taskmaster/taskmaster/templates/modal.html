@@ -4,9 +4,9 @@
         <div class="modal-content__btn-container">
             <form method="POST" action="{{ delete_url }}">
                 {% csrf_token %}
-                <input id="confirm-delete" class="btn fs-2" type="submit" value="Confirmar" />
+                <input id="confirm-delete" class="btn btn-primary fs-2" type="submit" value="Confirmar" />
             </form>
-            <button id="cancel-delete" class="btn fs-2">Cancelar</button>
+            <button id="cancel-delete" class="btn btn-cancel fs-2">Cancelar</button>
         </div>
     </div>
 </div>

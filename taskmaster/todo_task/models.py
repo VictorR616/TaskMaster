@@ -1,6 +1,5 @@
 from django.db import models
 from users.models import CustomUser  # Importa el modelo de usuario personalizado
-from django.core.exceptions import ValidationError
 
 
 class Task(models.Model):

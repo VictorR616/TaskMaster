@@ -11,21 +11,6 @@
 <!-- Contenido personalizado de list_tasks.html aquí -->
 <section class="container">
     <h1 class="fs-6">Creación de Tareas</h1>
-    <!-- <form class="create-task" method="POST">
-        {% csrf_token %}
-        
-        {{ form.title.label_tag }} {{ form.title }}
-        {{ form.title.errors }}
-
-        {{ form.complete.label_tag }} {{ form.complete }}
-        {{ form.complete.errors }}
-
-        {{ form.labels.label_tag }} {{ form.labels }}
-        {{ form.labels.errors }}
-
-        <!-- <input class="new-task" type="submit" value="Enviar"> -->
-    <!-- </form> --> 
-
     <form class="form" method="POST">
         {% csrf_token %}
         
@@ -44,11 +29,11 @@
                 <p class="error">{{ field.errors }}</p>
             {% endif %}
         {% endfor %}
-        <input type="submit" class="btn" value="Enviar">
+        <input type="submit" class="btn btn-primary" value="Enviar">
     </form>
 
     <div class="container-return-list">
-        <a class="btn" href="{% url 'list_tasks' %}">Volver a la lista de tareas</a>
+        <a class="btn btn-secondary" href="{% url 'task-list' %}">Volver a la lista de tareas</a>
     </div>
 </section>
 

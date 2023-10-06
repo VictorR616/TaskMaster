@@ -40,7 +40,6 @@
     --fs-8: clamp(2.18rem, calc(1.51rem + 3.83vw), 5.34rem);
 
     --fs-btn-1: clamp(1rem, calc(1rem + 0.05vw), 1.19rem);
-
 }
 
 /* ********** RESET ********** */
@@ -140,16 +139,28 @@ caption {
     font-size: var(--bs-1);
 }
 
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
 /* ---------------------------------- Estilos para el contenedor principal ----------------------------------*/
+h1 {
+    margin-block: 1rem;
+    width: min(100% - 3rem, 40ch);
+    letter-spacing: -1px;
+    text-align: left;
+}
+
 .container {
     width: min(100% - 3rem, 120ch);
     margin-inline: auto;
     margin-block: 1rem;
 }
 
-.container h1 {
-    width: min(100% - 3rem, 40ch);
-    text-align: left;
+.card-container {
+    width: min(100% - 3rem, 60ch);
+    margin-inline: auto;
 }
 
 .sr-only {
@@ -242,13 +253,53 @@ caption {
     margin-block: 1rem;
 }
 
-.cluster a {
-    text-decoration: none;
+
+.btn-primary {
     color: white;
+    background-color: var(--clr-accent-700);
+    border: 2px solid var(--clr-accent-700);
 }
 
-.cluster a:visited {
+.btn-primary:hover {
+    border: 2px solid var(--clr-accent-700);
+    background-color: transparent;
+    color: var(--clr-accent-700);
+    transition: background 100ms ease-in-out;
+}
+
+.btn-secondary {
+    color: var(--clr-accent-700);
+    background-color: var(--clr-white);
+    border: 2px solid var(--clr-accent-700);
+}
+
+.btn-secondary:hover {
+    color: var(--clr-white);
+    background-color: transparent;
+    border: 2px solid var(--clr-white);
+    transition: background 100ms ease-in-out;
+}
+
+
+.btn-cancel {
+    border: 2px solid var(--clr-accent-700);
+    color: var(--clr-accent-700);
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.btn-cancel:hover {
+    color: var(--clr-white);
+    background-color: var(--clr-accent-700);
+}
+
+.actions h3 {
+    font-weight: var(--fw-bold);
+}
+
+.actions .cluster a {
     color: white;
+    text-decoration: none;
 }
 
 @media (max-width: 35em) {
@@ -388,19 +439,6 @@ h1 {
     resize: none;
 }
 
-.form input[type="submit"] {
-    background-color: var(--clr-accent-700);
-    color: var(--clr-white);
-    border: 2px solid var(--clr-accent-700);
-}
-
-.form input[type="submit"]:hover {
-    border: 2px solid var(--clr-accent-700);
-    background-color: transparent;
-    color: var(--clr-accent-700);
-    transition: background 100ms ease-in-out;
-}
-
 /* Estilos para mensajes de error */
 .form .errorlist {
     color: red;
@@ -450,27 +488,15 @@ h1 {
     justify-content: center;
 }
 
-.close-modal-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
 
 .btn {
-    color: purple;
     font-weight: bold;
     padding: 1rem;
-    background-color: var(--clr-white);
     border-radius: 10px;
     text-align: center;
     cursor: pointer;
 }
 
-.btn:hover {
-    color: black;
-}
 
 .btn-edit {
     background-color: var(--clr-btn-edit);
@@ -496,26 +522,6 @@ h1 {
     background-color: var(--clr-btn-delete-hover);
 }
 
-.search-form {
-    display: flex;
-    gap: 1rem;
-    margin-block: 1rem;
-    flex-wrap: wrap;
-}
-
-.search-form input[type="text"] {
-    padding: 10px;
-    font-size: 1rem;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    outline: none;
-    flex-grow: 2;
-}
-
-.search-form .btn {
-    border: none;
-    flex-grow: 1;
-}
 /* ---------------------------------- Estilos genericos ----------------------------------*/
 
 /* ---------------------------------- Estilos para tabla ----------------------------------*/
@@ -685,5 +691,4 @@ tr:nth-of-type(2n) {
     .step-links {
         flex-direction: column;
     }
-
 }

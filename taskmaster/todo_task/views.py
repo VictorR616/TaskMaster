@@ -1,18 +1,20 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
-from .models import Task, Label
-from .forms import TaskEditForm, TaskForm, TaskMetaDataForm
-from django.core.paginator import Paginator, EmptyPage
 from datetime import datetime
-from django.db.models import Count
+
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import EmptyPage, Paginator
+from django.db.models import Count
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+
+from .forms import TaskEditForm, TaskForm, TaskMetaDataForm
+from .models import Label, Task
 
 
 @login_required(login_url="/users/login/")
 def list_tasks(request):
     fecha_actual = datetime.now()
     # Obtener las tareas del usuario actual
-    tasks = Task.objects.filter(user=request.user).order_by('created')
+    tasks = Task.objects.filter(user=request.user).order_by("created")
 
     query = request.GET.get("q", "")
 
@@ -44,13 +46,13 @@ def list_tasks(request):
         "categorias": categorias,
     }
 
-    return render(request, "todo_task/list_tasks.html", context)
+    return render(request, "todo_task/list.html", context)
 
 
 @login_required(login_url="/users/login/")
-def task_detail(request, task_id):
+def detail_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
-    delete_url = reverse("delete_task", args=[task_id])
+    delete_url = reverse("task-delete", args=[task_id])
 
     context = {
         "task": task,
@@ -58,7 +60,7 @@ def task_detail(request, task_id):
         "task_id_for_modal": task_id,
     }
 
-    return render(request, "todo_task/task_detail.html", context)
+    return render(request, "todo_task/detail.html", context)
 
 
 @login_required(login_url="/users/login/")
@@ -78,7 +80,7 @@ def create_task(request):
             task_metadata.task = task  # Establecer la relación con la tarea
             task_metadata.save()
 
-            return redirect("list_tasks")  # Redirigir a la lista de tareas
+            return redirect("task-list")  # Redirigir a la lista de tareas
     else:
         # Mostrar los formularios vacíos si es una solicitud GET
         task_form = TaskForm()
@@ -86,11 +88,11 @@ def create_task(request):
 
     context = {"task_form": task_form, "task_metadata_form": task_metadata_form}
 
-    return render(request, "todo_task/create_task.html", context)
+    return render(request, "todo_task/create.html", context)
 
 
 @login_required(login_url="/users/login/")
-def edit_task(request, task_id):
+def update_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
 
     if request.method == "POST":
@@ -100,14 +102,14 @@ def edit_task(request, task_id):
         if task_form.is_valid() and task_metadata_form.is_valid():
             task_form.save()
             task_metadata_form.save()
-            return redirect("list_tasks")
+            return redirect("task-list")
     else:
         task_form = TaskEditForm(instance=task)
         task_metadata_form = TaskMetaDataForm(instance=task.taskmetadata)
 
     return render(
         request,
-        "todo_task/edit_task.html",
+        "todo_task/update.html",
         {
             "task_form": task_form,
             "task_metadata_form": task_metadata_form,
@@ -121,5 +123,5 @@ def delete_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
     if request.method == "POST":
         task.delete()
-        return redirect("list_tasks")
-    return render(request, "todo_task/delete_task.html", {"task": task})
+        return redirect("task-list")
+    return render(request, "todo_task/delete.html", {"task": task})

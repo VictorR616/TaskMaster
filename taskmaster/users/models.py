@@ -1,6 +1,11 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
 from django.db import models
 from django.utils import timezone
+
 
 # Definimos un administrador personalizado para nuestro modelo de usuario
 class CustomUserManager(BaseUserManager):
@@ -28,26 +33,26 @@ class CustomUserManager(BaseUserManager):
 
 # Definimos nuestro modelo de usuario personalizado
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True, max_length=25)  # Campo de correo electrónico único
-    password = models.CharField(max_length=128)  # Campo de contraseña
-    first_name = models.CharField(max_length=30, blank=True)  # Campo de nombre
-    last_name = models.CharField(max_length=30, blank=True)  # Campo de apellido
-    date_joined = models.DateTimeField(default=timezone.now)  # Campo de fecha de registro
-    is_active = models.BooleanField(default=True)  # Indica si el usuario está activo
-    is_staff = models.BooleanField(default=False)  # Indica si el usuario es miembro del staff
-    is_worker = models.BooleanField(default=False)  # Indica si el usuario es trabajador
+    email = models.EmailField(unique=True, max_length=25)  
+    password = models.CharField(max_length=128)  
+    first_name = models.CharField(max_length=30, blank=True)  
+    last_name = models.CharField(max_length=30, blank=True)  
+    date_joined = models.DateTimeField(default=timezone.now) 
+    is_active = models.BooleanField(default=True)  
+    is_staff = models.BooleanField(default=False)  
+    is_worker = models.BooleanField(default=False)  
 
     # Ejemplo de campo personalizado: foto de perfil
-    profile_picture = models.ImageField(upload_to='users/images/profile_pictures/', blank=True, null=True)
-    # Puedes agregar más campos personalizados según tus necesidades
+    profile_picture = models.ImageField(upload_to='users/images/profile_pictures/', 
+                                        blank=True, null=True)
 
     objects = CustomUserManager()  # Instanciamos nuestro administrador personalizado
 
-    USERNAME_FIELD = "email"  # Campo que se usará como nombre de usuario (correo electrónico)
-    REQUIRED_FIELDS = []  # Campos adicionales requeridos al crear un superusuario
+    USERNAME_FIELD = "email"  
+    REQUIRED_FIELDS = [] 
 
     class Meta:
         ordering = ["-date_joined"]
 
     def __str__(self):
-        return self.email  # Representación en cadena del usuario (en este caso, el correo electrónico)
+        return self.email 

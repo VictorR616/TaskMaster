@@ -2,6 +2,7 @@
 
 from django.shortcuts import redirect
 
+
 def admin_or_worker_required(view_func):
     """
     Decorador personalizado para restringir el acceso a administradores o trabajadores.

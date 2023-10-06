@@ -27,7 +27,7 @@
             <tbody>
                 {% for user in users %}
                 <tr>
-                    <td headers="actions"><a class="table__action" href="{% url 'user_detail' user.id %}">Ver
+                    <td headers="actions"><a class="table__action" href="{% url 'user-detail' user.id %}">Ver
                             detalles</a>
                     </td>
                     <td headers="email">{{ user.email }}</td>
@@ -58,9 +58,9 @@
     <div class="pagination">
         <span class="step-links">
             {% if users.has_previous %}
-            <a href="?page={{ users.previous_page_number }}">previous</a>
+            <a href="?page={{ users.previous_page_number }}">Anterior</a>
             {% else %}
-            <span class="disabled">previous</span>
+            <span class="disabled">Anterior</span>
             {% endif %}
 
             <span class="current-page">
@@ -68,15 +68,15 @@
             </span>
 
             {% if users.has_next %}
-            <a href="?page={{ users.next_page_number }}">next</a>
+            <a href="?page={{ users.next_page_number }}">Siguiente</a>
             {% else %}
-            <span class="disabled">next</span>
+            <span class="disabled">Siguiente</span>
             {% endif %}
         </span>
     </div>
 
     <div class="links-container">
-        <a class="btn" href="{% url 'user_create' %}">Crear Usuario</a>
+        <a class="btn btn-secondary" href="{% url 'user-create' %}">Crear Usuario</a>
     </div>
 </section>
 

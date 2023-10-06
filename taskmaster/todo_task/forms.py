@@ -1,5 +1,6 @@
 from django import forms
-from .models import Task, TaskMetadata 
+
+from .models import Task, TaskMetadata
 
 
 class BaseTaskForm(forms.ModelForm):

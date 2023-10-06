@@ -10,32 +10,33 @@
 <section class="container">
     
     <h1 class="fs-6">Taskmaster</h1>
-    <form class="search-form" method="get">
-        <input type="text" name="q" value="{{ query }}" placeholder="Buscar tareas">
-        <input class="btn" type="submit" value="Buscar">
+    
+    <form class="search-form" method="GET">
+        <input class="fs-1" type="text" name="q" value="{{ query }}" placeholder="Buscar tareas">
+        <input class="btn btn-secondary" type="submit" value="Buscar">
     </form>
 
-    <!-- NUEVO DISEÑO-->
     <section class="card">
 
-        <div class="user">
-            <div class="user-info">
+        <div class="user flex-column">
+            <div class="user-info flex-column">
                 <img src="{{ request.user.profile_picture.url }}" alt="Foto de perfil">
 
                 <h2 class="fs-4">{{ request.user.first_name }}</h2>
             </div>
-            <div class="options fs-1">
+            <div class="user-options fs-1">
                 <a href="#"><i class="bi bi-grid"></i> Categorias</a>
                 <a href="#"><i class="bi bi-bar-chart"></i> Analiticas</a>
                 <a href="#"><i class="bi bi-gear"></i> Opciones</a>
 
             </div>
         </div>
-        <div class="task">
+        
+        <section class="task">
             <h2 class="fs-4">Hola, {{ request.user.first_name }}!</h2>
-            <p class="task_date fs-3">{{ fecha_actual|date:"l, j \d\e F \d\e Y" }}</p>
+            <p class="fs-3">{{ fecha_actual|date:"l, j \d\e F \d\e Y" }}</p>
 
-            <div class="categorias">
+            <section class="categorias">
                 <h3>Categorias</h3>
                 <div class="categoria_lista">
                     {% for categoria in categorias %}
@@ -45,36 +46,38 @@
                     </div>
                     {% endfor %}
                 </div>
-            </div>
+            </section>
 
 
-            <div class="tasks">
+            <section class="tasks">
                 <h3>Tareas</h3>
-                <div class="task-container">
-                    <ul class="task-list">
+                <div class="flex-column">
+                    <ul class="task-list flex-column">
                         {% for task in tasks %}
-                        <li class="task-element">
-                            <a href="{% url 'task_detail' task.id %}" class="task-link">
+                        <li class="task-element flex-column">
+                            <a href="{% url 'task-detail' task.id %}" class="task-link">
                                 {{ task.title }}
                             </a>
                         </li>
                         {% endfor %}
                     </ul>
                     <div class="task-creation fs-1">
-                        <a href="{% url 'create_task' %}">Crear nueva tarea</a>
+                        <a href="{% url 'task-create' %}">Crear nueva tarea</a>
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
+
+        </section>
+
     </section>
 
     <!-- Enlaces de paginación -->
     <div class="pagination">
         <span class="step-links">
             {% if tasks.has_previous %}
-            <a href="?page={{ tasks.previous_page_number }}">previous</a>
+            <a href="?page={{ tasks.previous_page_number }}">Anterior</a>
             {% else %}
-            <span class="disabled">previous</span>
+            <span class="disabled">Anterior</span>
             {% endif %}
 
             <span class="current-page">
@@ -82,9 +85,9 @@
             </span>
 
             {% if tasks.has_next %}
-            <a href="?page={{ tasks.next_page_number }}">next</a>
+            <a href="?page={{ tasks.next_page_number }}">Siguiente</a>
             {% else %}
-            <span class="disabled">next</span>
+            <span class="disabled">Siguiente</span>
             {% endif %}
         </span>
     </div>

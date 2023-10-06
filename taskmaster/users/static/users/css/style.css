@@ -1,7 +1,7 @@
 :root {
     /* Colores */
-    --clr-white: rgb(255, 255, 255);
-    --clr-accent-700: rgb(128, 0, 128);
+    --clr-white: #ffffff;
+    --clr-accent-700: #800080;
     --fw-bold: 700;
 }
 
@@ -10,7 +10,7 @@
     place-content: center;
 }
 
-/* Estilos para el login */
+/* ------------------------ Estilos para el login ------------------------ */
 .error-message {
     margin-block: 1rem;
     background-color: rgb(255, 51, 51);
@@ -22,10 +22,10 @@
 }
 
 .login-container {
-    width: min(100% - 3rem, 120ch);
-    margin-inline: auto;
     display: grid;
     place-content: center;
+    width: min(100% - 3rem, 120ch);
+    margin-inline: auto;
     min-height: 100svh;
     background-color: var(--clr-accent-700);
 }
@@ -37,8 +37,6 @@
 }
 
 .form-login {
-    display: flex;
-    flex-direction: column;
     gap: 2rem;
 }
 
@@ -111,72 +109,16 @@
 .container-register a {
     color: var(--clr-white);
     font-weight: var(--fw-bold);
+    text-decoration: none;
 }
 
 .container-register a:hover {
     text-decoration: underline;
 }
 
-/* Registro de usuarios */
+/* ------------------------ Estilos para el login ------------------------ */
 
-.custom-input {
-    color: var(--clr-white);
-}
-
-.custom-input::placeholder {
-    color: rgb(146, 146, 146);
-}
-
-.register-input-box {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.container-login {
-    display: flex;
-    gap: 1rem;
-    justify-content: space-between;
-    align-items: baseline;
-    align-content: baseline;
-    margin-block: 2rem;
-}
-
-.container-login a {
-    color: var(--clr-white);
-    background-color: transparent;
-    border: 2px solid var(--clr-white);
-    flex-grow: 1;
-}
-
-.container-login input[type="submit"] {
-    flex-grow: 1;
-}
-
-.container-login a:hover {
-    transition: background 0.25s ease-in-out;
-    background-color: var(--clr-white);
-    color: var(--clr-accent-700);
-}
-
-/* Lista de usuarios */
-
-/* Detalle de usuarios */
-.card-container {
-    width: min(100% - 3rem, 60ch);
-    margin-inline: auto;
-    margin-block: 1rem;
-}
-
-.card-container h1 {
-    width: min(100% - 3rem, 40ch);
-    text-align: left;
-}
-
-/* Tarjeta de usuario */
 .user-card {
-    display: flex;
-    flex-direction: column;
     align-content: center;
     gap: 1rem;
     margin-block: 1rem;
@@ -209,15 +151,11 @@
 
 /* Estilos del contenedor de información del usuario */
 .user__info {
-    display: flex;
     gap: 1rem;
-    flex-direction: column;
     margin-top: 1rem;
 }
 
 .user__info-box {
-    display: flex;
-    flex-direction: column;
     margin-bottom: 1rem;
 }
 
@@ -262,9 +200,6 @@ hr {
 }
 
 
-.actions {
-    font-weight: var(--fw-bold);
-}
 
 @media (min-width: 35em) {
     .user__info-actives {
@@ -275,12 +210,10 @@ hr {
     .cluster {
         flex-direction: row;
     }
-    
+
     .cluster > * {
         flex-grow: 1;
-        
     }
-
 }
 
 .delete-form input[type="submit"] {
@@ -288,11 +221,6 @@ hr {
     color: var(--clr-white);
 }
 
-.modal-content__btn-container .btn {
-    background-color: transparent;
-    color: var(--clr-accent-700);
-    border: 2px solid var(--clr-accent-700);
-}
 
 .delete-form input[type="submit"]:hover {
     background-color: transparent;
@@ -300,10 +228,6 @@ hr {
     border: 2px solid var(--clr-accent-700);
 }
 
-.modal-content__btn-container .btn:hover {
-    background-color: var(--clr-accent-700);
-    color: var(--clr-white);
-}
 
 .imagen {
     overflow: hidden; /* Evita que el contenido se desborde */

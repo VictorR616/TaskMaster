@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %} Detalle de Usuario {% endblock %}
+{% block title %}Detalle de Usuario{% endblock %}
 
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static 'users/css/style.css' %}">
@@ -10,7 +10,7 @@
 {% block content %}
 <section class="card-container">
     <h1 class="fs-6">Detalle del Usuario</h1>
-    <div class="user-card">
+    <div class="user-card flex-column">
         <div class="user__profile-picture">
             {% if user.profile_picture %}
             <img src="{{ user.profile_picture.url }}" alt="{{ user.first_name }} {{ user.last_name }}">
@@ -19,8 +19,8 @@
             {% endif %}
         </div>
 
-        <div class="user__info">
-            <div class="user__info-box">
+        <div class="user__info flex-column">
+            <div class="user__info-box flex-column">
                 <p class="fs-5">{{ user.first_name }} {{ user.last_name }}</p>
                 <p class="fs-2">{{ user.email }}</p>
             </div>
@@ -56,21 +56,18 @@
 
         <hr>
 
-        <div>
-            <h3 class="fs-3 actions">Acciones</h3>
+        <div class="actions">
+            <h3 class="fs-3">Acciones</h3>
             <div class="cluster">
-                <a class="item btn btn-edit fs-1" href="{% url 'user_update' user.id %}">Editar Usuario</a>
+                <a class="btn btn-edit fs-1" href="{% url 'user-update' user.id %}">Editar Usuario</a>
                 {% if is_not_current_user %}
-                <a id="delete-modal" class="item btn btn-delete fs-1" href="#">Borrar Usuario</a>
+                <a id="delete-modal" class="btn btn-delete fs-1" href="#">Borrar Usuario</a>
                 {% endif %}
-                <a class="item btn btn-return fs-1" href="{% url 'user_list' %}">Lista de usuarios</a>
+                <a class="btn btn-return fs-1" href="{% url 'user-list' %}">Lista de usuarios</a>
             </div>
         </div>
     </div>
 
     {% include 'modal.html' with title="este usuario" delete_url=delete_url user_id=user_id_for_modal %}
-
-
 </section>
-
 {% endblock %}

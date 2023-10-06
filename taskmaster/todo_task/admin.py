@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Task, Label,Priority, TaskMetadata
 
+from .models import Label, Priority, Task, TaskMetadata
 
 # Register your models here.
 
@@ -16,7 +16,7 @@ class TaskAdmin(admin.ModelAdmin):
     list_filter = (
         "complete",
         "created",
-    )  # Columnas que se mostrarán en la lista de filtros") # Columnas que se mostrarán en la lista de registros
+    )  
 
 
 class LabelAdmin(admin.ModelAdmin):

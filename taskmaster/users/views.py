@@ -1,18 +1,19 @@
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.urls import reverse
-from users.models import CustomUser
-from users.forms import UserEditForm, UserForm
-
-from django.contrib.auth import login, authenticate, logout, views as auth_views
-from .decorators import admin_or_worker_required
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator, EmptyPage
+from django.core.paginator import EmptyPage, Paginator
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+
+from users.forms import UserEditForm, UserForm
+from users.models import CustomUser
+
+from .decorators import admin_or_worker_required
 
 
 @login_required(login_url="/users/login/")
 @admin_or_worker_required
-def user_list(request):
+def list_users(request):
     users = CustomUser.objects.all()
 
     # Agregar paginación
@@ -32,14 +33,14 @@ def user_list(request):
     except EmptyPage:
         users = paginator.page(1)  # Si la página está vacía, muestra la primera página
 
-    return render(request, "users/user_list.html", {"users": users})
+    return render(request, "users/list.html", {"users": users})
 
 
 @login_required(login_url="/users/login/")
-def user_detail(request, user_id):
+def detail_user(request, user_id):
     user = get_object_or_404(CustomUser, pk=user_id)
     is_not_current_user = request.user != user
-    delete_url = reverse("user_delete", args=[user_id])
+    delete_url = reverse("user-delete", args=[user_id])
 
     context = {
         "user": user,
@@ -48,10 +49,10 @@ def user_detail(request, user_id):
         "user_id_for_modal": user_id,
     }
 
-    return render(request, "users/user_detail.html", context)
+    return render(request, "users/detail.html", context)
 
 
-def user_create(request):
+def create_user(request):
     if request.method == "POST":
         form = UserForm(request.POST, request.FILES)
         if form.is_valid():
@@ -61,28 +62,28 @@ def user_create(request):
             user.set_password(form.cleaned_data["password"])  # Establecer la contraseña
             user.save()  # Guardar el usuario con la contraseña encriptada
             messages.success(request, "Usuario creado correctamente.")
-            return redirect("user_list")
+            return redirect("user-list")
     else:
         form = UserForm()
-    return render(request, "users/user_create.html", {"user_form": form})
+    return render(request, "users/create.html", {"user_form": form})
 
 
 @login_required(login_url="/users/login/")
-def user_update(request, user_id):
+def update_user(request, user_id):
     user = get_object_or_404(CustomUser, pk=user_id)
     if request.method == "POST":
         form = UserEditForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
             messages.success(request, "Usuario actualizado correctamente.")
-            return redirect("user_list")
+            return redirect("user-list")
     else:
         form = UserEditForm(instance=user)
-    return render(request, "users/user_update.html", {"user_form": form, "user": user})
+    return render(request, "users/update.html", {"user_form": form, "user": user})
 
 
 @login_required(login_url="/users/login/")
-def user_delete(request, user_id):
+def delete_user(request, user_id):
     user = get_object_or_404(CustomUser, pk=user_id)
 
     if request.method == "POST":
@@ -90,9 +91,9 @@ def user_delete(request, user_id):
         user.is_active = False
         user.save()
         messages.success(request, "Usuario desactivado correctamente.")
-        return redirect("user_list")
+        return redirect("user-list")
 
-    return render(request, "users/user_delete.html", {"user": user})
+    return render(request, "users/delete.html", {"user": user})
 
 
 # Manejo de sesion
@@ -106,18 +107,11 @@ def iniciar_sesion(request):
     if request.method == "POST":
         email = request.POST["email"]
         password = request.POST["password"]
-        remember = request.POST.get(
-            "remember"
-        )  # Obtiene el valor del checkbox "Recordarme"
-
-        print(f"Email ingresado: {email}")
-        print(f"Contraseña ingresada: {password}")
+        remember = request.POST.get("remember")
 
         user = authenticate(request, email=email, password=password)
 
         if user is not None:
-            print(f"Usuario autenticado: {user}")
-
             login(request, user)
 
             # Configura la duración de la sesión en función del checkbox "Recordarme"
@@ -131,9 +125,8 @@ def iniciar_sesion(request):
                 )  # La sesión expirará al cerrar el navegador
 
             messages.success(request, "Inicio de sesión exitoso.")
-            return redirect("user_list")
+            return redirect("user-list")
         else:
-            print("Autenticación fallida.")
             messages.error(
                 request,
                 "Credenciales incorrectas. Intente nuevamente.",

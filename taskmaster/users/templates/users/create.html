@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %} Creacion de Usuario {% endblock %}
+{% block title %}Creación de Usuario{% endblock %}
+
 {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'users/css/style.css' %}" /> {% endblock %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/style.css' %}" />
+{% endblock %}
 
 {% block content %}
 <section class="container">
@@ -12,22 +14,21 @@
         {% csrf_token %}
 
         {% for field in user_form %}
-        <label for="{{ field.id_for_label }}">{{ field.label }} </label>
-        <div class="register-input-box">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        <div class="register-input-box flex-column">
             {{ field }}
             {% if field.errors %}
             {{ field.errors }}
             {% endif %}
-            {% endfor %}
         </div>
-        <div class="container-login">
+        {% endfor %}
+
+        <div class="cluster">
             {% if not user.is_authenticated %}
-            <a class="btn" href="{% url 'login' %}">Login</a>
+            <a class="btn btn-cancel" href="{% url 'login' %}">Login</a>
             {% endif %}
-            <input type="submit" class="btn" value="Registrarse">
+            <input type="submit" class="btn btn-primary" value="Registrarse">
         </div>
     </form>
-
 </section>
-
 {% endblock %}

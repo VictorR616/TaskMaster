@@ -1,9 +1,13 @@
 from django import forms
+
 from .models import CustomUser
+
 
 class UserForm(forms.ModelForm):
     email = forms.EmailField(
-        widget=forms.TextInput(attrs={'class': 'custom-input', 'placeholder': 'Ingresa tu correo electrónico', 'autocomplete': 'email'}),
+        widget=forms.TextInput(attrs={'class': 'custom-input', 'placeholder': 
+                                      'Ingresa tu correo electrónico', 
+                                      'autocomplete': 'email'}),
         # Habilitar el autocompletado para el campo de correo electrónico
         required=True,
         label='Correo electrónico',

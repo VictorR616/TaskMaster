@@ -23,11 +23,11 @@
         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
         {{ field }}
         {% endfor %}
-        <input type="submit" class="btn" value="Guardar Cambios">
+        <input type="submit" class="btn btn-primary" value="Guardar Cambios">
 
     </form>
     <div class="container-return-list">
-        <a class="btn" href="{% url 'list_tasks' %}">Volver a la lista de tareas</a>
+        <a class="btn btn-secondary" href="{% url 'task-list' %}">Volver a la lista de tareas</a>
     </div>
 
 

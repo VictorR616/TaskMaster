@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %} Iniciar Sesión {% endblock %}
+{% block title %}Iniciar Sesión{% endblock %}
 {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'users/css/style.css' %}" /> {% endblock %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/style.css' %}" />
+{% endblock %}
 
 {% block content %}
 <div class="login-container">
@@ -12,23 +13,23 @@
     {% for message in messages %}
     {% if 'alert-danger' in message.tags %}
     <div class="error-message">
-        <p class="fs-0">{{ message }}</p>
+        <p class="fs-1">{{ message }}</p>
     </div>
     {% endif %}
     {% endfor %}
     {% endif %}
 
-    <form method="POST" class="form-login">
+    <form method="POST" class="form-login flex-column">
         {% csrf_token %}
-        <div class="input-box fs-0">
-            <i class="fa fa-envelope fs-0"></i>
-            <input type="email" name="email" id="email" class="fs-0" placeholder="Email" />
+        <div class="input-box fs-1">
+            <i class="fa fa-envelope fs-1"></i>
+            <input type="email" name="email" id="email" class="fs-1" placeholder="Email" />
         </div>
-        <div class="input-box fs-0">
-            <i class="fa fa-lock fs-0"></i>
-            <input type="password" name="password" id="password" class="fs-0" placeholder="Contraseña" />
+        <div class="input-box fs-1">
+            <i class="fa fa-lock fs-1"></i>
+            <input type="password" name="password" id="password" class="fs-1" placeholder="Contraseña" />
         </div>
-        <div class="remember-forgot fs-0">
+        <div class="remember-forgot fs-1">
             <label for="remember" class="checkbox-label">
                 <input type="checkbox" name="remember" id="remember" class="custom-checkbox" />
                 Recordarme
@@ -37,8 +38,8 @@
 
         <input type="submit" value="Iniciar sesión" class="btn btn-login fs-1" />
         <div class="container-register">
-            <p class="fs-0">¿No tienes una cuenta?</p>
-            <a href="{% url 'user_create' %}" class="fs-0">Registrarte</a>
+            <p class="fs-1">¿No tienes una cuenta?</p>
+            <a href="{% url 'user-create' %}" class="fs-1">Registrarte</a>
         </div>
     </form>
 </div>
