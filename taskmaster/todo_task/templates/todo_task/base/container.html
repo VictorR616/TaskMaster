@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Lista de tareas {% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'todo_task/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="container">
+
+    <h1 class="fs-6">Taskmaster</h1>
+
+    {% block search-form %}
+        {% include 'search_form.html' with query=query placeholder=placeholder %}
+    {% endblock %}
+
+
+    <section class="card">
+
+        <div class="user flex-column">
+            <div class="user-info flex-column">
+                <img src="{{ request.user.profile_picture.url }}" alt="Foto de perfil">
+
+                <h2 class="fs-4">{{ request.user.first_name }}</h2>
+            </div>
+            <div class="user-options fs-1">
+                <a href="{% url 'category-list' %}"><i class="bi bi-grid"></i> Categorias</a>
+
+                <a href="{% url 'priority-list' %}"><i class="bi bi-gear"></i> Prioridades</a>
+                <a href="#"><i class="bi bi-bar-chart"></i> Analiticas</a>
+
+            </div>
+        </div>
+
+        <section class="task">
+            <h2 class="fs-4">Hola, {{ request.user.first_name }}!</h2>
+            <p class="fs-3">{{ fecha_actual|date:"l, j \d\e F \d\e Y" }}</p>
+
+            <!-- Incluir seccion generica -->
+            {% block section-fragment %}
+
+            {% endblock %}
+
+        </section>
+
+    </section>
+
+    <!-- Enlaces de paginación -->
+    {% include 'pagination.html' %}
+
+</section>
+
+{% block script %}
+<script src="{% static './todo_task/js/colors.js' %}"></script>
+{% endblock %}
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "container.html" %}
+
+{% block section-fragment %}
+<section class="content-section">
+    <h1 class="fs-3">Prioridades</h1>
+    <ul class="content-list">
+        {% for priority in paginator_data %}
+        <li class="content-item">
+            <a href="{% url 'priority-detail' priority.id %}">{{ priority.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+
+
+<section class="second-section">
+    <div class="item-creation fs-1">
+        <a href="{% url 'priority-create' %}">Crear nueva prioridad</a>
+    </div>
+</section>
+
+{% endblock %}

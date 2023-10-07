@@ -58,7 +58,8 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.join(BASE_DIR,"taskmaster", "templates"),  # Directorio de plantillas del proyecto
+            os.path.join(BASE_DIR, "taskmaster", "templates"),
+            os.path.join(BASE_DIR, "todo_task", "templates", "todo_task/base"),
         ],
         "APP_DIRS": True,
         "OPTIONS": {

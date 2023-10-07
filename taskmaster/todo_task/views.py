@@ -6,8 +6,8 @@ from django.db.models import Count
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
-from .forms import TaskEditForm, TaskForm, TaskMetaDataForm
-from .models import Label, Task
+from .forms import CategoryForm, PriorityForm, TaskEditForm, TaskForm, TaskMetaDataForm
+from .models import Label, Priority, Task
 
 
 @login_required(login_url="/users/login/")
@@ -32,17 +32,19 @@ def list_tasks(request):
     except EmptyPage:
         paginator_data = paginator.page(paginator.num_pages)
 
-    categorias = Label.objects.annotate(task_count=Count("task"))
+    categorias = Label.objects.annotate(task_count=Count("task")).order_by(
+        "-task_count"
+    )[:4]
 
     context = {
         "paginator_data": paginator_data,
         "fecha_actual": fecha_actual,
         "query": query,
         "categorias": categorias,
+        "placeholder": "Buscar tareas",
     }
 
-    return render(request, "todo_task/list.html", context)
-
+    return render(request, "todo_task/tasks/list.html", context)
 
 
 @login_required(login_url="/users/login/")
@@ -56,7 +58,7 @@ def detail_task(request, task_id):
         "task_id_for_modal": task_id,
     }
 
-    return render(request, "todo_task/detail.html", context)
+    return render(request, "todo_task/tasks/detail.html", context)
 
 
 @login_required(login_url="/users/login/")
@@ -84,7 +86,7 @@ def create_task(request):
 
     context = {"task_form": task_form, "task_metadata_form": task_metadata_form}
 
-    return render(request, "todo_task/create.html", context)
+    return render(request, "todo_task/tasks/create.html", context)
 
 
 @login_required(login_url="/users/login/")
@@ -105,7 +107,7 @@ def update_task(request, task_id):
 
     return render(
         request,
-        "todo_task/update.html",
+        "todo_task/tasks/update.html",
         {
             "task_form": task_form,
             "task_metadata_form": task_metadata_form,
@@ -120,4 +122,213 @@ def delete_task(request, task_id):
     if request.method == "POST":
         task.delete()
         return redirect("task-list")
-    return render(request, "todo_task/delete.html", {"task": task})
+    return render(request, "todo_task/tasks/delete.html", {"task": task})
+
+
+# Categorias
+@login_required(login_url="/users/login/")
+def list_categories(request):
+    fecha_actual = datetime.now()
+    categories = Label.objects.filter(user=request.user).order_by("created")
+
+    query = request.GET.get("q", "")
+
+    if query:
+        categories = categories.filter(name__startswith=query)
+
+    # Paginación
+    page_number = request.GET.get("page", 1)  # Valor predeterminado es 1
+
+    paginator = Paginator(categories, 8)
+
+    try:
+        paginator_data = paginator.page(page_number)
+    except PageNotAnInteger:
+        paginator_data = paginator.page(1)
+    except EmptyPage:
+        paginator_data = paginator.page(paginator.num_pages)
+
+    context = {
+        "paginator_data": paginator_data,
+        "fecha_actual": fecha_actual,
+        "query": query,
+        "placeholder": "Buscar categorías",
+    }
+
+    return render(request, "todo_task/categories/list.html", context)
+
+
+@login_required(login_url="/users/login/")
+def detail_category(request, category_id):
+    category = get_object_or_404(Label, pk=category_id)
+    delete_url = reverse("category-delete", args=[category_id])
+
+    task_count = category.task_set.count()
+
+    context = {
+        "category": category,
+        "delete_url": delete_url,
+        "category_id_for_modal": category_id,
+        "task_count": task_count,
+    }
+
+    return render(request, "todo_task/categories/detail.html", context)
+
+
+@login_required(login_url="/users/login/")
+def create_category(request):
+    if request.method == "POST":
+        category_form = CategoryForm(request.POST)
+
+        if category_form.is_valid():
+            # Asignar el usuario actual al campo 'user' del modelo de categoría
+            category = category_form.save(commit=False)
+            category.user = request.user  # Asigna el usuario actual
+            category.save()
+
+            return redirect("category-list")
+    else:
+        # Mostrar el formulario vacío si es una solicitud GET
+        category_form = CategoryForm()
+
+    context = {"category_form": category_form}
+
+    return render(request, "todo_task/categories/create.html", context)
+
+
+@login_required(login_url="/users/login/")
+def update_category(request, category_id):
+    category = get_object_or_404(Label, pk=category_id)
+
+    if request.method == "POST":
+        category_form = CategoryForm(request.POST, instance=category)
+
+        if category_form.is_valid():
+            category_form.save()
+            return redirect("category-list")
+    else:
+        category_form = CategoryForm(instance=category)
+
+    return render(
+        request,
+        "todo_task/categories/update.html",
+        {
+            "category_form": category_form,
+            "category": category,
+        },
+    )
+
+
+@login_required(login_url="/users/login/")
+def delete_category(request, category_id):
+    category = get_object_or_404(Label, pk=category_id)
+
+    if request.method == "POST":
+        category.delete()
+        return redirect("category-list")
+
+    return render(request, "todo_task/categories/delete.html", {"category": category})
+
+
+# Prioridades
+@login_required(login_url="/users/login/")
+def list_priorities(request):
+    fecha_actual = datetime.now()
+    priorities = Priority.objects.filter(user=request.user).order_by("created")
+
+    query = request.GET.get("q", "")
+
+    if query:
+        priorities = priorities.filter(name__startswith=query)
+
+    # Paginación
+    page_number = request.GET.get("page", 1)  # Valor predeterminado es 1
+
+    paginator = Paginator(priorities, 8)
+
+    try:
+        paginator_data = paginator.page(page_number)
+    except PageNotAnInteger:
+        paginator_data = paginator.page(1)
+    except EmptyPage:
+        paginator_data = paginator.page(paginator.num_pages)
+
+    context = {
+        "paginator_data": paginator_data,
+        "fecha_actual": fecha_actual,
+        "query": query,
+        "placeholder": "Buscar prioridades",
+    }
+
+    return render(request, "todo_task/priorities/list.html", context)
+
+
+@login_required(login_url="/users/login/")
+def detail_priority(request, priority_id):
+    priority = get_object_or_404(Priority, pk=priority_id)
+    delete_url = reverse("priority-delete", args=[priority_id])
+
+    task_count = priority.taskmetadata_set.count()
+
+    context = {
+        "priority": priority,
+        "delete_url": delete_url,
+        "priority_id_for_modal": priority_id,
+        "task_count": task_count,
+    }
+
+    return render(request, "todo_task/priorities/detail.html", context)
+
+
+@login_required(login_url="/users/login/")
+def create_priority(request):
+    if request.method == "POST":
+        priority_form = PriorityForm(request.POST)
+
+        if priority_form.is_valid():
+            # Asignar el usuario actual al campo 'user' del modelo de categoría
+            priority = priority_form.save(commit=False)
+            priority.user = request.user  # Asigna el usuario actual
+            priority.save()
+
+            return redirect("priority-list")
+    else:
+        # Mostrar el formulario vacío si es una solicitud GET
+        priority_form = PriorityForm()
+
+    context = {"priority_form": priority_form}
+    return render(request, "todo_task/priorities/create.html", context)
+
+
+@login_required(login_url="/users/login/")
+def update_priority(request, priority_id):
+    priority = get_object_or_404(Priority, pk=priority_id)
+
+    if request.method == "POST":
+        priority_form = PriorityForm(request.POST, instance=priority)
+
+        if priority_form.is_valid():
+            priority_form.save()
+            return redirect("priority-list")
+    else:
+        priority_form = PriorityForm(instance=priority)
+
+    return render(
+        request,
+        "todo_task/priorities/update.html",
+        {
+            "priority_form": priority_form,
+            "priority": priority,
+        },
+    )
+
+
+@login_required(login_url="/users/login/")
+def delete_priority(request, priority_id):
+    priority = get_object_or_404(Priority, pk=priority_id)
+
+    if request.method == "POST":
+        priority.delete()
+        return redirect("priority-list")
+
+    return render(request, "todo_task/priorities/delete.html", {"priority": priority})

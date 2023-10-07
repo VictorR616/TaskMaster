@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Detalle de prioridad {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'todo_task/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="card-container">
+    <h1 class="fs-6">Detalle de prioridad</h1>
+    <div class="card__body flex-column">
+        <h2 class="fs-4">{{ priority.name }}</h2>
+
+        <div class="task-info">
+            <div class="task-info-item">
+                <p>Fecha de Creación</p>
+                <p class="task_count">{{ priority.created|date:"d/m/Y" }}</p>
+            </div>
+            <div class="task-info-item">
+                <p>Cantidad de Tareas</p>
+                <p class="task_count">{{ task_count }}</p>
+            </div>
+        </div>
+
+
+        <div class="actions">
+            <h3 class="fs-3">Acciones</h3>
+            <div class="cluster">
+                <a class="btn btn-edit" href="{% url 'priority-update' priority.id %}">Editar Prioridad</a>
+                <a class="btn btn-delete" href="#" id="delete-modal">Borrar Prioridad</a>
+                <a class="btn btn-return" href="{% url 'priority-list' %}">Lista de prioridades</a>
+            </div>
+        </div>
+    </div>
+
+    {% include 'modal.html' with title="esta categoria" delete_url=delete_url category_id=category_id_for_modal %}
+
+
+</section>
+
+
+
+{% endblock %}

@@ -28,7 +28,14 @@
             </div>
             <div class="task-info-item">
                 <p>Prioridad</p>
-                <p class="categoria_count">{{ task.taskmetadata.priority }}</p>
+                <p class="categoria_count">
+                    {% if task.taskmetadata.priority %}
+                    {{ task.taskmetadata.priority }}
+                    {% else %}
+                    Sin Prioridad
+                    {% endif %}
+                </p>
+
             </div>
             <div class="task-info-item">
                 <p>Descripcion</p>

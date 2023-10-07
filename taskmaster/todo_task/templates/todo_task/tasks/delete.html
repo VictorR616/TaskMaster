@@ -1,0 +1,19 @@
+<!-- mi_plantilla.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Eliminacion de tarea {% endblock %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'todo_task/css/style.css' %}">
+{% endblock %}
+{% block content %}
+
+<!-- Contenido personalizado de list_tasks.html aquí -->
+<form method="POST">
+    {% csrf_token %} <!-- Agrega el token de seguridad CSRF -->
+    {{ form.as_p }} <!-- Renderiza los campos del formulario como párrafos -->
+    <input type="submit" value="Enviar">
+</form>
+{% endblock %}
+
+

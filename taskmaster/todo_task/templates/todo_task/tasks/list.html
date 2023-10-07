@@ -1,0 +1,36 @@
+{% extends "container.html" %}
+
+{% block section-fragment %}
+<section class="content-section">
+    <h3>Categorias</h3>
+    <div class="content-list">
+        {% for categoria in categorias %}
+        <div class="content-item">
+            <p>{{ categoria.name }}</p>
+            <p class="content-count">{{ categoria.task_count }} tasks</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+<section class="second-section">
+    <h3>Tareas</h3>
+    <div class="flex-column">
+        <ul class="item-list flex-column">
+            {% for task in paginator_data %}
+            <li class="item-element flex-column">
+                <a href="{% url 'task-detail' task.id %}" class="task-link">
+                    {{ task.title }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="item-creation fs-1">
+            <a href="{% url 'task-create' %}">Crear nueva tarea</a>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

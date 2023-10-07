@@ -1,0 +1,31 @@
+<!-- mi_plantilla.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Actualizacion de prioridad {% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'todo_task/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="container">
+    <h1 class="fs-6">Edicion de prioridad</h1>
+    <!-- Contenido personalizado de list_tasks.html aquí -->
+    <form class="form" method="POST">
+        {% csrf_token %}
+
+        {% for field in priority_form %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% endfor %}
+
+        <input type="submit" class="btn btn-primary" value="Guardar Cambios">
+
+    </form>
+    <div class="container-return-list">
+        <a class="btn btn-secondary" href="{% url 'priority-list' %}">Volver a la lista de prioridades</a>
+    </div>
+
+
+</section>
+{% endblock %}

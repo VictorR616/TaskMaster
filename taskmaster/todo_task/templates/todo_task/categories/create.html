@@ -1,0 +1,41 @@
+<!-- mi_plantilla.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Creacion de categorias {% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'todo_task/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Contenido personalizado de list_tasks.html aquí -->
+<section class="container">
+    <h1 class="fs-6">Creación de Categorias</h1>
+    <form class="form" method="POST">
+        {% csrf_token %}
+
+        {% for field in category_form %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}
+        {{ field.errors }}
+        {% endif %}
+        {% endfor %}
+
+        {% for field in task_metadata_form %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}
+        <p class="error">{{ field.errors }}</p>
+        {% endif %}
+        {% endfor %}
+        <input type="submit" class="btn btn-primary" value="Enviar">
+    </form>
+
+    <div class="container-return-list">
+        <a class="btn btn-secondary" href="{% url 'category-list' %}">Volver a la lista de categorias</a>
+    </div>
+</section>
+
+
+{% endblock %}

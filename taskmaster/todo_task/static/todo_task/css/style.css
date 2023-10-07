@@ -89,49 +89,68 @@ h3 {
     font-weight: var(--fw-bold);
 }
 
-.categorias {
+.content-section {
     display: grid;
     gap: 0.25rem;
     margin-top: var(--mt-2);
 }
 
-.categoria_lista {
+.content-section > h1 {
+    text-align: left;
+    color: var(--clr-main);
+}
+
+.content-list {
     display: flex;
     flex-wrap: wrap;
     gap: var(--gap-1);
     justify-content: space-between;
+    list-style: none; /* Elimina los puntos de la lista por defecto */
+    padding: 0; /* Elimina el relleno de la lista por defecto */
 }
 
-.categoria {
+.content-item {
     flex: 1;
     color: #fff;
-    padding-inline: clamp(0.25rem, 0.75rem, 2rem);
-    padding-block: 1rem;
     border-radius: var(--br);
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
     flex-basis: 33%;
 }
 
-.categoria > p:first-child {
+.content-item a {
+    display: block;
+    padding-inline: clamp(0.25rem, 0.75rem, 2rem);
+    padding-block: 1rem;
+    color: white;
+    text-decoration: none;
+}
+
+.content-item > p {
+    padding-inline: clamp(0.25rem, 0.75rem, 2rem);
+    padding-block: 0.5rem;
+    color: white;
+}
+
+.content-item > p:first-child {
     font-weight: var(--fw-bold);
 }
 
-.categoria_count {
+.content-count {
     color: #ddd;
 }
 
 /* Estilo para la lista de tareas */
-.tasks {
+.second-section {
     margin-top: var(--mt-2);
 }
 
-.task-list {
+.item-list {
     gap: var(--gap-1);
     list-style-type: none;
     flex-grow: 1;
 }
 
-.task-element {
+.item-element {
     background-color: #f0f1f166;
     border: 1px solid #ddd;
     border-radius: var(--br);
@@ -149,12 +168,13 @@ h3 {
     text-decoration: underline;
 }
 
-.task-creation {
-    align-self: flex-end;
+.item-creation {
+    display: flex;
+    justify-content: flex-end;
     margin-top: var(--mt-2);
 }
 
-.task-creation a {
+.item-creation a {
     background-color: var(--clr-main);
     color: white;
     padding-inline: clamp(1rem, 1.5rem, 2rem);
@@ -166,7 +186,7 @@ h3 {
     transition: color 250ms ease-in-out, background 250ms ease-in-out;
 }
 
-.task-creation a:hover {
+.item-creation a:hover {
     color: var(--clr-main);
     background-color: transparent;
     outline: 1px solid var(--clr-main);
@@ -175,6 +195,7 @@ h3 {
 
 /* ------------------------------- Detalle tarea ------------------------------- */
 .card__body {
+    width: 600px;
     background-color: #fff;
     border-radius: calc(var(--br) - 5px);
     padding: 2rem;
@@ -184,7 +205,10 @@ h3 {
     font-weight: var(--fw-bold);
     margin-block: 0.25rem;
     color: var(--clr-main);
+    word-wrap: break-word; /* O también puedes usar overflow-wrap: break-word; */
 }
+
+
 
 .task-info {
     display: flex;
