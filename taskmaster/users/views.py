@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import EmptyPage, Paginator
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
@@ -16,24 +16,25 @@ from .decorators import admin_or_worker_required
 def list_users(request):
     users = CustomUser.objects.all()
 
-    # Agregar paginación
-    page_number = request.GET.get("page")  # Devuelve un str
+    # Paginación
+    page_number = request.GET.get("page")
 
     try:
-        page_number = int(page_number)  # Convierte a entero
+        page_number = int(page_number)
     except (TypeError, ValueError):
-        page_number = 1  # Si no es un número válido, muestra la primera página
+        page_number = 1
 
-    paginator = Paginator(
-        users, 4
-    )  # Cambia 10 al número de elementos por página que desees
+    paginator = Paginator(users, 4)
 
     try:
-        users = paginator.page(page_number)
+        paginator_data = paginator.page(page_number)
+    except PageNotAnInteger:
+        paginator_data = paginator.page(1)
     except EmptyPage:
-        users = paginator.page(1)  # Si la página está vacía, muestra la primera página
+        paginator_data = paginator.page(1)
 
-    return render(request, "users/list.html", {"users": users})
+    return render(request, "users/list.html", {"paginator_data": paginator_data})
+
 
 
 @login_required(login_url="/users/login/")

@@ -8,9 +8,9 @@
 
 {% block content %}
 <section class="container">
-    
+
     <h1 class="fs-6">Taskmaster</h1>
-    
+
     <form class="search-form" method="GET">
         <input class="fs-1" type="text" name="q" value="{{ query }}" placeholder="Buscar tareas">
         <input class="btn btn-secondary" type="submit" value="Buscar">
@@ -26,12 +26,12 @@
             </div>
             <div class="user-options fs-1">
                 <a href="#"><i class="bi bi-grid"></i> Categorias</a>
+                <a href="#"><i class="bi bi-gear"></i> Prioridades</a>
                 <a href="#"><i class="bi bi-bar-chart"></i> Analiticas</a>
-                <a href="#"><i class="bi bi-gear"></i> Opciones</a>
 
             </div>
         </div>
-        
+
         <section class="task">
             <h2 class="fs-4">Hola, {{ request.user.first_name }}!</h2>
             <p class="fs-3">{{ fecha_actual|date:"l, j \d\e F \d\e Y" }}</p>
@@ -53,7 +53,7 @@
                 <h3>Tareas</h3>
                 <div class="flex-column">
                     <ul class="task-list flex-column">
-                        {% for task in tasks %}
+                        {% for task in paginator_data %}
                         <li class="task-element flex-column">
                             <a href="{% url 'task-detail' task.id %}" class="task-link">
                                 {{ task.title }}
@@ -72,25 +72,7 @@
     </section>
 
     <!-- Enlaces de paginación -->
-    <div class="pagination">
-        <span class="step-links">
-            {% if tasks.has_previous %}
-            <a href="?page={{ tasks.previous_page_number }}">Anterior</a>
-            {% else %}
-            <span class="disabled">Anterior</span>
-            {% endif %}
-
-            <span class="current-page">
-                Página {{ tasks.number }} de {{ tasks.paginator.num_pages }}.
-            </span>
-
-            {% if tasks.has_next %}
-            <a href="?page={{ tasks.next_page_number }}">Siguiente</a>
-            {% else %}
-            <span class="disabled">Siguiente</span>
-            {% endif %}
-        </span>
-    </div>
+    {% include 'pagination.html' %}
 
 </section>
 

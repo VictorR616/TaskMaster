@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import EmptyPage, Paginator
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -13,7 +13,6 @@ from .models import Label, Task
 @login_required(login_url="/users/login/")
 def list_tasks(request):
     fecha_actual = datetime.now()
-    # Obtener las tareas del usuario actual
     tasks = Task.objects.filter(user=request.user).order_by("created")
 
     query = request.GET.get("q", "")
@@ -21,32 +20,29 @@ def list_tasks(request):
     if query:
         tasks = tasks.filter(title__startswith=query)
 
-    # Agregar paginación
-    page_number = request.GET.get("page")
-
-    try:
-        page_number = int(page_number)
-    except (TypeError, ValueError):
-        page_number = 1
+    # Paginación
+    page_number = request.GET.get("page", 1)  # Valor predeterminado es 1
 
     paginator = Paginator(tasks, 4)
 
     try:
-        tasks = paginator.page(page_number)
+        paginator_data = paginator.page(page_number)
+    except PageNotAnInteger:
+        paginator_data = paginator.page(1)
     except EmptyPage:
-        tasks = paginator.page(1)
+        paginator_data = paginator.page(paginator.num_pages)
 
-    # Obtener el conteo de tareas por categoría
     categorias = Label.objects.annotate(task_count=Count("task"))
 
     context = {
-        "tasks": tasks,
+        "paginator_data": paginator_data,
         "fecha_actual": fecha_actual,
         "query": query,
         "categorias": categorias,
     }
 
     return render(request, "todo_task/list.html", context)
+
 
 
 @login_required(login_url="/users/login/")
