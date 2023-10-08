@@ -332,3 +332,41 @@ def delete_priority(request, priority_id):
         return redirect("priority-list")
 
     return render(request, "todo_task/priorities/delete.html", {"priority": priority})
+
+
+@login_required(login_url="/users/login/")
+def analytics(request):
+    fecha_actual = datetime.now()
+
+    # Obtén el usuario actual
+    user = request.user
+
+    # Filtra todas las tareas del usuario actual
+    todas_las_tareas = Task.objects.filter(user=user)
+
+    # Cantidad de tareas totales
+    total_tareas = todas_las_tareas.count()
+
+    # Cantidad de tareas sin completar
+    tareas_sin_completar = todas_las_tareas.filter(complete=False).count()
+
+    # Cantidad de tareas completadas
+    tareas_completadas = todas_las_tareas.filter(complete=True).count()
+
+    # Número de categorías asociadas al usuario actual
+    categorias = Label.objects.filter(user=user).count()
+
+    # Número de prioridades asociadas al usuario actual
+    prioridades = Priority.objects.filter(user=user).count()
+
+    # Pasamos los datos al template
+    context = {
+        'total_tareas': total_tareas,
+        'tareas_sin_completar': tareas_sin_completar,
+        'tareas_completadas': tareas_completadas,
+        'categorias': categorias,
+        'prioridades': prioridades,
+        "fecha_actual" : fecha_actual,
+    }
+
+    return render(request, 'todo_task/tasks/analytics.html', context)

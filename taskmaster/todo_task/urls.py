@@ -21,4 +21,9 @@ urlpatterns = [
     path("priorities/<int:priority_id>/", views.detail_priority, name="priority-detail"),
     path("priorities/<int:priority_id>/update/", views.update_priority, name="priority-update"),
     path("priorities/<int:priority_id>/delete/", views.delete_priority, name="priority-delete"),
+
+    # Analiticas
+    path("tasks/analytics/", views.analytics, name="analytics"),
+
+
 ]

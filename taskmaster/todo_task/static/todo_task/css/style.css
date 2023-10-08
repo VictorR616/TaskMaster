@@ -1,10 +1,11 @@
 /* NUEVO DISEÑO */
 :root {
     --clr-main: #206de0;
-    --clr-category-1: #a328b9;
-    --clr-category-2: #3498db;
-    --clr-category-3: #e74c3c;
-    --clr-category-4: #27ae60;
+    --clr-item-1: #a328b9;
+    --clr-item-2: #3498db;
+    --clr-item-3: #e74c3c;
+    --clr-item-4: #27ae60;
+    --clr-item-5: #f1c40f;
 
     --br: 10px;
     --gap-1: 1rem;
@@ -191,6 +192,7 @@ h3 {
     background-color: transparent;
     outline: 1px solid var(--clr-main);
 }
+
 /* ------------------------------- Lista Tareas ------------------------------- */
 
 /* ------------------------------- Detalle tarea ------------------------------- */
@@ -208,15 +210,13 @@ h3 {
     word-wrap: break-word; /* O también puedes usar overflow-wrap: break-word; */
 }
 
-
-
-.task-info {
+.card-info {
     display: flex;
     flex-wrap: wrap;
     gap: var(--gap-1);
 }
 
-.task-info-item {
+.card-info-item {
     flex: 1;
     color: #fff;
     padding: 1rem;
@@ -225,25 +225,28 @@ h3 {
     flex-basis: calc(33.33% - 1rem);
 }
 
-.task-info-item > p:first-child {
+.card-info-item > p:first-child {
     font-weight: var(--fw-bold);
 }
 
-.task-info-item:nth-child(1) {
-    background-color: var(--clr-category-1);
+.card-info-item:nth-child(1) {
+    background-color: var(--clr-item-1);
 }
 
-.task-info-item:nth-child(2) {
-    background-color: var(--clr-category-2);
+.card-info-item:nth-child(2) {
+    background-color: var(--clr-item-2);
 }
 
-.task-info-item:nth-child(3) {
-    background-color: var(--clr-category-3);
+.card-info-item:nth-child(3) {
+    background-color: var(--clr-item-3);
 }
 
-.task-info-item:nth-child(4) {
-    flex-basis: 100%;
-    background-color: var(--clr-category-4);
+.card-info-item:nth-child(4) {
+    background-color: var(--clr-item-4);
+}
+
+.card-info-item:nth-child(5) {
+    background-color: var(--clr-item-5);
 }
 
 .actions {
@@ -251,6 +254,48 @@ h3 {
 }
 
 /* ------------------------------- Detalle tarea ------------------------------- */
+
+/* ------------------------------- Analiticas ------------------------------- */
+.content-analytics {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-1);
+    list-style-type: none;
+}
+
+.content-item-analytic {
+    border-radius: var(--br);
+}
+
+.content-item-analytic:nth-child(1) {
+    background-color: var(--clr-item-1);
+}
+
+.content-item-analytic:nth-child(2) {
+    background-color: var(--clr-item-2);
+}
+
+.content-item-analytic:nth-child(3) {
+    background-color: var(--clr-item-3);
+}
+
+.content-item-analytic:nth-child(4) {
+    background-color: var(--clr-item-4);
+}
+
+.content-item-analytic:nth-child(5) {
+    background-color: var(--clr-item-5);
+}
+
+.content-item-analytic a {
+    display: block;
+    padding: 1rem;
+    color: white;
+    height: 100%;
+    text-decoration: none;
+}
+/* ------------------------------- Analiticas ------------------------------- */
+
 @media (min-width: 45em) {
     .card {
         grid-template-columns: 30% 1fr;
@@ -277,5 +322,18 @@ h3 {
 
     .cluster a:last-child {
         flex-basis: 100%;
+    }
+
+    .content-analytics {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+    .grid-col-span-2 {
+        grid-column: span 2;
+    }
+
+    .grid-col-span-3 {
+        grid-column: span 3;
     }
 }
