@@ -19,6 +19,10 @@
                 <p class="categoria_count">{{ task.created|date:"d/m/Y" }}</p>
             </div>
             <div class="task-info-item">
+                <p>Fecha a realizar</p>
+                <p class="categoria_count">{{ task.due_date|date:"d/m/Y" }}</p>
+            </div>
+            <div class="task-info-item">
                 <p>Categorias</p>
                 <p class="categoria_count">
                     {% for label in task.labels.all %}

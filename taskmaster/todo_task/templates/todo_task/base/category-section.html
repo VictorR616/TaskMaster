@@ -1,0 +1,13 @@
+<section class="content-section">
+    <h3>Categorias</h3>
+    <div class="content-list">
+        {% for categoria in categorias %}
+        {% if categoria.task_count > 0 %}
+        <div class="content-item">
+            <p>{{ categoria.name }}</p>
+            <p class="content-count">{{ categoria.task_count }} tasks</p>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</section>

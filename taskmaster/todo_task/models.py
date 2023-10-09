@@ -5,6 +5,7 @@ from users.models import CustomUser  # Importa el modelo de usuario personalizad
 class Task(models.Model):
     title = models.CharField(max_length=35)
     complete = models.BooleanField(default=False)
+    due_date = models.DateField()
     created = models.DateTimeField(auto_now_add=True)
     labels = models.ManyToManyField("Label")
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="tasks")

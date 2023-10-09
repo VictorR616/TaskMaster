@@ -1,6 +1,11 @@
 {% extends "container.html" %}
 
+{% block search-form %}
+{% include 'search_form.html' with query=query placeholder=placeholder %}
+{% endblock %}
+
 {% block section-fragment %}
+
 <section class="content-section">
     <h1 class="fs-3">Prioridades</h1>
     <ul class="content-list">
@@ -19,4 +24,8 @@
     </div>
 </section>
 
+{% endblock %}
+
+{% block pagination %}
+{% include 'pagination.html' %}
 {% endblock %}

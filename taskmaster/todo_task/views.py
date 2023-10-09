@@ -11,9 +11,17 @@ from .models import Label, Priority, Task
 
 
 @login_required(login_url="/users/login/")
-def list_tasks(request):
+def list_tasks(request, filter_type=None):
     fecha_actual = datetime.now()
-    tasks = Task.objects.filter(user=request.user).order_by("created")
+    tasks = Task.objects.filter(user=request.user)
+    
+    if filter_type == "complete":
+        tasks = tasks.filter(complete=True)
+    elif filter_type == "incomplete":
+        tasks = tasks.filter(complete=False)
+    elif filter_type == "today_due_date":
+        today = fecha_actual.date()
+        tasks = tasks.filter(due_date=today)
 
     query = request.GET.get("q", "")
 
@@ -44,7 +52,34 @@ def list_tasks(request):
         "placeholder": "Buscar tareas",
     }
 
-    return render(request, "todo_task/tasks/list.html", context)
+    template = "todo_task/tasks/list-due-date.html"  # Plantilla predeterminada
+
+    if filter_type == "complete":
+        template = "todo_task/tasks/list-complete.html"
+    elif filter_type == "incomplete":
+        template = "todo_task/tasks/list-incomplete.html"
+    elif filter_type is None:
+        template = "todo_task/tasks/list.html"
+
+    return render(request, template, context)
+
+
+@login_required(login_url="/users/login/")
+def list_tasks_all(request):
+    return list_tasks(request, filter_type=None)
+
+@login_required(login_url="/users/login/")
+def list_tasks_incomplete(request):
+    return list_tasks(request, filter_type="incomplete")
+
+@login_required(login_url="/users/login/")
+def list_tasks_complete(request):
+    return list_tasks(request, filter_type="complete")
+
+@login_required(login_url="/users/login/")
+def list_tasks_today_due_date(request):
+    return list_tasks(request, filter_type="today_due_date")
+
 
 
 @login_required(login_url="/users/login/")
@@ -361,12 +396,12 @@ def analytics(request):
 
     # Pasamos los datos al template
     context = {
-        'total_tareas': total_tareas,
-        'tareas_sin_completar': tareas_sin_completar,
-        'tareas_completadas': tareas_completadas,
-        'categorias': categorias,
-        'prioridades': prioridades,
-        "fecha_actual" : fecha_actual,
+        "total_tareas": total_tareas,
+        "tareas_sin_completar": tareas_sin_completar,
+        "tareas_completadas": tareas_completadas,
+        "categorias": categorias,
+        "prioridades": prioridades,
+        "fecha_actual": fecha_actual,
     }
 
-    return render(request, 'todo_task/tasks/analytics.html', context)
+    return render(request, "todo_task/tasks/analytics.html", context)

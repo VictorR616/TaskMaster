@@ -15,11 +15,9 @@
         {% csrf_token %}
         
         {% for field in task_form %}
-            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field.label_tag }}
             {{ field }}
-            {% if field.errors %}
-                {{ field.errors }}
-            {% endif %}
+            {{ field.errors }}
         {% endfor %}
 
         {% for field in task_metadata_form %}

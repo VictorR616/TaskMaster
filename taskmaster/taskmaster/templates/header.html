@@ -5,7 +5,7 @@
     </button>
     <nav>
         <ul id="primary-navigation" data-visible="false" class="primary-navigation flex">
-            <li class="active"><a href="{% url 'task-list' %}">Tareas</a></li>
+            <li class="active"><a href="{% url 'task-list-today-due-date' %}">Tareas</a></li>
             {% if request.user.is_staff %}
             <li class="active"><a href="{% url 'user-list' %}">Usuarios</a></li>
             {% endif %}

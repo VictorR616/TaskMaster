@@ -4,19 +4,35 @@ from .models import Label, Priority, Task, TaskMetadata
 
 
 class BaseTaskForm(forms.ModelForm):
+    # error_css_class = 'error-field' Indica la clase que ocupa el error del input
+    # required_css_class = 'required-field' Indica la clase del input
+    # title = forms.CharField(
+    #     widget=forms.TextInput(
+    #         attrs={"class": "form-control", "placeholder": "Título de la Tarea"}
+    #     )
+    # )
+
     class Meta:
         model = Task
         fields = [
             "title",
             "complete",
             "labels",
+            "due_date",
         ]
 
         labels = {
             "title": "Título de la Tarea",
             "complete": "Completada",
-            "labels": "Categorias",
-            # Otras etiquetas personalizadas si las tienes
+            "labels": "Categorías",
+            "due_date": "Fecha a realizar tarea",
+        }
+
+        widgets = {
+            "title": forms.TextInput(attrs={"placeholder": "Ingrese el título"}),
+            "due_date": forms.DateInput(
+                attrs={"type": "date", "placeholder": "Seleccione la fecha"}
+            ),
         }
 
     def clean_title(self):
@@ -31,18 +47,10 @@ class TaskForm(BaseTaskForm):
         # Excluir el campo 'complete' en TaskForm
         exclude = ["complete"]
 
-        # Puedes agregar campos adicionales o personalizaciones aquí si es necesario
-
 
 class TaskEditForm(BaseTaskForm):
     class Meta(BaseTaskForm.Meta):
-        fields = [
-            "title",
-            "complete",
-            "labels",
-        ]
-
-    # Puedes agregar validaciones específicas para TaskEditForm aquí si es necesario
+        pass
 
 
 class TaskMetaDataForm(forms.ModelForm):
@@ -53,7 +61,12 @@ class TaskMetaDataForm(forms.ModelForm):
         labels = {
             "description": "Descripcion",
             "priority": "Prioridad",
-            # Otras etiquetas personalizadas si las tienes
+        }
+
+        widgets = {
+            "description": forms.TextInput(
+                attrs={"placeholder": "Ingrese la descripción"}
+            ),
         }
 
 

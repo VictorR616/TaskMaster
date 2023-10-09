@@ -12,7 +12,6 @@
     <h1 class="fs-6">Taskmaster</h1>
 
     {% block search-form %}
-        {% include 'search_form.html' with query=query placeholder=placeholder %}
     {% endblock %}
 
 
@@ -47,7 +46,8 @@
     </section>
 
     <!-- Enlaces de paginación -->
-    {% include 'pagination.html' %}
+    {% block pagination %}
+    {% endblock %}
 
 </section>
 

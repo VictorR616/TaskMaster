@@ -390,6 +390,8 @@ h1 {
     margin-block: 1rem;
 }
 
+
+
 .form input[type="checkbox"] {
     align-self: flex-start;
     width: 1.5rem;
@@ -431,9 +433,6 @@ h1 {
     border-color: purple;
 }
 
-.form input::placeholder {
-    color: var(--clr-white);
-}
 
 .form textarea {
     resize: none;
