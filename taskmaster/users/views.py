@@ -14,7 +14,7 @@ from .decorators import admin_or_worker_required
 @login_required(login_url="/users/login/")
 @admin_or_worker_required
 def list_users(request):
-    users = CustomUser.objects.all()
+    users = CustomUser.objects.exclude(pk=request.user.pk)
 
     # Paginación
     page_number = request.GET.get("page")
@@ -36,16 +36,13 @@ def list_users(request):
     return render(request, "users/list.html", {"paginator_data": paginator_data})
 
 
-
 @login_required(login_url="/users/login/")
 def detail_user(request, user_id):
     user = get_object_or_404(CustomUser, pk=user_id)
-    is_not_current_user = request.user != user
     delete_url = reverse("user-delete", args=[user_id])
 
     context = {
         "user": user,
-        "is_not_current_user": is_not_current_user,
         "delete_url": delete_url,
         "user_id_for_modal": user_id,
     }
@@ -96,6 +93,19 @@ def delete_user(request, user_id):
 
     return render(request, "users/delete.html", {"user": user})
 
+
+@login_required(login_url="/users/login/")
+def reactivate_user(request, user_id):
+    user = get_object_or_404(CustomUser, pk=user_id)
+
+    if request.method == "POST":
+        # Cambiar el estado de is_active a False en lugar de eliminar al usuario
+        user.is_active = True
+        user.save()
+        messages.success(request, "Usuario reactivado correctamente.")
+        return redirect("user-list")
+
+    return render(request, "users/delete.html", {"user": user})
 
 # Manejo de sesion
 

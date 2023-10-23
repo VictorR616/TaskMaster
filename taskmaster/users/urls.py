@@ -8,6 +8,7 @@ urlpatterns = [
     path('<int:user_id>/', views.detail_user, name='user-detail'),
     path('<int:user_id>/update/', views.update_user, name='user-update'),
     path('<int:user_id>/delete/', views.delete_user, name='user-delete'),
+    path('<int:user_id>/reactivate_user//', views.reactivate_user, name='user-reactivate'),
     
     # Manejo de sesión
     path('login/', views.iniciar_sesion, name='login'),

@@ -60,9 +60,17 @@
             <h3 class="fs-3">Acciones</h3>
             <div class="cluster">
                 <a class="btn btn-edit fs-1" href="{% url 'user-update' user.id %}">Editar Usuario</a>
-                {% if is_not_current_user %}
-                <a id="delete-modal" class="btn btn-delete fs-1" href="#">Borrar Usuario</a>
+                {% if user.is_active %}
+                <button id="delete-modal" class="btn btn-delete fs-1">Borrar Usuario</button>
+                {% else %}
+                <form method="POST" action="{% url 'user-reactivate' user.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-create fs-1">Reactivar Usuario</button>
+                </form>
+
                 {% endif %}
+
+
                 <a class="btn btn-return fs-1" href="{% url 'user-list' %}">Lista de usuarios</a>
             </div>
         </div>
