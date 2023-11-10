@@ -17,7 +17,9 @@
         {% for field in task_form %}
             {{ field.label_tag }}
             {{ field }}
-            {{ field.errors }}
+            {% if field.errors %}
+            <p class="error">{{ field.errors }}</p>
+            {% endif %} 
         {% endfor %}
 
         {% for field in task_metadata_form %}

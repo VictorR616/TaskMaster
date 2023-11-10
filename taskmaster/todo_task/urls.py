@@ -4,18 +4,12 @@ from . import views
 
 urlpatterns = [
     # Tasks URLS
-    path("tasks/", views.list_tasks_all, name="task-list"),
-    path("tasks/incomplete/", views.list_tasks_incomplete, name="task-list-incomplete"),
-    path("tasks/complete/", views.list_tasks_complete, name="task-list-complete"),
-    path(
-        "tasks/today_due_date/",
-        views.list_tasks_today_due_date,
-        name="task-list-today-due-date",
-    ),
+path("tasks/", views.list_tasks, name="task-list"),
     path("tasks/create/", views.create_task, name="task-create"),
     path("tasks/<int:task_id>/", views.detail_task, name="task-detail"),
     path("tasks/<int:task_id>/update/", views.update_task, name="task-update"),
     path("tasks/<int:task_id>/delete/", views.delete_task, name="task-delete"),
+    path("tasks/filtered/<str:filter_type>/", views.list_tasks, name="task-list-with-filter"),
     # Categories URLS
     path("categories/", views.list_categories, name="category-list"),
     path("categories/create/", views.create_category, name="category-create"),
@@ -49,5 +43,5 @@ urlpatterns = [
         name="priority-delete",
     ),
     # Analiticas
-    path("tasks/analytics/", views.analytics, name="analytics"),
+    path("analytics/", views.analytics, name="analytics"),
 ]

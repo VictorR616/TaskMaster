@@ -10,20 +10,32 @@
 <section class="content-section">
     <h1 class="fs-3">Estadísticas de Tareas</h1>
     <ul class="grid-layout">
-        <li class="content-item-analytic grid-col-span-2"><a href="{% url 'task-list' %}">Cantidad de tareas totales: 
-            {{ total_tareas }}</a></li>
-        <li class="content-item-analytic grid-col-span-2"><a href="{% url 'task-list-incomplete' %}">Cantidad de tareas
-                sin completar: {{ tareas_sin_completar }}</a></li>
-        <li class="content-item-analytic grid-col-span-2"><a href="{% url 'task-list-complete' %}">Cantidad de tareas
-                completadas: {{ tareas_completadas }}</a></li>
-        <li class="content-item-analytic grid-col-span-3"><a href="{% url 'category-list' %}">Número de categorías: 
-            {{ categorias }}</a></li>
-        <li class="content-item-analytic grid-col-span-3"><a href="{% url 'priority-list' %}">Número de prioridades: 
-            {{ prioridades }}</a></li>
+        <li class="content-item-analytic grid-col-span-2">
+            <a href="{% url 'task-list' %}">
+                Cantidad de tareas sin completar: {{ tareas_sin_completar }}
+            </a>
+        </li>
+        <li class="content-item-analytic grid-col-span-2">
+            <a href="{% url 'task-list-with-filter' filter_type='complete' %}">
+                Cantidad de tareas completadas: {{ tareas_completadas }}
+            </a>
+        </li>
+        <li class="content-item-analytic grid-col-span-2">
+            <a href="{% url 'task-list-with-filter' filter_type='all' %}">
+                Cantidad de tareas totales: {{ total_tareas }}
+            </a>
+        </li>
+        <li class=" content-item-analytic grid-col-span-3">
+            <a href="{% url 'category-list' %}">
+                Número de categorías: {{ categorias }}
+            </a>
+        </li>
+        <li class="content-item-analytic grid-col-span-3">
+            <a href="{% url 'priority-list' %}">
+                Número de prioridades: {{ prioridades }}
+            </a>
+        </li>
     </ul>
-
-
-
 </section>
 
 

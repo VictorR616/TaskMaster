@@ -4,14 +4,6 @@ from .models import Label, Priority, Task, TaskMetadata
 
 
 class BaseTaskForm(forms.ModelForm):
-    # error_css_class = 'error-field' Indica la clase que ocupa el error del input
-    # required_css_class = 'required-field' Indica la clase del input
-    # title = forms.CharField(
-    #     widget=forms.TextInput(
-    #         attrs={"class": "form-control", "placeholder": "Título de la Tarea"}
-    #     )
-    # )
-
     class Meta:
         model = Task
         fields = [
@@ -44,7 +36,6 @@ class BaseTaskForm(forms.ModelForm):
 
 class TaskForm(BaseTaskForm):
     class Meta(BaseTaskForm.Meta):
-        # Excluir el campo 'complete' en TaskForm
         exclude = ["complete"]
 
 

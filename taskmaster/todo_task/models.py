@@ -2,21 +2,6 @@ from django.db import models
 from users.models import CustomUser  # Importa el modelo de usuario personalizado
 
 
-class Task(models.Model):
-    title = models.CharField(max_length=35)
-    complete = models.BooleanField(default=False)
-    due_date = models.DateField()
-    created = models.DateTimeField(auto_now_add=True)
-    labels = models.ManyToManyField("Label")
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="tasks")
-
-    class Meta:
-        ordering = ["-created"]
-
-    def __str__(self):
-        return self.title
-
-
 class Label(models.Model):
     name = models.CharField(max_length=50)
     created = models.DateTimeField(auto_now_add=True)
@@ -29,6 +14,21 @@ class Label(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Task(models.Model):
+    title = models.CharField(max_length=35)
+    complete = models.BooleanField(default=False)
+    due_date = models.DateField()
+    created = models.DateTimeField(auto_now_add=True)
+    labels = models.ManyToManyField(Label)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="tasks")
+
+    class Meta:
+        ordering = ["-created"]
+
+    def __str__(self):
+        return self.title
 
 
 class Priority(models.Model):

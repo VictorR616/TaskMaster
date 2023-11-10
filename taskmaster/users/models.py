@@ -40,12 +40,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(default=timezone.now) 
     is_active = models.BooleanField(default=True)  
     is_staff = models.BooleanField(default=False)  
-    is_worker = models.BooleanField(default=False)  
 
     # Ejemplo de campo personalizado: foto de perfil
-    profile_picture = models.ImageField(upload_to='users/images/profile_pictures/', 
-                                        blank=True, null=True)
-
+    profile_picture = models.ImageField(
+        upload_to='users/images/profile_pictures/',
+        default='users/images/profile_pictures/default.png'
+    )
+        
     objects = CustomUserManager()  # Instanciamos nuestro administrador personalizado
 
     USERNAME_FIELD = "email"  

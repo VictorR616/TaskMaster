@@ -14,13 +14,32 @@
     <div class="flex-column">
         <ul class="item-list flex-column">
             {% for task in paginator_data %}
+            {% if filter_type == 'complete' %}
+            {% if task.complete %}
             <li class="item-element flex-column">
                 <a href="{% url 'task-detail' task.id %}" class="task-link">
                     {{ task.title }}
                 </a>
             </li>
+            {% endif %}
+            {% elif filter_type == 'incomplete' %}
+            {% if not task.complete %}
+            <li class="item-element flex-column">
+                <a href="{% url 'task-detail' task.id %}" class="task-link">
+                    {{ task.title }}
+                </a>
+            </li>
+            {% endif %}
+            {% else %}
+            <li class="item-element flex-column">
+                <a href="{% url 'task-detail' task.id %}" class="task-link">
+                    {{ task.title }}
+                </a>
+            </li>
+            {% endif %}
             {% endfor %}
         </ul>
+
         <div class="item-creation fs-1">
             <a href="{% url 'task-create' %}">Crear nueva tarea</a>
         </div>

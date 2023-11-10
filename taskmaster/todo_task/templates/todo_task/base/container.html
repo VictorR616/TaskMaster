@@ -19,8 +19,11 @@
 
         <div class="user flex-column">
             <div class="user-info flex-column">
-                <img src="{{ request.user.profile_picture.url }}" alt="Foto de perfil">
-
+                {% if user.profile_picture %}
+                <img src="{{ request.user.profile_picture.url }}" alt="{{ user.first_name }} {{ user.last_name }}">
+                {% else %}
+                <p class="placeholder">No hay foto de perfil disponible.</p>
+                {% endif %}
                 <h2 class="fs-4">{{ request.user.first_name }}</h2>
             </div>
             <div class="user-options fs-1">

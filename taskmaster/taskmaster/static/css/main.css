@@ -502,6 +502,7 @@ h1 {
 }
 
 .btn-delete {
+    color: var(--clr-white);
     background-color: var(--clr-btn-delete);
 }
 
