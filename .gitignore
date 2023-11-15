@@ -1,1 +1,50 @@
-env/
+# Entornos virtuales
+Pipfile
+Pipfile.lock
+
+# Archivos de configuración
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Archivos de configuración de Django
+*.log
+db.sqlite3
+
+# Archivos locales de desarrollo
+*.sqlite3
+*.db
+
+# Archivos generados por IDEs
+.idea/
+.vscode/
+
+# Archivos de configuración de sistema operativo
+*.DS_Store
+Thumbs.db
+
+# Archivos de caché y sesiones de Django
+*.cache/
+*.session/
+
+# Archivos de registro
+log/
+logs/
+
+# Archivos de compilación y distribución
+*.pyc
+*.pyo
+*.pyd
+*.pyz
+*.pyw
+__pycache__/
+
+# Archivos de dependencias
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Entorno de desarrollo
+.env
+
+TaskMaster.code-workspace

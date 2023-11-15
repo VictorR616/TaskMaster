@@ -19,16 +19,10 @@
 
         <div class="user flex-column">
             <div class="user-info flex-column">
-                {% if user.profile_picture %}
                 <img src="{{ request.user.profile_picture.url }}" alt="{{ user.first_name }} {{ user.last_name }}">
-                {% else %}
-                <p class="placeholder">No hay foto de perfil disponible.</p>
-                {% endif %}
-                <h2 class="fs-4">{{ request.user.first_name }}</h2>
             </div>
             <div class="user-options fs-1">
                 <a href="{% url 'category-list' %}"><i class="bi bi-grid"></i> Categorias</a>
-
                 <a href="{% url 'priority-list' %}"><i class="bi bi-gear"></i> Prioridades</a>
                 <a href="{% url 'analytics' %}"><i class="bi bi-bar-chart"></i> Analiticas</a>
 
@@ -36,7 +30,7 @@
         </div>
 
         <section class="task">
-            <h2 class="fs-4">Hola, {{ request.user.first_name }}!</h2>
+            <h2 class="fs-4">Hola, {% if user.first_name %}{{ user.first_name }}{% else %} Invitado{% endif %}!</h2>
             <p class="fs-3">{{ fecha_actual|date:"l, j \d\e F \d\e Y" }}</p>
 
             <!-- Incluir seccion generica -->

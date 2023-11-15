@@ -11,7 +11,7 @@ from users.models import CustomUser
 
 # Definir una función que verifica si el usuario es un administrador
 def is_admin(user):
-    return user.is_authenticated and user.is_staff 
+    return user.is_authenticated and user.is_staff
 
 
 @login_required(login_url="/users/login/")
@@ -52,7 +52,7 @@ def detail_user(request, user_id):
 
     return render(request, "users/detail.html", context)
 
-@user_passes_test(is_admin)
+
 def create_user(request):
     if request.method == "POST":
         form = UserForm(request.POST, request.FILES)
@@ -111,13 +111,14 @@ def reactivate_user(request, user_id):
 
     return render(request, "users/delete.html", {"user": user})
 
+
 # Manejo de sesion
 
 
 def iniciar_sesion(request):
     if request.user.is_authenticated:
         # Si el usuario ya ha iniciado sesión, redirige a la página deseada.
-        return redirect("list_tasks")  # Cambia 'user_list' a la URL que desees.
+        return redirect("task-list")  # Cambia 'user_list' a la URL que desees.
 
     if request.method == "POST":
         email = request.POST["email"]

@@ -44,7 +44,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     # Ejemplo de campo personalizado: foto de perfil
     profile_picture = models.ImageField(
         upload_to='users/images/profile_pictures/',
-        default='users/images/profile_pictures/default.png'
+        default='users/images/profile_pictures/default.png', blank=True
     )
         
     objects = CustomUserManager()  # Instanciamos nuestro administrador personalizado

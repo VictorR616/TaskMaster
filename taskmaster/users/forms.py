@@ -38,11 +38,7 @@ class UserForm(forms.ModelForm):
         label='Apellido',
         max_length=30,
     )
-    profile_picture = forms.ImageField(
-        widget=forms.ClearableFileInput(attrs={'class': 'custom-input'}),
-        # Habilitar el autocompletado para el campo de imagen de perfil
-        label='Imagen de perfil',
-    )
+
 
     class Meta:
         model = CustomUser
@@ -80,11 +76,7 @@ class UserEditForm(forms.ModelForm):
         label='Apellido',
         max_length=30,
     )
-    profile_picture = forms.ImageField(
-        widget=forms.ClearableFileInput(attrs={'class': 'custom-input'}),
-        # Habilitar el autocompletado para el campo de imagen de perfil
-        label='Imagen de perfil',
-    )
+    
 
     class Meta:
         model = CustomUser

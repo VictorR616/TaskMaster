@@ -125,9 +125,9 @@ USE_TZ = True
 # Ruta de archivos estaticos
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'taskmaster', 'static'),
-    os.path.join(BASE_DIR, 'users', 'static'),
-    os.path.join(BASE_DIR, 'todo_task', 'static'),
+    os.path.join(BASE_DIR, "taskmaster", "static"),
+    os.path.join(BASE_DIR, "users", "static"),
+    os.path.join(BASE_DIR, "todo_task", "static"),
 ]
 
 
@@ -136,9 +136,14 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = 'users.CustomUser'  # Utilizando usuario personalizado
+AUTH_USER_MODEL = "users.CustomUser"  # Utilizando usuario personalizado
 
 # Configuracion del manejo de sesiones
-SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
+LOGIN_REDIRECT_URL = "task-list"  # Cambia 'list_tasks' a la vista que desees después del inicio de sesión
+LOGOUT_REDIRECT_URL = (
+    "login"  # Cambia 'index' a la vista que desees después del cierre de sesión
+)
+LOGIN_URL = "login"

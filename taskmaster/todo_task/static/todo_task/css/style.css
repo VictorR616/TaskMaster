@@ -24,6 +24,7 @@ h3 {
     color: var(--clr-main);
 }
 
+
 /* ------------------------------- Lista Tareas ------------------------------- */
 .search-form {
     display: flex;
@@ -203,10 +204,10 @@ h3 {
 
 /* ------------------------------- Detalle tarea ------------------------------- */
 .card__body {
-    width: 600px;
     background-color: #fff;
     border-radius: calc(var(--br) - 5px);
     padding: 2rem;
+    margin-block: 2rem;
 }
 
 .card__body h2 {
@@ -321,6 +322,61 @@ h3 {
     height: 100%;
     text-decoration: none;
 }
+
+
+
+/* ------------------------------- Detalles ------------------------------- */
+.task-info {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.task-info-dates {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.task-info-dates div {
+    flex-grow: 1;
+    border-radius: var(--br);
+    padding: 1rem;
+    color: white;
+}
+
+.task-info-dates div:nth-child(1) {
+    background-color: var(--clr-item-1);
+}
+
+.task-info-dates div:nth-child(2) {
+    background-color: var(--clr-item-2);
+}
+
+.task-info-category,
+.task-info-priority,
+.task-info-description {
+    padding: 1rem;
+    border-radius: var(--br);
+    color: white;
+}
+
+.task-info-category {
+    background-color: var(--clr-item-3);
+}
+
+.task-info-priority {
+    background-color: var(--clr-item-4);
+}
+
+.task-info-description {
+    background-color: var(--clr-item-5);
+}
+
+
+/* ------------------------------- Detalles ------------------------------- */
+
 /* ------------------------------- Analiticas ------------------------------- */
 
 @media (min-width: 45em) {

@@ -1,4 +1,6 @@
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils import timezone
 from users.models import CustomUser  # Importa el modelo de usuario personalizado
 
 
@@ -19,10 +21,16 @@ class Label(models.Model):
 class Task(models.Model):
     title = models.CharField(max_length=35)
     complete = models.BooleanField(default=False)
-    due_date = models.DateField()
+    due_date = models.DateField(
+        help_text="Ingrese la fecha de vencimiento.",
+    )
     created = models.DateTimeField(auto_now_add=True)
     labels = models.ManyToManyField(Label)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="tasks")
+
+    def clean(self):
+        if self.due_date and self.due_date < timezone.now().date():
+            raise ValidationError("La fecha de vencimiento no puede ser en el pasado.")
 
     class Meta:
         ordering = ["-created"]

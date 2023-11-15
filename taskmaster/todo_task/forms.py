@@ -1,4 +1,6 @@
 from django import forms
+from django.forms.widgets import DateInput
+from django.utils import timezone
 
 from .models import Label, Priority, Task, TaskMetadata
 
@@ -22,9 +24,7 @@ class BaseTaskForm(forms.ModelForm):
 
         widgets = {
             "title": forms.TextInput(attrs={"placeholder": "Ingrese el título"}),
-            "due_date": forms.DateInput(
-                attrs={"type": "date", "placeholder": "Seleccione la fecha"}
-            ),
+            "due_date": DateInput(attrs={"placeholder": "dd/mm/aaaa"}),
         }
 
     def clean_title(self):
@@ -32,6 +32,16 @@ class BaseTaskForm(forms.ModelForm):
         if len(title) <= 8:
             raise forms.ValidationError("El título debe tener más de 8 caracteres.")
         return title
+
+    def clean_due_date(self):
+        due_date = self.cleaned_data["due_date"]
+        if due_date and due_date < timezone.now().date():
+            print(due_date)
+            print(timezone.now().date())
+            raise forms.ValidationError(
+                "La fecha de vencimiento no puede ser en el pasado."
+            )
+        return due_date
 
 
 class TaskForm(BaseTaskForm):

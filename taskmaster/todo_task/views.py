@@ -82,18 +82,14 @@ def create_task(request):
             task.user = request.user  # Asignar el usuario actual
             task.save()
 
+            # Asignar las categorías a la tarea
+            task.labels.set(request.POST.getlist("labels"))
+
             # Guardar la metadata (TaskMetadata)
             task_metadata = task_metadata_form.save(commit=False)
             task_metadata.task = task  # Establecer la relación con la tarea
             task_metadata.save()
-
-            # Mostrar los datos enviados en la consola (para depuración)
-            print("Datos del formulario task_form:", task_form.cleaned_data)
-            print(
-                "Datos del formulario task_metadata_form:",
-                task_metadata_form.cleaned_data,
-            )
-
+            
             return redirect("task-list")  # Redirigir a la lista de tareas
     else:
         # Mostrar los formularios vacíos si es una solicitud GET

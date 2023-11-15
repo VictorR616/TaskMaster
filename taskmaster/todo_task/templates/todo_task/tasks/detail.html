@@ -14,34 +14,35 @@
         <h2 class="fs-4">{{ task.title }}</h2>
 
         <div class="task-info">
-            <div class="task-info-item">
-                <p>Fecha Creacion</p>
-                <p class="categoria_count">{{ task.created|date:"d/m/Y" }}</p>
+            <div class="task-info-dates">
+                <div>
+                    <p>Fecha Creacion</p>
+                    <p>{{ task.created|date:"d/m/Y" }}</p>
+                </div>
+                <div>
+                    <p>Fecha a realizar</p>
+                    <p>{{ task.due_date|date:"d/m/Y" }}</p>
+                </div>
             </div>
-            <div class="task-info-item">
-                <p>Fecha a realizar</p>
-                <p class="categoria_count">{{ task.due_date|date:"d/m/Y" }}</p>
-            </div>
-            <div class="task-info-item">
+            <div class="task-info-category">
                 <p>Categorias</p>
-                <p class="categoria_count">
+                <p>
                     {% for label in task.labels.all %}
                     {{ label.name }}{% if not forloop.last %} - {% endif %}
                     {% endfor %}
                 </p>
             </div>
-            <div class="task-info-item">
+            <div class="task-info-priority">
                 <p>Prioridad</p>
-                <p class="categoria_count">
+                <p>
                     {% if task.taskmetadata.priority %}
                     {{ task.taskmetadata.priority }}
                     {% else %}
                     Sin Prioridad
                     {% endif %}
                 </p>
-
             </div>
-            <div class="task-info-item">
+            <div class="task-info-description">
                 <p>Descripcion</p>
                 <p>{{ task.taskmetadata.description }}</p>
             </div>

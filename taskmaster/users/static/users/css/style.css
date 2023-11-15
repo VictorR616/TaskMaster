@@ -21,6 +21,16 @@
     text-align: center;
 }
 
+#profile_picture-clear_id  {
+    /* Tus estilos personalizados aquí */
+    display: none; /* Esto oculta el checkbox, si deseas que no sea visible */
+}
+
+label[for="profile_picture-clear_id"] {
+    display: none;
+}
+
+
 .login-container {
     display: grid;
     place-content: center;
@@ -199,8 +209,6 @@ hr {
     height: 0.25rem;
 }
 
-
-
 @media (min-width: 35em) {
     .user__info-actives {
         grid-auto-flow: column;
@@ -221,13 +229,11 @@ hr {
     color: var(--clr-white);
 }
 
-
 .delete-form input[type="submit"]:hover {
     background-color: transparent;
     color: var(--clr-accent-700);
     border: 2px solid var(--clr-accent-700);
 }
-
 
 .imagen {
     overflow: hidden; /* Evita que el contenido se desborde */
