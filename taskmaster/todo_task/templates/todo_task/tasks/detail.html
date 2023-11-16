@@ -1,18 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
-
-{% block title %} Detalle de Tarea {% endblock %}
-
+{% block title %}Detalle de Tarea{% endblock %}
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static 'todo_task/css/style.css' %}">
 {% endblock %}
-
 {% block content %}
 <section class="card-container">
     <h1 class="fs-6">Detalle de Tarea</h1>
     <div class="card__body flex-column">
         <h2 class="fs-4">{{ task.title }}</h2>
-
         <div class="task-info">
             <div class="task-info-dates">
                 <div>
@@ -28,7 +24,8 @@
                 <p>Categorias</p>
                 <p>
                     {% for label in task.labels.all %}
-                    {{ label.name }}{% if not forloop.last %} - {% endif %}
+                    {{ label.name }}
+                    {% if not forloop.last %}-{% endif %}
                     {% endfor %}
                 </p>
             </div>
@@ -46,8 +43,16 @@
                 <p>Descripcion</p>
                 <p>{{ task.taskmetadata.description }}</p>
             </div>
+            <div
+                class="task-info-state {% if task.complete %}task-info-complete{% else %}task-info-incomplete{% endif %}">
+                <p>Estado</p>
+                {% if task.complete %}
+                <p>Completada</p>
+                {% else %}
+                <p>Pendiente</p>
+                {% endif %}
+            </div>
         </div>
-
         <div class="actions">
             <h3 class="fs-3">Acciones</h3>
             <div class="cluster">
@@ -57,12 +62,6 @@
             </div>
         </div>
     </div>
-
     {% include 'modal.html' with title="esta tarea" delete_url=delete_url task_id=task_id_for_modal %}
-
-
 </section>
-
-
-
 {% endblock %}

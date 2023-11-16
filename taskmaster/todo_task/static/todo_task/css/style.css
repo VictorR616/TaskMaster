@@ -6,6 +6,10 @@
     --clr-item-3: #e74c3c;
     --clr-item-4: #27ae60;
     --clr-item-5: #f1c40f;
+    
+    --clr-complete: #01af01;
+    --clr-incomplete: #ff0000;
+
 
     --clr-item-1-hover: #8e1a9b;
     --clr-item-2-hover: #2575ab;
@@ -22,6 +26,11 @@
 h3 {
     font-weight: var(--fw-bold);
     color: var(--clr-main);
+}
+
+
+.errorlist li {
+    list-style: none;
 }
 
 
@@ -356,7 +365,8 @@ h3 {
 
 .task-info-category,
 .task-info-priority,
-.task-info-description {
+.task-info-description,
+.task-info-state {
     padding: 1rem;
     border-radius: var(--br);
     color: white;
@@ -372,6 +382,14 @@ h3 {
 
 .task-info-description {
     background-color: var(--clr-item-5);
+}
+
+.task-info-complete {
+    background-color: var(--clr-complete);
+}
+
+.task-info-incomplete {
+    background-color: var(--clr-incomplete);
 }
 
 

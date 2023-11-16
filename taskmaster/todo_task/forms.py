@@ -27,6 +27,13 @@ class BaseTaskForm(forms.ModelForm):
             "due_date": DateInput(attrs={"placeholder": "dd/mm/aaaa"}),
         }
 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)  # Extraer 'user' del kwargs
+        super(BaseTaskForm, self).__init__(*args, **kwargs)
+
+        if user:
+            self.fields["labels"].queryset = Label.objects.filter(user=user)
+
     def clean_title(self):
         title = self.cleaned_data["title"]
         if len(title) <= 8:
@@ -69,6 +76,14 @@ class TaskMetaDataForm(forms.ModelForm):
                 attrs={"placeholder": "Ingrese la descripción"}
             ),
         }
+
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)  # Extraer 'user' del kwargs
+        super(TaskMetaDataForm, self).__init__(*args, **kwargs)
+
+        if user:
+            self.fields["priority"].queryset = Priority.objects.filter(user=user)
 
 
 class CategoryForm(forms.ModelForm):

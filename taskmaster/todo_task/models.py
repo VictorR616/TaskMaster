@@ -12,6 +12,12 @@ class Label(models.Model):
     )
 
     class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["name", "user"], name="Categoria unica para usuario"
+            )
+        ]
+
         ordering = ["-created"]
 
     def __str__(self):
@@ -40,7 +46,7 @@ class Task(models.Model):
 
 
 class Priority(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
     created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(
         CustomUser, on_delete=models.CASCADE, related_name="priorities"
@@ -50,6 +56,13 @@ class Priority(models.Model):
         verbose_name = "Priority"  # Nombre en singular
         verbose_name_plural = "Priorities"  # Nombre en plural
         ordering = ["-created"]
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["name", "user"], name="Prioridad unica para usuario"
+            )
+        ]
+
 
     def __str__(self):
         return self.name

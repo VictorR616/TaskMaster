@@ -20,9 +20,10 @@ class TaskAdmin(admin.ModelAdmin):
 
 
 class LabelAdmin(admin.ModelAdmin):
-    list_display = ("name",)
+    list_display = ("name","user")
 
-    list_filter = ("name",)
+    list_filter = ("name", "user")
+    
 
 
 
@@ -37,9 +38,9 @@ class TaskMetadataAdmin(admin.ModelAdmin):
 
 
 class PriorityAdmin(admin.ModelAdmin):
-    list_display = ("name",)
+    list_display = ("name","user")
 
-    list_filter = ("name",)
+    list_filter = ("name", "user")
 
 admin.site.register(Task, TaskAdmin)
 admin.site.register(Label, LabelAdmin)

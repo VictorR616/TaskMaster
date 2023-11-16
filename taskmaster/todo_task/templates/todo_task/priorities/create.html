@@ -10,7 +10,7 @@
 {% block content %}
 <!-- Contenido personalizado de list_tasks.html aquí -->
 <section class="container">
-    <h1 class="fs-6">Creación de Categorias</h1>
+    <h1 class="fs-6">Creación de Prioridad</h1>
     <form class="form" method="POST">
         {% csrf_token %}
 
@@ -20,15 +20,16 @@
         {% if field.errors %}
         {{ field.errors }}
         {% endif %}
-        {% endfor %}
-
-        {% for field in task_metadata_form %}
-        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-        {{ field }}
-        {% if field.errors %}
-        <p class="error">{{ field.errors }}</p>
+        {% if messages %}
+        <ul class="error">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
         {% endif %}
         {% endfor %}
+
+
         <input type="submit" class="btn btn-primary" value="Enviar">
     </form>
 

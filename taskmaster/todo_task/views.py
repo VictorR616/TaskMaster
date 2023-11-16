@@ -1,9 +1,9 @@
 from datetime import datetime
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count
-from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
@@ -40,9 +40,11 @@ def list_tasks(request, filter_type=None):
     except EmptyPage:
         paginator_data = paginator.page(paginator.num_pages)
 
-    categorias = Label.objects.annotate(task_count=Count("task")).order_by(
-        "-task_count"
-    )[:4]
+    categorias = (
+        Label.objects.filter(task__user=request.user)
+        .annotate(task_count=Count("task"))
+        .order_by("-task_count")[:4]
+    )
 
     context = {
         "paginator_data": paginator_data,
@@ -73,28 +75,24 @@ def detail_task(request, task_id):
 @login_required(login_url="/users/login/")
 def create_task(request):
     if request.method == "POST":
-        task_form = TaskForm(request.POST)
-        task_metadata_form = TaskMetaDataForm(request.POST)
+        task_form = TaskForm(request.POST, user=request.user)
+        task_metadata_form = TaskMetaDataForm(request.POST, user=request.user)
 
         if task_form.is_valid() and task_metadata_form.is_valid():
-            # Guardar la tarea (Task)
-            task = task_form.save(commit=False)  # No guardar la tarea de inmediato
-            task.user = request.user  # Asignar el usuario actual
+            task = task_form.save(commit=False)
+            task.user = request.user
             task.save()
 
-            # Asignar las categorías a la tarea
-            task.labels.set(request.POST.getlist("labels"))
+            task.labels.set(task_form.cleaned_data["labels"])
 
-            # Guardar la metadata (TaskMetadata)
             task_metadata = task_metadata_form.save(commit=False)
-            task_metadata.task = task  # Establecer la relación con la tarea
+            task_metadata.task = task
             task_metadata.save()
-            
-            return redirect("task-list")  # Redirigir a la lista de tareas
+
+            return redirect("task-list")
     else:
-        # Mostrar los formularios vacíos si es una solicitud GET
-        task_form = TaskForm()
-        task_metadata_form = TaskMetaDataForm()
+        task_form = TaskForm(user=request.user)
+        task_metadata_form = TaskMetaDataForm(user=request.user)
 
     context = {"task_form": task_form, "task_metadata_form": task_metadata_form}
 
@@ -103,29 +101,34 @@ def create_task(request):
 
 @login_required(login_url="/users/login/")
 def update_task(request, task_id):
+    # Obtener la tarea asociada al usuario actual
     task = get_object_or_404(Task, pk=task_id)
 
     if request.method == "POST":
-        task_form = TaskEditForm(request.POST, instance=task)
-        task_metadata_form = TaskMetaDataForm(request.POST, instance=task.taskmetadata)
+        # Pasar el usuario actual al formulario para filtrar las opciones
+        task_form = TaskEditForm(request.POST, instance=task, user=request.user)
+        task_metadata_form = TaskMetaDataForm(
+            request.POST, instance=task.taskmetadata, user=request.user
+        )
 
         if task_form.is_valid() and task_metadata_form.is_valid():
             task_form.save()
             task_metadata_form.save()
             return redirect("task-list")
     else:
-        task_form = TaskEditForm(instance=task)
-        task_metadata_form = TaskMetaDataForm(instance=task.taskmetadata)
+        # Pasar el usuario actual al formulario para filtrar las opciones
+        task_form = TaskEditForm(instance=task, user=request.user)
+        task_metadata_form = TaskMetaDataForm(
+            instance=task.taskmetadata, user=request.user
+        )
 
-    return render(
-        request,
-        "todo_task/tasks/update.html",
-        {
-            "task_form": task_form,
-            "task_metadata_form": task_metadata_form,
-            "task": task,
-        },
-    )
+    context = {
+        "task_form": task_form,
+        "task_metadata_form": task_metadata_form,
+        "task": task,
+    }
+
+    return render(request, "todo_task/tasks/update.html", context)
 
 
 @login_required(login_url="/users/login/")
@@ -190,17 +193,18 @@ def detail_category(request, category_id):
 @login_required(login_url="/users/login/")
 def create_category(request):
     if request.method == "POST":
-        category_form = CategoryForm(request.POST)
-
-        if category_form.is_valid():
-            # Asignar el usuario actual al campo 'user' del modelo de categoría
-            category = category_form.save(commit=False)
-            category.user = request.user  # Asigna el usuario actual
-            category.save()
-
-            return redirect("category-list")
+        try:
+            category_form = CategoryForm(request.POST)
+            if category_form.is_valid():
+                category = category_form.save(commit=False)
+                category.user = request.user  # Asigna el usuario actual
+                category.save()
+                return redirect("category-list")
+        except Exception:
+            messages.error(
+                request, "Error al crear la categoría, porfavor intente otra vez"
+            )
     else:
-        # Mostrar el formulario vacío si es una solicitud GET
         category_form = CategoryForm()
 
     context = {"category_form": category_form}
@@ -295,22 +299,21 @@ def detail_priority(request, priority_id):
 @login_required(login_url="/users/login/")
 def create_priority(request):
     if request.method == "POST":
-        priority_form = PriorityForm(request.POST)
+        try:
+            priority_form = PriorityForm(request.POST)
 
-        if priority_form.is_valid():
-            # Asignar el usuario actual al campo 'user' del modelo de prioridad
-            priority = priority_form.save(commit=False)
-            priority.user = request.user  # Asigna el usuario actual
-            priority.save()
+            if priority_form.is_valid():
+                priority = priority_form.save(commit=False)
+                priority.user = request.user
+                priority.save()
 
-            return redirect("priority-list")
-        else:
-            # Devuelve un código de estado HTTP 400 (Bad Request)
-            return HttpResponseBadRequest(
-                "Datos insuficientes o incorrectos. La solicitud es inválida."
+                messages.success(request, "Prioridad creada exitosamente.")
+                return redirect("priority-list")
+        except Exception:
+            messages.error(
+                request, "Error al crear la prioridad, porfavor intentelo nuevamente"
             )
     else:
-        # Mostrar el formulario vacío si es una solicitud GET
         priority_form = PriorityForm()
 
     context = {"priority_form": priority_form}
