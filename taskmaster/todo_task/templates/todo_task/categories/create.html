@@ -11,25 +11,18 @@
 <!-- Contenido personalizado de list_tasks.html aquí -->
 <section class="container">
     <h1 class="fs-6">Creación de Categorias</h1>
-    <form class="form" method="POST">
+    <form class="form" method="post">
         {% csrf_token %}
 
         {% for field in category_form %}
-        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-        {{ field }}
-        {% if field.errors %}
-        {{ field.errors }}
-        {% endif %}
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li>{{ message }}</li>
+            {{ field.label_tag }}
+            {{ field }}
+            
+            {% if field.errors %}
+                {{ field.errors }}
+            {% endif %}
+
             {% endfor %}
-        </ul>
-        {% endif %}
-        {% endfor %}
-
-
         <input type="submit" class="btn btn-primary" value="Enviar">
     </form>
 
@@ -37,6 +30,4 @@
         <a class="btn btn-secondary" href="{% url 'category-list' %}">Volver a la lista de categorias</a>
     </div>
 </section>
-
-
 {% endblock %}

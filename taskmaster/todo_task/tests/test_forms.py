@@ -16,7 +16,7 @@ class TestBaseTaskForm(TestCase):
             "title": "Título de la tarea",
             "complete": False,
             "labels": [self.label.id,],  
-            "due_date": "2023-10-30",
+            "due_date": "12/12/2024",
         })
 
         self.assertTrue(form.is_valid())
@@ -40,7 +40,7 @@ class TestCategoryForm(TestCase):
     def test_category_form_no_data(self):
         form = CategoryForm(data={})
         self.assertFalse(form.is_valid())
-        self.assertEquals(len(form.errors), 1)
+        self.assertEqual(len(form.errors), 1)
 
 class TestPriorityForm(TestCase):
 
@@ -51,5 +51,5 @@ class TestPriorityForm(TestCase):
     def test_priority_form_no_data(self):
         form = PriorityForm(data={})
         self.assertFalse(form.is_valid())
-        self.assertEquals(len(form.errors), 1)
+        self.assertEqual(len(form.errors), 1)
 

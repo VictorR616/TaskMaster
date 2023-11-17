@@ -77,7 +77,6 @@ class TaskMetaDataForm(forms.ModelForm):
             ),
         }
 
-
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user", None)  # Extraer 'user' del kwargs
         super(TaskMetaDataForm, self).__init__(*args, **kwargs)

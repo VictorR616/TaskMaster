@@ -21,6 +21,10 @@
     text-align: center;
 }
 
+.errorlist {
+    list-style-type: none;
+}
+
 #profile_picture-clear_id  {
     /* Tus estilos personalizados aquí */
     display: none; /* Esto oculta el checkbox, si deseas que no sea visible */

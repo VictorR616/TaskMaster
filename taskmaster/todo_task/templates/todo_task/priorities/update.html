@@ -15,7 +15,7 @@
         {% csrf_token %}
 
         {% for field in priority_form %}
-        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field.label_tag }}
         {{ field }}
         {% endfor %}
 

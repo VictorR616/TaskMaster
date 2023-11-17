@@ -1,35 +1,29 @@
 {% extends "container.html" %}
 
 {% block search-form %}
-{% include 'search_form.html' with query=query placeholder=placeholder %}
+    {% include 'search_form.html' with query=query placeholder=placeholder %}
 {% endblock %}
 
 {% block section-fragment %}
 
 {% include 'category-section.html' %}
-
-
 <section class="second-section">
     <h3>Tareas</h3>
     <div class="flex-column">
         <ul class="item-list flex-column">
             {% for task in paginator_data %}
             {% if filter_type == 'complete' %}
-            {% if task.complete %}
             <li class="item-element flex-column">
                 <a href="{% url 'task-detail' task.id %}" class="task-link">
                     {{ task.title }}
                 </a>
             </li>
-            {% endif %}
             {% elif filter_type == 'incomplete' %}
-            {% if not task.complete %}
             <li class="item-element flex-column">
                 <a href="{% url 'task-detail' task.id %}" class="task-link">
                     {{ task.title }}
                 </a>
             </li>
-            {% endif %}
             {% else %}
             <li class="item-element flex-column">
                 <a href="{% url 'task-detail' task.id %}" class="task-link">
@@ -45,9 +39,8 @@
         </div>
     </div>
 </section>
-
 {% endblock %}
 
 {% block pagination %}
-{% include 'pagination.html' %}
+    {% include 'pagination.html' %}
 {% endblock %}

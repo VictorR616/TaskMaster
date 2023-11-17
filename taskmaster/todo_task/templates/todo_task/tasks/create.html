@@ -11,7 +11,7 @@
 <!-- Contenido personalizado de list_tasks.html aquí -->
 <section class="container">
     <h1 class="fs-6">Creación de Tareas</h1>
-    <form class="form" method="POST">
+    <form class="form" method="post">
         {% csrf_token %}
         
         {% for field in task_form %}
@@ -23,7 +23,7 @@
         {% endfor %}
 
         {% for field in task_metadata_form %}
-            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field.label_tag }}
             {{ field }}
             {% if field.errors %}
                 {{ field.errors }}
@@ -36,8 +36,4 @@
         <a class="btn btn-secondary" href="{% url 'task-list' %}">Volver a la lista de tareas</a>
     </div>
 </section>
-
-
 {% endblock %}
-
-

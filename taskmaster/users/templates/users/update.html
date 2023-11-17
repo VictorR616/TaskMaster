@@ -14,7 +14,7 @@
         {% csrf_token %}
 
         {% for field in user_form %}
-        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field.label_tag }}
 
         {% if field.name == 'profile_picture' %}
         {% if user.profile_picture %}

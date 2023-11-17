@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.db import IntegrityError
 from django.db.models import Count
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -40,8 +40,9 @@ def list_tasks(request, filter_type=None):
     except EmptyPage:
         paginator_data = paginator.page(paginator.num_pages)
 
+    # Filtrar categorías según las tareas seleccionadas
     categorias = (
-        Label.objects.filter(task__user=request.user)
+        Label.objects.filter(task__user=request.user, task__in=tasks)
         .annotate(task_count=Count("task"))
         .order_by("-task_count")[:4]
     )
@@ -193,22 +194,22 @@ def detail_category(request, category_id):
 @login_required(login_url="/users/login/")
 def create_category(request):
     if request.method == "POST":
-        try:
-            category_form = CategoryForm(request.POST)
-            if category_form.is_valid():
-                category = category_form.save(commit=False)
-                category.user = request.user  # Asigna el usuario actual
+        category_form = CategoryForm(request.POST)
+        if category_form.is_valid():
+            category = category_form.save(commit=False)
+            category.user = request.user
+
+            try:
                 category.save()
                 return redirect("category-list")
-        except Exception:
-            messages.error(
-                request, "Error al crear la categoría, porfavor intente otra vez"
-            )
+            except IntegrityError:
+                category_form.add_error(
+                    "name", "Ya existe una etiqueta con este nombre."
+                )
     else:
         category_form = CategoryForm()
 
     context = {"category_form": category_form}
-
     return render(request, "todo_task/categories/create.html", context)
 
 
@@ -220,8 +221,13 @@ def update_category(request, category_id):
         category_form = CategoryForm(request.POST, instance=category)
 
         if category_form.is_valid():
-            category_form.save()
-            return redirect("category-list")
+            try:
+                category_form.save()
+                return redirect("category-list")
+            except IntegrityError:
+                category_form.add_error(
+                    "name", "Ya existe una etiqueta con este nombre."
+                )
     else:
         category_form = CategoryForm(instance=category)
 
@@ -299,20 +305,18 @@ def detail_priority(request, priority_id):
 @login_required(login_url="/users/login/")
 def create_priority(request):
     if request.method == "POST":
-        try:
-            priority_form = PriorityForm(request.POST)
+        priority_form = PriorityForm(request.POST)
 
-            if priority_form.is_valid():
-                priority = priority_form.save(commit=False)
-                priority.user = request.user
+        if priority_form.is_valid():
+            priority = priority_form.save(commit=False)
+            priority.user = request.user
+            try:
                 priority.save()
-
-                messages.success(request, "Prioridad creada exitosamente.")
                 return redirect("priority-list")
-        except Exception:
-            messages.error(
-                request, "Error al crear la prioridad, porfavor intentelo nuevamente"
-            )
+            except IntegrityError:
+                priority_form.add_error(
+                    "name", "Ya existe una prioridad con este nombre."
+                )
     else:
         priority_form = PriorityForm()
 
@@ -328,8 +332,13 @@ def update_priority(request, priority_id):
         priority_form = PriorityForm(request.POST, instance=priority)
 
         if priority_form.is_valid():
-            priority_form.save()
-            return redirect("priority-list")
+            try:
+                priority_form.save()
+                return redirect("priority-list")
+            except IntegrityError:
+                priority_form.add_error(
+                    "name", "Ya existe una prioridad con este nombre."
+                )
     else:
         priority_form = PriorityForm(instance=priority)
 
