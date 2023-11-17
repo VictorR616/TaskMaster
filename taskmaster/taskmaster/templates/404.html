@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+</head>
+
+<body>
+    <div class="error-404">
+        <h1>Oops! Parece que te perdiste...</h1>
+        <p>La página que estás buscando no existe.</p>
+        {% if user.is_authenticated %}
+        <p>Te encuentras autenticado. ¿Quieres explorar tu <a href="{% url 'task-list' %}">lista de tareas</a>?</p>
+        {% else %}
+        <p>¿Quizás quieras volver a la <a href="{% url 'login' %}">página de inicio de sesión</a>?</p>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -158,6 +158,35 @@ h1 {
     margin-block: 1rem;
 }
 
+/* Estilos pagina error 404 */
+.error-404 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    min-height: 100svh;
+}
+
+.error-404 h1 {
+    color: #e44d26;
+    font-size: var(--fs-5);
+}
+
+.error-404 p {
+    font-size: var(--fs-3);
+}
+
+.error-404 a {
+    color: #1e90ff;
+    text-decoration: none;
+    font-weight: var(--fw-bold);
+}
+
+.error-404 a:hover {
+    text-decoration: underline;
+}
+
 .card-container {
     width: min(100% - 3rem, 60ch);
     margin-inline: auto;
@@ -253,7 +282,6 @@ h1 {
     margin-block: 1rem;
 }
 
-
 .btn-primary {
     color: white;
     background-color: var(--clr-accent-700);
@@ -279,7 +307,6 @@ h1 {
     border: 2px solid var(--clr-white);
     transition: background 100ms ease-in-out;
 }
-
 
 .btn-cancel {
     border: 2px solid var(--clr-accent-700);
@@ -390,8 +417,6 @@ h1 {
     margin-block: 1rem;
 }
 
-
-
 .form input[type="checkbox"] {
     align-self: flex-start;
     width: 1.5rem;
@@ -432,7 +457,6 @@ h1 {
 .form textarea:focus {
     border-color: purple;
 }
-
 
 .form textarea {
     resize: none;
@@ -487,7 +511,6 @@ h1 {
     justify-content: center;
 }
 
-
 .btn {
     font-weight: bold;
     padding: 1rem;
@@ -495,7 +518,6 @@ h1 {
     text-align: center;
     cursor: pointer;
 }
-
 
 .btn-edit {
     background-color: var(--clr-btn-edit);

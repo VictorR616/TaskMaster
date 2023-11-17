@@ -399,3 +399,7 @@ def analytics(request):
     }
 
     return render(request, "todo_task/tasks/analytics.html", context)
+
+
+def error_404(request, exception):
+    return render(request, "404.html", status=404)

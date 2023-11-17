@@ -1,15 +1,21 @@
+from django.conf.urls import handler404
 from django.urls import path
 
 from . import views
+from .views import error_404
 
 urlpatterns = [
     # Tasks URLS
-path("tasks/", views.list_tasks, name="task-list"),
+    path("tasks/", views.list_tasks, name="task-list"),
     path("tasks/create/", views.create_task, name="task-create"),
     path("tasks/<int:task_id>/", views.detail_task, name="task-detail"),
     path("tasks/<int:task_id>/update/", views.update_task, name="task-update"),
     path("tasks/<int:task_id>/delete/", views.delete_task, name="task-delete"),
-    path("tasks/filtered/<str:filter_type>/", views.list_tasks, name="task-list-with-filter"),
+    path(
+        "tasks/filtered/<str:filter_type>/",
+        views.list_tasks,
+        name="task-list-with-filter",
+    ),
     # Categories URLS
     path("categories/", views.list_categories, name="category-list"),
     path("categories/create/", views.create_category, name="category-create"),
@@ -45,3 +51,5 @@ path("tasks/", views.list_tasks, name="task-list"),
     # Analiticas
     path("analytics/", views.analytics, name="analytics"),
 ]
+
+handler404 = error_404
