@@ -92,10 +92,12 @@ WSGI_APPLICATION = "taskmaster.wsgi.application"
 # }
 
 
-DATABASES = {"default": dj_database_url.config(
-    default="postgres://postgres:postgres@localhost:5432/taskmaster",
-    conn_max_age=600
-)}
+DATABASES = {
+    "default": dj_database_url.config(
+        default="postgres://postgres:postgres@localhost:5432/taskmaster_hjf2",
+        conn_max_age=600,
+    )
+}
 
 
 # Password validation
