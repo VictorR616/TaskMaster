@@ -2,9 +2,18 @@
 # exit on error
 set -o errexit
 
-pip install pipenv
-pipenv shell
-pipenv install
+# Install or update pipenv
+pip install --upgrade pipenv
 
-python manage.py collectstatic --no-input
+# Activate the virtual environment
+pipenv install --dev
+pipenv shell
+
+# Install dependencies
+pipenv install --ignore-pipfile
+
+# Run migrations
 python manage.py migrate
+
+# Collect static files
+python manage.py collectstatic --no-input
