@@ -146,7 +146,7 @@ def iniciar_sesion(request):
                 )  # La sesión expirará al cerrar el navegador
 
             messages.success(request, "Inicio de sesión exitoso.")
-            return redirect("user-list")
+            return redirect("task-list")
         else:
             messages.error(
                 request,
