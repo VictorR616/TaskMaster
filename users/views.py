@@ -60,11 +60,15 @@ def create_user(request):
             user = form.save(
                 commit=False
             )  # Evitar guardar inmediatamente en la base de datos
-            user.set_password(form.cleaned_data["password1"])  # Establecer la contraseña
-            user.set_password(form.cleaned_data["password2"])  # Establecer la contraseña
+            user.set_password(
+                form.cleaned_data["password1"]
+            )  # Establecer la contraseña
+            user.set_password(
+                form.cleaned_data["password2"]
+            )  # Establecer la contraseña
             user.save()  # Guardar el usuario con la contraseña encriptada
             messages.success(request, "Usuario creado correctamente.")
-            return redirect("user-list")
+            return redirect("task-list")
     else:
         form = UserForm()
     return render(request, "users/create.html", {"user_form": form})
