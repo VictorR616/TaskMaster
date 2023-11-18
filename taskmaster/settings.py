@@ -22,14 +22,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", default="your secret key")
 
 
-DEBUG = "RENDER" not in os.environ
+# Configuración de DEBUG
+DEBUG = "RENDER" in os.environ
 
+# Configuración de ALLOWED_HOSTS
 ALLOWED_HOSTS = []
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
 
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+else:
+    # Añade "localhost" como un valor predeterminado si RENDER_EXTERNAL_HOSTNAME no está presente
+    ALLOWED_HOSTS.append("localhost")
 
 
 # Application definition
