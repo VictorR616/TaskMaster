@@ -13,24 +13,17 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
-import dj_database_url
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = os.environ.get("SECRET_KEY", default="your secret key")
+SECRET_KEY = 'zw^ya_v#0&+i1j=n$-=g0*o95*rdga)*!x1xsg0-+7=7p_+g+='
 
 
-DEBUG = os.environ.get("DEBUG", "RENDER") != "RENDER"
+DEBUG = True
 
 
 ALLOWED_HOSTS = []
-
-RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
-
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 # Application definition
@@ -85,19 +78,11 @@ WSGI_APPLICATION = "taskmaster.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
-
-
 DATABASES = {
-    "default": dj_database_url.config(
-        default="postgres://postgres:postgres@localhost:5432/taskmaster_hjf2",
-        conn_max_age=600,
-    )
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
 
 
@@ -137,16 +122,11 @@ USE_TZ = True
 
 # Ruta de archivos estaticos
 STATIC_URL = "static/"
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "taskmaster", "static"),
-#     os.path.join(BASE_DIR, "users", "static"),
-#     os.path.join(BASE_DIR, "todo_task", "static"),
-# ]
-
-if not DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "taskmaster", "static"),
+    os.path.join(BASE_DIR, "users", "static"),
+    os.path.join(BASE_DIR, "todo_task", "static"),
+]
 
 
 # Default primary key field type
