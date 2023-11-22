@@ -1,0 +1,16 @@
+__pycache__
+.dockerignore
+Dockerfile
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+.env
+.idea
+.vscode
+__pycache__
+db.sqlite3
+node_modules
+staticfiles
+media

@@ -13,17 +13,21 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
+from decouple import config
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = 'zw^ya_v#0&+i1j=n$-=g0*o95*rdga)*!x1xsg0-+7=7p_+g+='
+SECRET_KEY = config("SECRET_KEY")
 
 
-DEBUG = True
+DEBUG = config("DEBUG", default=False, cast=bool)
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config(
+    "ALLOWED_HOSTS", default="", cast=lambda v: [s.strip() for s in v.split(",")]
+)
 
 
 # Application definition
@@ -51,13 +55,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "taskmaster.urls"
-
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
             os.path.join(BASE_DIR, "taskmaster", "templates"),
-            os.path.join(BASE_DIR, "todo_task", "templates", "todo_task/base"),
+            os.path.join(BASE_DIR, "todo_task", "templates"),
+            os.path.join(BASE_DIR, "users", "templates"),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -78,12 +82,26 @@ WSGI_APPLICATION = "taskmaster.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+# Configuración en desarrollo
+if config("DEBUG", default=False, cast=bool):
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
+else:
+    # Configuración en producción
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": config("DB_NAME"),
+            "USER": config("DB_USER"),
+            "PASSWORD": config("DB_PASSWORD"),
+            "HOST": config("DB_HOST"),
+            "PORT": config("DB_PORT", default=""),
+        }
+    }
 
 
 # Password validation
@@ -121,12 +139,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 # Ruta de archivos estaticos
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "taskmaster", "static"),
-    os.path.join(BASE_DIR, "users", "static"),
-    os.path.join(BASE_DIR, "todo_task", "static"),
+    os.path.join(BASE_DIR, "static", "taskmaster"),
+    os.path.join(BASE_DIR, "static", "todo_task"),
+    os.path.join(BASE_DIR, "static", "users"),
 ]
+print("***************************************************")
+print("Directorio: " + os.path.join(BASE_DIR, "taskmaster"))
+print("***************************************************")
+
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
 
 
 # Default primary key field type
@@ -140,8 +165,6 @@ AUTH_USER_MODEL = "users.CustomUser"  # Utilizando usuario personalizado
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-LOGIN_REDIRECT_URL = "task-list"  # Cambia 'list_tasks' a la vista que desees después del inicio de sesión
-LOGOUT_REDIRECT_URL = (
-    "login"  # Cambia 'index' a la vista que desees después del cierre de sesión
-)
+LOGIN_REDIRECT_URL = "task-list"
+LOGOUT_REDIRECT_URL = "login"
 LOGIN_URL = "login"
