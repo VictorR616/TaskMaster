@@ -1,10 +1,7 @@
 import os
 from pathlib import Path
 
-<<<<<<< Updated upstream
-=======
 import environ
->>>>>>> Stashed changes
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
