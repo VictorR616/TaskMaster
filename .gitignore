@@ -46,3 +46,6 @@ pip-delete-this-directory.txt
 .env
 
 TaskMaster.code-workspace
+
+media
+static

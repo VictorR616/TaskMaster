@@ -75,8 +75,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     )
 
     profile_picture = models.ImageField(
-        upload_to="users/images/profile_pictures/",
-        default="users/images/profile_pictures/default.png",
+        upload_to="users/profile_pictures/",
+        default="users/profile_pictures/default.png",
         blank=True,
     )
 
@@ -90,4 +90,3 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-
