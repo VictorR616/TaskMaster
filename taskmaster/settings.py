@@ -74,7 +74,7 @@ WSGI_APPLICATION = "taskmaster.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # Configuración en desarrollo
-if config("DEBUG"):
+if DEBUG:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -136,9 +136,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static", "todo_task"),
     os.path.join(BASE_DIR, "static", "users"),
 ]
-print("***************************************************")
-print("Directorio: " + os.path.join(BASE_DIR, "taskmaster"))
-print("***************************************************")
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")

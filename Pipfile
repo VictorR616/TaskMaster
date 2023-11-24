@@ -16,6 +16,7 @@ django-storages = "*"
 boto3 = "*"
 cryptography = "*"
 django-environ = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
