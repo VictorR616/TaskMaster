@@ -1,4 +1,4 @@
-{% extends "container.html" %}
+{% extends "todo_task/base/container.html" %}
 
 {% block search-form %}
     {% include 'search_form.html' with query=query placeholder=placeholder %}
@@ -6,7 +6,7 @@
 
 {% block section-fragment %}
 
-{% include 'category-section.html' %}
+{% include 'todo_task/base/category-section.html' %}
 <section class="second-section">
     <h3>Tareas</h3>
     <div class="flex-column">
