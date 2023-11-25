@@ -1,40 +1,31 @@
 import os
 from pathlib import Path
 
-import environ
-from decouple import config
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-env = environ.Env()
-environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
-
-SECRET_KEY = config("SECRET_KEY")
-
-
-DEBUG = config("DEBUG", default=False, cast=bool)
-
-
-ALLOWED_HOSTS = config(
-    "ALLOWED_HOSTS", default="", cast=lambda v: [s.strip() for s in v.split(",")]
-)
-
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Application definition
 
-INSTALLED_APPS = [
+BASE_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+]
+
+LOCAL_APPS = [
     "todo_task",
     "users",
 ]
 
-MIDDLEWARE = [
+THIRD_APPS = []
+
+INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
+
+
+BASE_MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -42,8 +33,15 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
+
+LOCAL_MIDDLEWARE = []
+
+THIRD_MIDDLEWARE = []
+
+
+MIDDLEWARE = BASE_MIDDLEWARE + LOCAL_MIDDLEWARE + THIRD_MIDDLEWARE
+
 
 ROOT_URLCONF = "taskmaster.urls"
 TEMPLATES = [
@@ -68,32 +66,6 @@ TEMPLATES = [
 
 
 WSGI_APPLICATION = "taskmaster.wsgi.application"
-
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-# Configuración en desarrollo
-if DEBUG:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
-else:
-    # Configuración en producción
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": env("DB_NAME"),
-            "USER": env("DB_USER"),
-            "PASSWORD": env("DB_PASSWORD"),
-            "HOST": env("DB_HOST"),
-            "PORT": env("DB_PORT", default=""),
-        }
-    }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -126,25 +98,6 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-# Ruta de archivos estaticos
-STATIC_URL = "/static/"
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static", "taskmaster"),
-    os.path.join(BASE_DIR, "static", "todo_task"),
-    os.path.join(BASE_DIR, "static", "users"),
-]
-
-
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-MEDIA_URL = "/media/"
-
-MEDIA_URL = "media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
-
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -161,30 +114,14 @@ LOGOUT_REDIRECT_URL = "login"
 LOGIN_URL = "login"
 
 
-# Manejo de S3 y Cloudfront
-STORAGES = {
-    "default": {
-        "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": {
-            "bucket_name": env("AWS_STORAGE_BUCKET_NAME"),
-            "access_key": env("AWS_ACCESS_KEY_ID"),
-            "secret_key": env("AWS_SECRET_ACCESS_KEY"),
-            "region_name": env("AWS_S3_REGION_NAME"),
-            "custom_domain": env("AWS_S3_CUSTOM_DOMAIN"),
-            "querystring_expire": env.int("QUERY_STRING_EXPIRE"),
-            "cloudfront_key_id": env.str("AWS_CLOUDFRONT_KEY_ID").strip(),
-            "cloudfront_key": env.str("AWS_CLOUDFRONT_KEY", multiline=True)
-            .encode("ascii")
-            .strip(),
-        },
-    },
-    "staticfiles": {
-        "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": {
-            "bucket_name": env("AWS_STORAGE_BUCKET_NAME"),
-            "access_key": env("AWS_ACCESS_KEY_ID"),
-            "secret_key": env("AWS_SECRET_ACCESS_KEY"),
-            "region_name": env("AWS_S3_REGION_NAME"),
-        },
-    },
-}
+# Ruta de archivos estaticos
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "taskmaster", "static"),
+    os.path.join(BASE_DIR, "todo_task", "static"),
+    os.path.join(BASE_DIR, "users", "static"),
+]
+MEDIA_URL = "/media/"
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
