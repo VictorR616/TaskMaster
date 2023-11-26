@@ -11,10 +11,12 @@ services:
       - .env 
     image: app:taskmaster
     container_name: taskmaster_container
-    command: gunicorn taskmaster.wsgi:application -b 0.0.0.0:8000
-  
+    depends_on:
+      - db
   db:
     image: postgres:latest
+    ports:
+      - "5431:5432"
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
